@@ -2330,6 +2330,40 @@ then
     AM_CCASFLAGS="$AM_CCASFLAGS -DHAVE_AESCCM"
 fi
 
+# AES-EAX
+AC_ARG_ENABLE([aeseax],
+    [AS_HELP_STRING([--enable-aeseax],[Enable wolfSSL AES-EAX support (default: disabled)])],
+    [ ENABLED_AESEAX=$enableval ],
+    [ ENABLED_AESEAX=no ]
+    )
+
+if test "$ENABLED_AESEAX" = "yes"
+then
+    #AS_IF([test "$ENABLED_AESCTR" != "yes" && (test "$FIPS_VERSION" != "dev" || test "$enable_aesctr" != "no")],
+    #        [ENABLED_AESCTR="yes"; AM_CFLAGS="$AM_CFLAGS -DWOLFSSL_AES_COUNTER"])
+
+    AM_CFLAGS="$AM_CFLAGS -DWOLFSSL_AES_EAX"
+
+    # Requires aesctr
+    #if test "x$ENABLED_AESCTR" = "xno"
+    #then
+    #    ENABLED_AESCTR="yes"
+    #fi
+
+    #if test "x$ENABLED_AESCTR" != "xyes"
+    #then
+    #    # These flags are already implied by --enable-aesctr
+    #    AM_CFLAGS="$AM_CFLAGS -DWOLFSSL_AES_COUNTER -DWOLFSSL_AES_DIRECT"
+    #fi
+
+    # Requires CMAC
+    #if test "x$ENABLED_CMAC" = "xno"
+    #then
+    #    ENABLED_CMAC="yes"
+    #fi
+
+fi
+
 # AES-SIV (RFC 5297)
 AC_ARG_ENABLE([aessiv],
     [AS_HELP_STRING([--enable-aessiv],[Enable AES-SIV (RFC 5297) (default: disabled)])],

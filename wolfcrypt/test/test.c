@@ -671,6 +671,10 @@ WOLFSSL_TEST_SUBROUTINE wc_test_ret_t certpiv_test(void);
 WOLFSSL_TEST_SUBROUTINE wc_test_ret_t aes_siv_test(void);
 #endif
 
+#if defined(WOLFSSL_AES_EAX)
+WOLFSSL_TEST_SUBROUTINE wc_test_ret_t aes_eax_test(void);
+#endif /* WOLFSSL_AES_EAX */
+
 /* General big buffer size for many tests. */
 #define FOURK_BUF 4096
 
@@ -1422,6 +1426,13 @@ options: [-s max_relative_stack_bytes] [-m max_relative_heap_memory_bytes]\n\
         TEST_PASS("AES-SIV  test passed!\n");
 #endif
 #endif
+
+#if defined(WOLFSSL_AES_EAX)
+    if ( (ret = aes_eax_test()) != 0)
+        TEST_FAIL("AES-EAX test failed!\n", ret);
+    else
+        TEST_PASS("AES-EAX test passed!\n");
+#endif /* WOLFSSL_AES_EAX */
 
 #ifdef HAVE_ARIA
     if ( (ret = ariagcm_test(MC_ALGID_ARIA_128BITKEY)) != 0)
@@ -12869,6 +12880,140 @@ WOLFSSL_TEST_SUBROUTINE wc_test_ret_t aesccm_test(void)
     return ret;
 }
 #endif /* HAVE_AESCCM */
+
+
+#if defined(WOLFSSL_AES_EAX)
+static void print_bytes(const byte* bytes, int size)
+{
+    printf("0x");
+    for (int i=0; i<size; i++)
+    {
+        printf("%X",bytes[i]);
+    }
+    printf("\n");
+}
+
+
+WOLFSSL_TEST_SUBROUTINE wc_test_ret_t aes_eax_test(void)
+{
+    /* key */
+    byte key[] =       { 0x88, 0xd0, 0x20, 0x33, 0x78, 0x1c, 0x7b, 0x41, 0x64, 0x71, 0x1a, 0x05, 0x42, 0x0f, 0x25, 0x6e};
+    /* nonce */
+    byte nonce[]  =    { 0x7f, 0x29, 0x85, 0x29, 0x63, 0x15, 0x50, 0x7a, 0xa4, 0xc0, 0xa9, 0x3d, 0x5c, 0x12, 0xbd, 0x77};
+    /* header */
+    byte header[] =    { 0x7c, 0x57, 0x1d, 0x2f, 0xbb, 0x5f, 0x62, 0x52, 0x3c, 0x0e, 0xb3, 0x38, 0xbe, 0xf9, 0xa9 };
+    /* plaintext */
+    byte plaintext[] = { 0xd9, 0x8a, 0xdc, 0x03, 0xd9, 0xd5, 0x82, 0x73, 0x2e, 0xb0, 0x7d, 0xf2, 0x3d, 0x7b, 0x9f, 0x74};
+
+    /* ciphertext */
+    byte outct[] =     { 0x67, 0xca, 0xac, 0x35, 0x44, 0x3a, 0x31, 0x38, 0xd2, 0xcb, 0x81, 0x1f, 0x0c, 0xe0, 0x4d, 0xd2};
+
+    /* tag */
+    byte outtag[] =    { 0xb7, 0x96, 0x8e, 0x0b, 0x56, 0x40, 0xe3, 0xb2, 0x36, 0x56, 0x96, 0x53, 0x20, 0x8b, 0x9d, 0xeb};
+
+    byte ciphertext[sizeof(plaintext)];
+    byte decrypted[sizeof(plaintext)];
+    byte encAuthTag[AES_BLOCK_SIZE];
+    byte decAuthTag[AES_BLOCK_SIZE];
+    word32 encAuthTagSz = sizeof(encAuthTag);
+    word32 decAuthTagSz = sizeof(decAuthTag);
+    int result;
+
+    printf("Parameters:\nkeySize=%d, nonceSize=%d, headerSize=%d, plaintextSize=%d\n", sizeof(key), sizeof(nonce), sizeof(header), sizeof(plaintext));
+    printf(" k=");
+    print_bytes((byte*)key, sizeof(key));
+    printf(" n=");
+    print_bytes(nonce, sizeof(nonce));
+    printf(" h=");
+    print_bytes(header, sizeof(header));
+    printf(" m=");
+    print_bytes(plaintext, sizeof(plaintext));
+
+
+    printf("\nEncrypting...\n");
+
+    /*
+     * Encrypt and compute auth tag
+     */
+    result = wc_AesEaxEncryptAuth(key, sizeof(key), ciphertext, plaintext, sizeof(plaintext), nonce, sizeof(nonce), encAuthTag, encAuthTagSz, header, sizeof(header));
+    if (result != 0) {
+        printf("Encryption failed.\n");
+        return -1;
+    }
+
+    printf("\n  AUTH TAG = ");
+    print_bytes(encAuthTag, encAuthTagSz);
+    printf("CIPHERTEXT = ");
+    print_bytes(ciphertext, sizeof(ciphertext));
+
+    byte payload[sizeof(ciphertext) + encAuthTagSz];
+    memset(payload, 0, sizeof(payload));
+    memcpy(payload, ciphertext, sizeof(ciphertext));
+    memcpy(&payload[sizeof(ciphertext)], encAuthTag, encAuthTagSz);
+
+    printf("CONCAT PAYLOAD = ");
+    print_bytes(payload, sizeof(payload));
+
+    printf("\n\nDecrypting...\n");
+
+
+    /*
+     * Decrypt and verify auth tag
+     */
+    result = wc_AesEaxDecryptAuth(key, sizeof(key), decrypted, ciphertext, sizeof(ciphertext), nonce, sizeof(nonce), encAuthTag, encAuthTagSz, header, sizeof(header));
+    if (result == 0) {
+        printf("\nDecryption and tag verification successful.\n");
+        //printf("Plaintext = %s\n", plaintext);
+        //printf("Decrypted = %s\n", decrypted);
+        printf("Plaintext bin = ");
+        print_bytes(plaintext, sizeof(plaintext));
+        printf("Decrypted bin = ");
+        print_bytes(decrypted, sizeof(decrypted));
+
+
+
+        printf("\nChecking Vectors...\n");
+
+        if (memcmp(plaintext, decrypted, sizeof(plaintext) - 1) == 0) {
+            printf("Decrypted text matches the original plaintext.\n");
+        } else {
+            printf("Decrypted text does not match the original plaintext.\n");
+            return -1;
+        }
+
+        if (memcmp(ciphertext, outct, sizeof(outct) - 1) != 0) {
+            printf("Ciphertext doesn't match vector data\n");
+            printf("  Expected: ");
+            print_bytes(outct, sizeof(outct));
+            return -1;
+        }
+        else {
+            printf("Ciphertext matches vector data\n");
+        }
+
+        if (memcmp(encAuthTag, outtag, sizeof(encAuthTagSz) - 1) != 0) {
+            printf("Auth tag doesn't match vector data\n");
+            printf("  Expected: ");
+            print_bytes(outtag, sizeof(outtag));
+            return -1;
+        }
+        else {
+            printf("Auth tag matches vector data\n");
+        }
+
+    } else {
+        printf("Decryption or tag verification failed.\n");
+        return -1;
+    }
+    printf("SUCCESS\n");
+
+    return 0;
+}
+
+
+
+#endif  /* WOLFSSL_AES_EAX */
+
 
 
 #ifdef HAVE_AES_KEYWRAP
