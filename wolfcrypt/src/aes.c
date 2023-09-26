@@ -11394,7 +11394,7 @@ int wc_AesSivDecrypt(const byte* key, word32 keySz, const byte* assoc,
 
 #endif /* WOLFSSL_AES_SIV */
 
-#ifdef WOLFSSL_AES_EAX
+#if defined(WOLFSSL_AES_EAX)
 #define MAC_LTC_COMPAT
 
 struct AesEax {
@@ -11463,7 +11463,7 @@ int  wc_AesEaxDecryptAuth(const byte* key, word32 keySz, byte* out,
         return ret;
     }
 
-    return 0;
+    return ret;
 }
 
 
@@ -11474,31 +11474,35 @@ int  wc_AesEaxInit(AesEax* eax,
 {
     int ret = 0;
     word32 cmacSize;
-    byte prefixBuf[AES_BLOCK_SIZE]      = {0};
+    byte prefixBuf[AES_BLOCK_SIZE] = {0};
 
     /* Init the cipher context */
-    wc_AesInit(&eax->aes, NULL, INVALID_DEVID);
-    ret = wc_AesSetKey(&eax->aes, key, keySz, NULL, AES_ENCRYPTION);
-    if (ret != 0) {
-        printf("AES set key encrypt failed with error %d\n", ret);
+    if ((ret = wc_AesInit(&eax->aes, NULL, INVALID_DEVID)) != 0) {
+        return ret;
+    }
+    if ((ret = wc_AesSetKey(&eax->aes, key, keySz, NULL, AES_ENCRYPTION)) != 0) {
+        return ret;
     }
 
     /*
 	 * OMAC the nonce to use as the IV for CTR encryption and auth tag chunk
 	 *   N' ← OMAC^0_K(N)
 	 */
-    ret += wc_InitCmac(&eax->nonceCmac, key, keySz, WC_CMAC_AES, NULL);
-    ret += wc_CmacUpdate(&eax->nonceCmac, prefixBuf, sizeof(prefixBuf));
-    ret += wc_CmacUpdate(&eax->nonceCmac, nonce, nonceSz);
+    if ((ret = wc_InitCmac(&eax->nonceCmac, key, keySz, WC_CMAC_AES, NULL)) != 0) {
+        return ret;
+    }
+    if ((ret = wc_CmacUpdate(&eax->nonceCmac, prefixBuf, sizeof(prefixBuf))) != 0) {
+        return ret;
+    }
+    if ((ret = wc_CmacUpdate(&eax->nonceCmac, nonce, nonceSz)) != 0) {
+        return ret;
+    }
     cmacSize = AES_BLOCK_SIZE;
-    ret += wc_CmacFinal(&eax->nonceCmac, eax->nonceCmacIV, &cmacSize);
-    if (ret != 0) {
-        printf("wc_CmacFinal nonce error: %d.\n", ret);
+    if ((ret = wc_CmacFinal(&eax->nonceCmac, eax->nonceCmacIV, &cmacSize)) != 0) {
         return ret;
     }
 
-    ret = wc_AesSetIV(&eax->aes, eax->nonceCmacIV);
-    if (ret != 0) {
+    if ((ret = wc_AesSetIV(&eax->aes, eax->nonceCmacIV)) != 0) {
         printf("wc_AesSetIV error: %d.\n", ret);
         return ret;
     }
@@ -11514,10 +11518,16 @@ int  wc_AesEaxInit(AesEax* eax,
 #else
     memset(prefixBuf, 1, sizeof(prefixBuf));
 #endif
-    ret += wc_InitCmac(&eax->headerCmac, key, keySz, WC_CMAC_AES, NULL);
-    ret += wc_CmacUpdate(&eax->headerCmac, prefixBuf, sizeof(prefixBuf));
+    if ((ret = wc_InitCmac(&eax->headerCmac, key, keySz, WC_CMAC_AES, NULL)) != 0) {
+        return ret;
+    }
+    if ((ret = wc_CmacUpdate(&eax->headerCmac, prefixBuf, sizeof(prefixBuf))) != 0) {
+        return ret;
+    }
     if (authIn != NULL) {
-        wc_CmacUpdate(&eax->headerCmac, authIn, authInSz);
+        if ((ret = wc_CmacUpdate(&eax->headerCmac, authIn, authInSz)) != 0) {
+            return ret;
+        }
     }
 
     /*
@@ -11530,16 +11540,14 @@ int  wc_AesEaxInit(AesEax* eax,
 #else
     memset(prefixBuf, 2, sizeof(prefixBuf));
 #endif
-    ret += wc_InitCmac(&eax->ciphertextCmac, key, keySz, WC_CMAC_AES, NULL);
-    ret += wc_CmacUpdate(&eax->ciphertextCmac, prefixBuf, sizeof(prefixBuf));
-
-    if (ret != 0)
-    {
-        printf("ERROR\n");
+    if ((ret = wc_InitCmac(&eax->ciphertextCmac, key, keySz, WC_CMAC_AES, NULL)) != 0) {
+        return ret;
+    }
+    if ((ret = wc_CmacUpdate(&eax->ciphertextCmac, prefixBuf, sizeof(prefixBuf))) != 0) {
         return ret;
     }
 
-    return 0;
+    return ret;
 }
 
 
