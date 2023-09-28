@@ -571,6 +571,8 @@ WOLFSSL_API int wc_AesEaxEncryptFinal(AesEax* aes,
 WOLFSSL_API int wc_AesEaxDecryptFinal(AesEax* aes,
                                       const byte* authIn, word32 authInSz);
 
+WOLFSSL_API int wc_AesEaxFree(AesEax* aes);
+
 #endif /* WOLFSSL_AES_EAX */
 
 #ifdef HAVE_AES_KEYWRAP

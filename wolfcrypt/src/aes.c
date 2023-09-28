@@ -11407,7 +11407,14 @@ struct AesEax {
     byte prefixBuf[AES_BLOCK_SIZE];
 };
 
-/* One-shot API */
+/*
+ * AES EAX one-shot API
+ * Encrypts input data and computes an auth tag over the input
+ * auth data and ciphertext
+ *
+ * Returns 0 on success
+ * Returns error code on failure
+ */
 int  wc_AesEaxEncryptAuth(const byte* key, word32 keySz, byte* out,
                           const byte* in, word32 inSz,
                           const byte* nonce, word32 nonceSz,
@@ -11454,10 +11461,18 @@ cleanup:
 #if defined(WOLFSSL_SMALL_STACK)
     XFREE(eax, NULL, DYNAMIC_TYPE_AES_EAX);
 #endif
+    wc_AesEaxFree(eax);
     return ret;
 }
 
 
+/*
+ * AES EAX one-shot API
+ * Decrypts and authenticates data against a supplied auth tag
+ *
+ * Returns 0 on success
+ * Returns error code on failure
+ */
 int  wc_AesEaxDecryptAuth(const byte* key, word32 keySz, byte* out,
                           const byte* in, word32 inSz,
                           const byte* nonce, word32 nonceSz,
@@ -11505,10 +11520,19 @@ cleanup:
 #if defined(WOLFSSL_SMALL_STACK)
     XFREE(eax, NULL, DYNAMIC_TYPE_AES_EAX);
 #endif
+    wc_AesEaxFree(eax);
     return ret;
 }
 
 
+/*
+ * AES EAX Incremental API:
+ * Initializes an AES EAX encryption or decryption operation. This must be
+ * called on before any other EAX APIs are used
+ *
+ * Returns 0 on success
+ * Returns error code on failure
+ */
 int  wc_AesEaxInit(AesEax* eax,
                    const byte* key, word32 keySz,
                    const byte* nonce, word32 nonceSz,
@@ -11523,7 +11547,6 @@ int  wc_AesEaxInit(AesEax* eax,
 
     XMEMSET(eax->prefixBuf, 0, sizeof(eax->prefixBuf));
 
-    /* Init the cipher context */
     if ((ret = wc_AesInit(&eax->aes, NULL, INVALID_DEVID)) != 0) {
         return ret;
     }
@@ -11614,6 +11637,14 @@ int  wc_AesEaxInit(AesEax* eax,
 }
 
 
+/*
+ * AES EAX Incremental API:
+ * Encrypts input plaintext using AES EAX mode, adding optional auth data to
+ * the authentication stream
+ *
+ * Returns 0 on success
+ * Returns error code on failure
+ */
 int  wc_AesEaxEncryptUpdate(AesEax* eax, byte* out,
                             const byte* in, word32 inSz,
                             const byte* authIn, word32 authInSz)
@@ -11650,6 +11681,15 @@ int  wc_AesEaxEncryptUpdate(AesEax* eax, byte* out,
     return 0;
 }
 
+
+/*
+ * AES EAX Incremental API:
+ * Decrypts input ciphertext using AES EAX mode, adding optional auth data to
+ * the authentication stream
+ *
+ * Returns 0 on sucess
+ * Returns error code on failure
+ */
 int  wc_AesEaxDecryptUpdate(AesEax* eax, byte* out,
                             const byte* in, word32 inSz,
                             const byte* authIn, word32 authInSz)
@@ -11687,12 +11727,28 @@ int  wc_AesEaxDecryptUpdate(AesEax* eax, byte* out,
 }
 
 
+/*
+ * AES EAX Incremental API:
+ * Provides additional header (auth data) information to the authentication
+ * stream for an authenticated encryption or decryption operation
+ *
+ * Returns 0 on success
+ * Returns error code on failure
+ */
 int  wc_AesEaxHeaderUpdate(AesEax* eax, const byte* authIn, word32 authInSz)
 {
     return wc_CmacUpdate(&eax->headerCmac, authIn, authInSz);
 }
 
 
+/*
+ * AES EAX Incremental API:
+ * Finalizes the authenticated encryption operation, computing the auth tag
+ * over previously supplied header (auth) data and computed ciphertext
+ *
+ * Returns 0 on success
+ * Returns error code on failure
+ */
 int wc_AesEaxEncryptFinal(AesEax* eax, byte* authTag, word32 authTagSz)
 {
     word32 cmacSize;
@@ -11703,9 +11759,7 @@ int wc_AesEaxEncryptFinal(AesEax* eax, byte* authTag, word32 authTagSz)
         return BAD_FUNC_ARG;
     }
 
-    /*
-     * Complete the OMAC for the ciphertext
-     */
+    /* Complete the OMAC for the ciphertext */
     cmacSize = AES_BLOCK_SIZE;
     if ((ret = wc_CmacFinal(&eax->ciphertextCmac,
                             eax->ciphertextCmacFinal,
@@ -11713,9 +11767,7 @@ int wc_AesEaxEncryptFinal(AesEax* eax, byte* authTag, word32 authTagSz)
         return ret;
     }
 
-    /*
-     * Complete the OMAC for auth data
-     */
+    /* Complete the OMAC for auth data */
     cmacSize = AES_BLOCK_SIZE;
     if ((ret = wc_CmacFinal(&eax->headerCmac,
                             eax->headerCmacFinal,
@@ -11738,6 +11790,15 @@ int wc_AesEaxEncryptFinal(AesEax* eax, byte* authTag, word32 authTagSz)
 }
 
 
+/*
+ * AES EAX Incremental API:
+ * Finalizes the authenticated decryption operation, computing the auth tag
+ * for the previously supplied auth data and cipher text and validating it
+ * against a provided auth tag
+ *
+ * Returns 0 on success
+ * Return error code for failure
+ */
 int wc_AesEaxDecryptFinal(AesEax* eax,
                           const byte* authIn, word32 authInSz)
 {
@@ -11755,9 +11816,7 @@ int wc_AesEaxDecryptFinal(AesEax* eax,
         return BAD_FUNC_ARG;
     }
 
-    /*
-     * Complete the OMAC for the ciphertext
-     */
+    /* Complete the OMAC for the ciphertext */
     cmacSize = AES_BLOCK_SIZE;
     if ((ret = wc_CmacFinal(&eax->ciphertextCmac,
                             eax->ciphertextCmacFinal,
@@ -11765,9 +11824,7 @@ int wc_AesEaxDecryptFinal(AesEax* eax,
         return ret;
     }
 
-    /*
-     * Complete the OMAC for auth data
-     */
+    /* Complete the OMAC for auth data */
     cmacSize = AES_BLOCK_SIZE;
     if ((ret = wc_CmacFinal(&eax->headerCmac,
                             eax->headerCmacFinal,
@@ -11782,7 +11839,6 @@ int wc_AesEaxDecryptFinal(AesEax* eax,
     }
 #endif
 
-
     /*
      * Concatenate all three auth tag chunks into the final tag, truncating
      * at the specified tag length
@@ -11795,18 +11851,35 @@ int wc_AesEaxDecryptFinal(AesEax* eax,
     }
 
     if (XMEMCMP(authTag, authIn, AES_BLOCK_SIZE) != 0) {
-        ret = -1;
+        ret = AES_EAX_AUTH_E;
     }
     else {
         ret = 0;
     }
-
 
 #if defined(WOLFSSL_SMALL_STACK)
     XFREE(authTag, NULL, DYNAMIC_TYPE_TMP_BUFFER);
 #endif
 
     return ret;
+}
+
+/*
+ * Frees the underlying AES context. Must be called when done using the AES EAX
+ * context structure
+ *
+ * Returns 0 on success
+ * Returns error code on failure
+ */
+int wc_AesEaxFree(AesEax* eax)
+{
+    if (eax == NULL) {
+        return BAD_FUNC_ARG;
+    }
+
+    wc_AesFree(&eax->aes);
+
+    return 0;
 }
 
 #endif /* WOLFSSL_AES_EAX */

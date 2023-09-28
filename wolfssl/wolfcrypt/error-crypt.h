@@ -259,8 +259,10 @@ enum {
     SM4_GCM_AUTH_E      = -298,  /* SM4-GCM Authentication check failure */
     SM4_CCM_AUTH_E      = -299,  /* SM4-CCM Authentication check failure */
 
-    WC_LAST_E           = -299,  /* Update this to indicate last error */
-    MIN_CODE_E          = -300   /* errors -101 - -299 */
+    AES_EAX_AUTH_E = -300, /* AES-EAX Authentication check failure */
+
+    WC_LAST_E           = -300,  /* Update this to indicate last error */
+    MIN_CODE_E          = -301   /* errors -101 - -300 */
 
     /* add new companion error id strings for any new error codes
        wolfcrypt/src/error.c !!! */
