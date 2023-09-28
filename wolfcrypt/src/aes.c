@@ -11560,7 +11560,7 @@ int  wc_AesEaxInit(AesEax* eax,
 
     /*
 	 * OMAC the nonce to use as the IV for CTR encryption and auth tag chunk
-	 *   N' ← OMAC^0_K(N)
+	 *   N' = OMAC^0_K(N)
 	 */
     if ((ret = wc_InitCmac(&eax->nonceCmac,
                            key,
@@ -11569,14 +11569,17 @@ int  wc_AesEaxInit(AesEax* eax,
                            NULL)) != 0) {
         return ret;
     }
+
     if ((ret = wc_CmacUpdate(&eax->nonceCmac,
                              eax->prefixBuf,
                              sizeof(eax->prefixBuf))) != 0) {
         return ret;
     }
+
     if ((ret = wc_CmacUpdate(&eax->nonceCmac, nonce, nonceSz)) != 0) {
         return ret;
     }
+
     cmacSize = AES_BLOCK_SIZE;
     if ((ret = wc_CmacFinal(&eax->nonceCmac,
                             eax->nonceCmacFinal,
@@ -11585,7 +11588,6 @@ int  wc_AesEaxInit(AesEax* eax,
     }
 
     if ((ret = wc_AesSetIV(&eax->aes, eax->nonceCmacFinal)) != 0) {
-        printf("wc_AesSetIV error: %d.\n", ret);
         return ret;
     }
 
@@ -11593,7 +11595,7 @@ int  wc_AesEaxInit(AesEax* eax,
      * start the OMAC used to build the auth tag chunk for the AD (header).
      * This CMAC is continued in subsequent update calls when more auth data is
      * provided
-	 *   H' ← OMAC^1_K(H)
+	 *   H' = OMAC^1_K(H)
      */
     eax->prefixBuf[AES_BLOCK_SIZE-1] = 1;
     if ((ret = wc_InitCmac(&eax->headerCmac,
@@ -11603,11 +11605,13 @@ int  wc_AesEaxInit(AesEax* eax,
                            NULL)) != 0) {
         return ret;
     }
+
     if ((ret = wc_CmacUpdate(&eax->headerCmac,
                              eax->prefixBuf,
                              sizeof(eax->prefixBuf))) != 0) {
         return ret;
     }
+
     if (authIn != NULL) {
         if ((ret = wc_CmacUpdate(&eax->headerCmac, authIn, authInSz)) != 0) {
             return ret;
@@ -11617,7 +11621,7 @@ int  wc_AesEaxInit(AesEax* eax,
     /*
 	 * start the OMAC to create auth tag chunk for ciphertext. This MAC will be
      * updated in subsequent calls to encrypt/decrypt
-     *  C' ← OMAC^2_K(C)
+     *  C' = OMAC^2_K(C)
      */
     eax->prefixBuf[AES_BLOCK_SIZE-1] = 2;
     if ((ret = wc_InitCmac(&eax->ciphertextCmac,
@@ -11627,6 +11631,7 @@ int  wc_AesEaxInit(AesEax* eax,
                            NULL)) != 0) {
         return ret;
     }
+
     if ((ret = wc_CmacUpdate(&eax->ciphertextCmac,
                              eax->prefixBuf,
                              sizeof(eax->prefixBuf))) != 0) {
@@ -11657,7 +11662,7 @@ int  wc_AesEaxEncryptUpdate(AesEax* eax, byte* out,
 
     /*
      * Encrypt the plaintext using AES CTR
-     *  C ← CTR(M)
+     *  C = CTR(M)
      */
     if ((ret = wc_AesCtrEncrypt(&eax->aes, out, in, inSz)) != 0) {
         return ret;
@@ -11665,7 +11670,7 @@ int  wc_AesEaxEncryptUpdate(AesEax* eax, byte* out,
 
     /*
      * update OMAC with new ciphertext
-     *  C' ← OMAC^2_K(C)
+     *  C' = OMAC^2_K(C)
      */
     if ((ret = wc_CmacUpdate(&eax->ciphertextCmac, out, inSz)) != 0) {
         return ret;
@@ -11702,7 +11707,7 @@ int  wc_AesEaxDecryptUpdate(AesEax* eax, byte* out,
 
     /*
      * Decrypt the plaintext using AES CTR
-     *  C ← CTR(M)
+     *  C = CTR(M)
      */
     if ((ret = wc_AesCtrEncrypt(&eax->aes, out, in, inSz)) != 0) {
         return ret;
@@ -11710,7 +11715,7 @@ int  wc_AesEaxDecryptUpdate(AesEax* eax, byte* out,
 
     /*
      * update OMAC with new ciphertext
-     *  C' ← OMAC^2_K(C)
+     *  C' = OMAC^2_K(C)
      */
     if ((ret = wc_CmacUpdate(&eax->ciphertextCmac, in, inSz)) != 0) {
         return ret;
@@ -11778,7 +11783,7 @@ int wc_AesEaxEncryptFinal(AesEax* eax, byte* authTag, word32 authTagSz)
     /*
      * Concatenate all three auth tag chunks into the final tag, truncating
      * at the specified tag length
-     *   T ← Tag [first τ bits]
+     *   T = Tag [first τ bits]
      */
     for (i = 0; i < authTagSz; i++) {
         authTag[i] = eax->nonceCmacFinal[i]
@@ -11842,7 +11847,7 @@ int wc_AesEaxDecryptFinal(AesEax* eax,
     /*
      * Concatenate all three auth tag chunks into the final tag, truncating
      * at the specified tag length
-     *   T ← Tag [first τ bits]
+     *   T = Tag [first τ bits]
      */
     for (i = 0; i < authInSz; i++) {
         authTag[i] = eax->nonceCmacFinal[i]

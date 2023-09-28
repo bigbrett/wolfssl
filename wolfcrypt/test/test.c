@@ -12891,11 +12891,11 @@ WOLFSSL_TEST_SUBROUTINE wc_test_ret_t aes_eax_test(void)
         int key_length;
         byte iv[AES_BLOCK_SIZE];
         int iv_length;
-        byte aad[AES_BLOCK_SIZE * 8];
+        byte aad[AES_BLOCK_SIZE * 2];
         int aad_length;
-        byte msg[AES_BLOCK_SIZE * 8];
+        byte msg[AES_BLOCK_SIZE * 2];
         int msg_length;
-        byte ct[AES_BLOCK_SIZE * 8];
+        byte ct[AES_BLOCK_SIZE * 2];
         int ct_length;
         byte tag[AES_BLOCK_SIZE];
         int tag_length;
