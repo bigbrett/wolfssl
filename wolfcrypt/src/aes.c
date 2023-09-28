@@ -11396,8 +11396,6 @@ int wc_AesSivDecrypt(const byte* key, word32 keySz, const byte* assoc,
 
 #if defined(WOLFSSL_AES_EAX)
 
-#define MAC_LTC_COMPAT
-
 struct AesEax {
     Aes  aes;
     Cmac nonceCmac;
@@ -11560,11 +11558,7 @@ int  wc_AesEaxInit(AesEax* eax,
      * provided
 	 *   H' ← OMAC^1_K(H)
      */
-#ifdef MAC_LTC_COMPAT
     eax->prefixBuf[AES_BLOCK_SIZE-1] = 1;
-#else
-    XMEMSET(eax->prefixBuf, 1, sizeof(eax->prefixBuf));
-#endif
     if ((ret = wc_InitCmac(&eax->headerCmac,
                            key,
                            keySz,
@@ -11588,11 +11582,7 @@ int  wc_AesEaxInit(AesEax* eax,
      * updated in subsequent calls to encrypt/decrypt
      *  C' ← OMAC^2_K(C)
      */
-#ifdef MAC_LTC_COMPAT
     eax->prefixBuf[AES_BLOCK_SIZE-1] = 2;
-#else
-    XMEMSET(eax->prefixBuf, 2, sizeof(eax->prefixBuf));
-#endif
     if ((ret = wc_InitCmac(&eax->ciphertextCmac,
                            key,
                            keySz,
