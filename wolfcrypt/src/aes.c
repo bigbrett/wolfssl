@@ -11418,6 +11418,11 @@ int  wc_AesEaxEncryptAuth(const byte* key, word32 keySz, byte* out,
 {
     int ret;
 
+    if (key == NULL || out == NULL || in == NULL || nonce == NULL
+                             || authTag == NULL || authIn == NULL) {
+        return BAD_FUNC_ARG;
+    }
+
 #if defined(WOLFSSL_SMALL_STACK)
     AesEax *eax;
     if ((eax = (AesEax *)XMALLOC(sizeof(AesEax),
@@ -11463,6 +11468,11 @@ int  wc_AesEaxDecryptAuth(const byte* key, word32 keySz, byte* out,
 {
     int ret;
 
+    if (key == NULL || out == NULL || in == NULL || nonce == NULL
+                             || authTag == NULL || authIn == NULL) {
+        return BAD_FUNC_ARG;
+    }
+
 #if defined(WOLFSSL_SMALL_STACK)
     AesEax *eax;
     if ((eax = (AesEax *)XMALLOC(sizeof(AesEax),
@@ -11506,6 +11516,10 @@ int  wc_AesEaxInit(AesEax* eax,
 {
     int ret = 0;
     word32 cmacSize;
+
+    if (eax == NULL || key == NULL ||  nonce == NULL) {
+        return BAD_FUNC_ARG;
+    }
 
     XMEMSET(eax->prefixBuf, 0, sizeof(eax->prefixBuf));
 
@@ -11606,6 +11620,10 @@ int  wc_AesEaxEncryptUpdate(AesEax* eax, byte* out,
 {
     int ret;
 
+    if (eax == NULL || out == NULL ||  in == NULL) {
+        return BAD_FUNC_ARG;
+    }
+
     /*
      * Encrypt the plaintext using AES CTR
      *  C ← CTR(M)
@@ -11637,6 +11655,10 @@ int  wc_AesEaxDecryptUpdate(AesEax* eax, byte* out,
                             const byte* authIn, word32 authInSz)
 {
     int ret;
+
+    if (eax == NULL || out == NULL ||  in == NULL) {
+        return BAD_FUNC_ARG;
+    }
 
     /*
      * Decrypt the plaintext using AES CTR
@@ -11676,6 +11698,10 @@ int wc_AesEaxEncryptFinal(AesEax* eax, byte* authTag, word32 authTagSz)
     word32 cmacSize;
     int ret;
     word32 i;
+
+    if (eax == NULL || authTag == NULL) {
+        return BAD_FUNC_ARG;
+    }
 
     /*
      * Complete the OMAC for the ciphertext
@@ -11724,6 +11750,10 @@ int wc_AesEaxDecryptFinal(AesEax* eax,
 #else
     byte authTag[AES_BLOCK_SIZE];
 #endif
+
+    if (eax == NULL || authIn == NULL) {
+        return BAD_FUNC_ARG;
+    }
 
     /*
      * Complete the OMAC for the ciphertext
