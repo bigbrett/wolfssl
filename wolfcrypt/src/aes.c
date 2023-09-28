@@ -11458,10 +11458,10 @@ int  wc_AesEaxEncryptAuth(const byte* key, word32 keySz, byte* out,
     }
 
 cleanup:
+    wc_AesEaxFree(eax);
 #if defined(WOLFSSL_SMALL_STACK)
     XFREE(eax, NULL, DYNAMIC_TYPE_AES_EAX);
 #endif
-    wc_AesEaxFree(eax);
     return ret;
 }
 
@@ -11517,10 +11517,10 @@ int  wc_AesEaxDecryptAuth(const byte* key, word32 keySz, byte* out,
     }
 
 cleanup:
+    wc_AesEaxFree(eax);
 #if defined(WOLFSSL_SMALL_STACK)
     XFREE(eax, NULL, DYNAMIC_TYPE_AES_EAX);
 #endif
-    wc_AesEaxFree(eax);
     return ret;
 }
 
