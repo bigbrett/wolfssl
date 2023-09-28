@@ -13711,6 +13711,8 @@ WOLFSSL_TEST_SUBROUTINE wc_test_ret_t aes_eax_test(void)
 
     for (i = 0; i < (int)(sizeof(vectors)/sizeof(vectors[0])); i++) {
 
+        XMEMSET(ciphertext, 0, sizeof(ciphertext));
+
         len = sizeof(authtag);
         ret = wc_AesEaxEncryptAuth(vectors[i].key, vectors[i].key_length,
                                    ciphertext,
