@@ -1085,24 +1085,23 @@ int wc_AesSivDecrypt(const byte* key, word32 keySz, const byte* assoc,
     \brief This function performs AES EAX encryption and authentication as
     described in "EAX: A Conventional Authenticated-Encryption Mode"
     (https://eprint.iacr.org/2003/069). It is a "one-shot" API that performs
-    all encryption and authentication operations in one functions call.
+    all encryption and authentication operations in one function call.
 
-    \return 0 On successful encryption.
-    \return BAD_FUNC_ARG If input or output buffers are NULL. Also returned
-    if the key size isn't a valid AES key size (16, 24, or 32 bytes).
-    \return Other negative error values returned if AES or CMAC operations
+    \return 0 on successful encryption.
+    \return BAD_FUNC_ARG if input or output buffers are NULL. Also returned
+    if the key size isn't a valid AES key size (16, 24, or 32 bytes)
+    \return other negative error values returned if AES or CMAC operations
     fail.
 
-    \param key Byte buffer containing the key to use.
-    \param keySz Length of the key buffer in bytes.
-    \param out Buffer to hold the ciphertext. Should be the same length as the
-    plaintext buffer.
-    \param in Plaintext buffer to encrypt.
-    \param inSz Length of plaintext buffer.
-    \param nonce A number used once. Used by the algorithm in the same manner as
-    the AD.
-    \param nonceSz Length of nonce buffer in bytes.
-    \param authTag Output: pointer to the buffer in which to store the
+    \param key buffer containing the key to use
+    \param keySz length of the key buffer in bytes
+    \param[out] out buffer to hold the ciphertext. Should be the same length as the
+    plaintext buffer
+    \param in plaintext buffer to encrypt
+    \param inSz length of plaintext buffer
+    \param nonce the cryptographic nonce to use for EAX operations
+    \param nonceSz length of nonce buffer in bytes
+    \param[out] authTag pointer to the buffer in which to store the
     authentication tag
     \param authTagSz length of the desired authentication tag
     \param authIn pointer to the buffer containing input data to authenticate
@@ -1116,7 +1115,7 @@ int wc_AesSivDecrypt(const byte* key, word32 keySz, const byte* assoc,
     byte authIn[] = {0x01, 0x2, 0x3};
 
     byte cipherText[sizeof(plainText)]; // output ciphertext
-    byte authTag[length, often a multiple of AES_BLOCK_SIZE] // output authTag
+    byte authTag[length, often a multiple of AES_BLOCK_SIZE]; // output authTag
 
     if (wc_AesEaxEncrypt(key, sizeof(key),
                          cipherText, plainText, sizeof(plainText),
@@ -1126,9 +1125,9 @@ int wc_AesSivDecrypt(const byte* key, word32 keySz, const byte* assoc,
         // failed to encrypt
     }
 
-    \sa wc_AesEaxDecryptAuth
-
     \endcode
+
+    \sa wc_AesEaxDecryptAuth
 
 */
 WOLFSSL_API int  wc_AesEaxEncryptAuth(const byte* key, word32 keySz, byte* out,
@@ -1144,26 +1143,27 @@ WOLFSSL_API int  wc_AesEaxEncryptAuth(const byte* key, word32 keySz, byte* out,
     \brief This function performs AES EAX decryption and authentication as
     described in "EAX: A Conventional Authenticated-Encryption Mode"
     (https://eprint.iacr.org/2003/069). It is a "one-shot" API that performs
-    all decryption and authentication operations in one functions call.
+    all decryption and authentication operations in one function call.
 
-    \return 0 On successful decryption
-    \return BAD_FUNC_ARG If input or output buffers are NULL. Also returned
-    if the key size isn't a valid AES key size (16, 24, or 32 bytes).
-    \return Other negative error values returned if AES or CMAC operations
+    \return 0 on successful decryption
+    \return BAD_FUNC_ARG if input or output buffers are NULL. Also returned
+    if the key size isn't a valid AES key size (16, 24, or 32 bytes)
+    \return AES_EAX_AUTH_E If the authentication tag does not match the
+    supplied authentication code vector \c authTag
+    \return other negative error values returned if AES or CMAC operations
     fail.
 
-    \param key Byte buffer containing the key to use.
-    \param keySz Length of the key buffer in bytes.
-    \param out Buffer to hold the plaintext. Should be the same length as the
-    input ciphertext buffer.
-    \param in Ciphertext buffer to decrypt.
-    \param inSz Length of ciphertext buffer.
-    \param nonce A number used once. Used by the algorithm in the same manner as
-    the AD.
-    \param nonceSz Length of nonce buffer in bytes.
-    \param authTag Buffer that holds the authentication tag to check the
+    \param key byte buffer containing the key to use
+    \param keySz length of the key buffer in bytes
+    \param[out] out buffer to hold the plaintext. Should be the same length as the
+    input ciphertext buffer
+    \param in ciphertext buffer to decrypt
+    \param inSz length of ciphertext buffer
+    \param nonce the cryptographic nonce to use for EAX operations
+    \param nonceSz length of nonce buffer in bytes
+    \param authTag buffer that holds the authentication tag to check the
     authenticity of the data against
-    \param authTagSz length of the input authentication tag
+    \param authTagSz Length of the input authentication tag
     \param authIn pointer to the buffer containing input data to authenticate
     \param authInSz length of the input authentication data
 
@@ -1175,7 +1175,7 @@ WOLFSSL_API int  wc_AesEaxEncryptAuth(const byte* key, word32 keySz, byte* out,
     byte authIn[] = {0x01, 0x2, 0x3};
 
     byte plainText[sizeof(cipherText)]; // output plaintext
-    byte authTag[length, often a multiple of AES_BLOCK_SIZE] // output authTag
+    byte authTag[length, often a multiple of AES_BLOCK_SIZE]; // output authTag
 
     if (wc_AesEaxDecrypt(key, sizeof(key),
                          cipherText, plainText, sizeof(plainText),
@@ -1185,9 +1185,9 @@ WOLFSSL_API int  wc_AesEaxEncryptAuth(const byte* key, word32 keySz, byte* out,
         // failed to encrypt
     }
 
-    \sa wc_AesEaxEncryptAuth
-
     \endcode
+
+    \sa wc_AesEaxEncryptAuth
 
 */
 WOLFSSL_API int  wc_AesEaxDecryptAuth(const byte* key, word32 keySz, byte* out,
@@ -1201,7 +1201,7 @@ WOLFSSL_API int  wc_AesEaxDecryptAuth(const byte* key, word32 keySz, byte* out,
 /*!
     \ingroup AES
     \brief This function initializes an AesEax object for use in authenticated
-    encryption or decryption. This function must be called ono an AesEax
+    encryption or decryption. This function must be called on an AesEax
     object before using it with any of the AES EAX incremental API functions.
     It does not need to be called if using the one-shot EAX API functions.
     All AesEax instances initialized with this function need to be freed with
@@ -1213,9 +1213,9 @@ WOLFSSL_API int  wc_AesEaxDecryptAuth(const byte* key, word32 keySz, byte* out,
     \param eax AES EAX structure holding the context of the AEAD operation
     \param key 16, 24, or 32 byte secret key for encryption and decryption
     \param keySz length of the supplied key in bytes
-    \param nonce
-    \param nonceSz
-    \param authIn (optional) input data to add to the authentication stream.
+    \param nonce the cryptographic nonce to use for EAX operations
+    \param nonceSz length of nonce buffer in bytes
+    \param authIn (optional) input data to add to the authentication stream
     This argument should be NULL if not used
     \param authInSz size in bytes of the input authentication data
 
@@ -1227,8 +1227,8 @@ WOLFSSL_API int  wc_AesEaxDecryptAuth(const byte* key, word32 keySz, byte* out,
     authIn[] = { some data to add to the authentication stream };
     plainText[] = {some plaintext data to encrypt};
 
-    cipherText[]; // buffer to hold cipherText
-    authData[]; // buffer to hold computed auth data
+    cipherText[sizeof(plainText)]; // buffer to hold cipherText
+    authTag[]; // buffer to hold computed auth data
 
     AesEax eax;
 
@@ -1247,7 +1247,7 @@ WOLFSSL_API int  wc_AesEaxDecryptAuth(const byte* key, word32 keySz, byte* out,
         goto cleanup;
     }
 
-    if ((ret = wc_AesEaxEncryptFinal(eax, authTag, authTagSz)) != 0) {
+    if ((ret = wc_AesEaxEncryptFinal(eax, authTag, sizeof(authTag))) != 0) {
         goto cleanup;
     }
 
@@ -1278,10 +1278,10 @@ WOLFSSL_API int  wc_AesEaxInit(AesEax* eax,
     \return error code on failure
 
     \param eax AES EAX structure holding the context of the AEAD operation
-    \param out output buffer holding the ciphertext
+    \param[out] out output buffer holding the ciphertext
     \param in input buffer holding the plaintext to encrypt
     \param inSz size in bytes of the input data buffer
-    \param authIn (optional) input data to add to the authentication stream.
+    \param authIn (optional) input data to add to the authentication stream
     This argument should be NULL if not used
     \param authInSz size in bytes of the input authentication data
 
@@ -1293,8 +1293,8 @@ WOLFSSL_API int  wc_AesEaxInit(AesEax* eax,
     authIn[] = { some data to add to the authentication stream };
     plainText[] = {some plaintext data to encrypt};
 
-    cipherText[]; // buffer to hold cipherText
-    authData[]; // buffer to hold computed auth data
+    cipherText[sizeof(plainText)]; // buffer to hold cipherText
+    authTag[]; // buffer to hold computed auth data
 
     AesEax eax;
 
@@ -1313,7 +1313,7 @@ WOLFSSL_API int  wc_AesEaxInit(AesEax* eax,
         goto cleanup;
     }
 
-    if ((ret = wc_AesEaxEncryptFinal(eax, authTag, authTagSz)) != 0) {
+    if ((ret = wc_AesEaxEncryptFinal(eax, authTag, sizeof(authTag))) != 0) {
         goto cleanup;
     }
 
@@ -1343,14 +1343,14 @@ WOLFSSL_API int  wc_AesEaxEncryptUpdate(AesEax* eax, byte* out,
     \return error code on failure
 
     \param eax AES EAX structure holding the context of the AEAD operation
-    \param key 16, 24, or 32 byte secret key for encryption and decryption
-    \param keySz length of the supplied key in bytes
-    \param nonce
-    \param nonceSz
-    \param authIn (optional) input data to add to the authentication stream.
+    \param[out] out output buffer holding the decrypted plaintext
+    \param in input buffer holding the ciphertext
+    \param inSz size in bytes of the input data buffer
+    \param authIn (optional) input data to add to the authentication stream
     This argument should be NULL if not used
-    \param authInSz Size in bytes of the input authentication data
+    \param authInSz size in bytes of the input authentication data
 
+    
     _Example_
     \code
     AesEax eax;
@@ -1359,8 +1359,8 @@ WOLFSSL_API int  wc_AesEaxEncryptUpdate(AesEax* eax, byte* out,
     authIn[] = { some data to add to the authentication stream };
     cipherText[] = {some encrypted data};
 
-    plainText[] = // buffer to hold decrypted data
-    authData[]; // buffer to hold computed auth data
+    plainText[sizeof(cipherText)]; // buffer to hold decrypted data
+    authTag[]; // buffer to hold computed auth data
 
     AesEax eax;
 
@@ -1408,8 +1408,8 @@ WOLFSSL_API int  wc_AesEaxDecryptUpdate(AesEax* eax, byte* out,
     \return error code on failure
 
     \param eax AES EAX structure holding the context of the AEAD operation
-    \param authIn input data to add to the authentication stream.
-    \param authInSz Size in bytes of the input authentication data
+    \param authIn input data to add to the authentication stream
+    \param authInSz size in bytes of the input authentication data
 
     _Example_
     \code
@@ -1419,8 +1419,8 @@ WOLFSSL_API int  wc_AesEaxDecryptUpdate(AesEax* eax, byte* out,
     authIn[] = { some data to add to the authentication stream };
     cipherText[] = {some encrypted data};
 
-    plainText[] = // buffer to hold decrypted data
-    authData[]; // buffer to hold computed auth data
+    plainText[sizeof(cipherText)]; // buffer to hold decrypted data
+    authTag[]; // buffer to hold computed auth data
 
     AesEax eax;
 
@@ -1462,9 +1462,128 @@ WOLFSSL_API int  wc_AesEaxDecryptUpdate(AesEax* eax, byte* out,
 WOLFSSL_API int  wc_AesEaxHeaderUpdate(AesEax* eax,
                                        const byte* authIn, word32 authInSz);
 
+/*!
+    \ingroup AES
+    \brief This function finalizes the encrypt AEAD operation, producing an auth 
+    tag over the current authentication stream. \c eax must have been previously 
+    initialized with a call to \ref wc_AesEaxInit. When done using the \c AesEax
+    context structure, make sure to free it using \ref wc_AesEaxFree.
+
+    \return 0 on success
+    \return error code on failure
+
+    \param eax AES EAX structure holding the context of the AEAD operation
+    \param authTag[out] buffer that will hold the computed auth tag
+    \param authTagSz size in bytes of \c authTag
+
+    _Example_
+    \code
+    AesEax eax;
+    key[]   = { some 16, 24, or 32 byte length key };
+    nonce[] = { some arbitrary length nonce };
+    authIn[] = { some data to add to the authentication stream };
+    plainText[] = {some plaintext data to encrypt};
+
+    cipherText[sizeof(plainText)]; // buffer to hold cipherText
+    authTag[]; // buffer to hold computed auth data
+
+    AesEax eax;
+
+    if ((ret = wc_AesEaxInit(eax,
+                             key, keySz,
+                             nonce, nonceSz,
+                             authIn, authInSz)) != 0) {
+        goto cleanup;
+    }
+
+    // if we wanted to add more auth data, we could provide it at this point,
+    // otherwise we use NULL for the authIn parameter, with authInSz of 0
+    if ((ret = wc_AesEaxEncryptUpdate(eax,
+                                      cipherText, plainText, sizeof(plainText),
+                                      NULL, 0)) != 0) {
+        goto cleanup;
+    }
+
+    if ((ret = wc_AesEaxEncryptFinal(eax, authTag, sizeof(authTag))) != 0) {
+        goto cleanup;
+    }
+
+    cleanup:
+        wc_AesEaxFree(eax);
+    \endcode
+
+    \sa wc_AesEaxInit
+    \sa wc_AesEaxEncryptUpdate
+    \sa wc_AesEaxDecryptUpdate
+    \sa wc_AesEaxHeaderUpdate
+    \sa wc_AesEaxDecryptFinal
+    \sa wc_AesEaxFree
+
+*/
 WOLFSSL_API int wc_AesEaxEncryptFinal(AesEax* eax,
                                       byte* authTag, word32 authTagSz);
 
+/*!
+    \ingroup AES
+    \brief This function finalizes the decrypt AEAD operation, finalizing the 
+    auth tag computation and checking it for validity against the user supplied
+    tag. \c eax must have been previously initialized with a call to 
+    \ref wc_AesEaxInit. When done using the \c AesEax context structure, make 
+    sure to free it using \ref wc_AesEaxFree.
+
+    \return 0 if data is authenticated succesfully
+    \return AES_EAX_AUTH_E if the authentication tag does not match the
+    supplied authentication code vector \c authIn
+    \return other error code on failure
+
+    \param eax AES EAX structure holding the context of the AEAD operation
+    \param authIn input auth tag to check computed auth tag against
+    \param authInSz size in bytes of \c authIn
+
+    _Example_
+    \code
+    AesEax eax;
+    key[]   = { some 16, 24, or 32 byte length key };
+    nonce[] = { some arbitrary length nonce };
+    authIn[] = { some data to add to the authentication stream };
+    cipherText[] = {some encrypted data};
+
+    plainText[sizeof(cipherText)];  // buffer to hold decrypted data
+    authTag[] = { the auth tag, generated by encrypt AEAD operation }; 
+
+    AesEax eax;
+
+    if ((ret = wc_AesEaxInit(eax,
+                             key, keySz,
+                             nonce, nonceSz,
+                             authIn, authInSz)) != 0) {
+        goto cleanup;
+    }
+
+    // if we wanted to add more auth data, we could provide it at this point,
+    // otherwise we use NULL for the authIn parameter, with authInSz of 0
+    if ((ret = wc_AesEaxDecryptUpdate(eax,
+                                      plainText, cipherText, sizeof(cipherText),
+                                      NULL, 0)) != 0) {
+        goto cleanup;
+    }
+
+    if ((ret = wc_AesEaxDecryptFinal(eax, authTag, authTagSz)) != 0) {
+        goto cleanup;
+    }
+
+    cleanup:
+        wc_AesEaxFree(eax);
+    \endcode
+
+    \sa wc_AesEaxInit
+    \sa wc_AesEaxEncryptUpdate
+    \sa wc_AesEaxDecryptUpdate
+    \sa wc_AesEaxHeaderUpdate
+    \sa wc_AesEaxEncryptFinal
+    \sa wc_AesEaxFree
+
+*/
 WOLFSSL_API int wc_AesEaxDecryptFinal(AesEax* eax,
                                       const byte* authIn, word32 authInSz);
 /*!
@@ -1485,7 +1604,7 @@ WOLFSSL_API int wc_AesEaxDecryptFinal(AesEax* eax,
 
     if(wc_AesEaxInit(eax, key, keySz, nonce, nonceSz, authIn, authInSz) != 0) {
         // handle errors, then free
-        wc_AesXtsFree(&eax);
+        wc_AesEaxFree(&eax);
     }
     \endcode
 
