@@ -165,6 +165,10 @@ WOLFSSL_API void wolfSSL_SetLoggingPrefix(const char* prefix);
 
     WOLFSSL_API void WOLFSSL_ENTER(const char* msg);
     WOLFSSL_API void WOLFSSL_LEAVE(const char* msg, int ret);
+
+    #define WOLFSSL_ENTER_FN()  WOLFSSL_ENTER(__func__)
+    #define WOLFSSL_LEAVE_FN(r) WOLFSSL_LEAVE(__func__, (r))
+
     #define WOLFSSL_STUB(m) \
         WOLFSSL_MSG(WOLFSSL_LOG_CAT(wolfSSL Stub, m, not implemented))
     WOLFSSL_API int WOLFSSL_IS_DEBUG_ON(void);
@@ -181,6 +185,8 @@ WOLFSSL_API void wolfSSL_SetLoggingPrefix(const char* prefix);
 
     #define WOLFSSL_ENTER(m)      WC_DO_NOTHING
     #define WOLFSSL_LEAVE(m, r)   WC_DO_NOTHING
+    #define WOLFSSL_ENTER_FN()    WC_DO_NOTHING
+    #define WOLFSSL_LEAVE_FN(r)   WC_DO_NOTHING
     #define WOLFSSL_STUB(m)       WC_DO_NOTHING
     #define WOLFSSL_IS_DEBUG_ON() 0
 
