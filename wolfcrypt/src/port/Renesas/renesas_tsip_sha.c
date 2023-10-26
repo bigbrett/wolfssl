@@ -58,7 +58,7 @@ WOLFSSL_LOCAL int tsip_Tls13GetHmacMessages(struct WOLFSSL* ssl, byte* mac)
     byte hash[WC_SHA256_DIGEST_SIZE];
     int     hmacSz = 0;
 
-    WOLFSSL_ENTER("tsip_Tls13GetHmacMessages");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL)
         ret = BAD_FUNC_ARG;
@@ -148,7 +148,7 @@ WOLFSSL_LOCAL int tsip_StoreMessage(struct WOLFSSL* ssl, const byte* data,
     MsgBag* bag = NULL;
     TsipUserCtx* tuc = NULL;
 
-    WOLFSSL_ENTER("tsip_StoreMessage");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL)
         ret = BAD_FUNC_ARG;
@@ -223,7 +223,7 @@ WOLFSSL_LOCAL int tsip_GetMessageSha256(struct WOLFSSL* ssl, byte* hash,
     e_tsip_err_t err = TSIP_SUCCESS;
     uint32_t hashSz = 0;
 
-    WOLFSSL_ENTER("tsip_GetMessageSha256");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL)
         ret = BAD_FUNC_ARG;

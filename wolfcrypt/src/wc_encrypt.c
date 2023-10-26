@@ -408,7 +408,7 @@ int wc_CryptKey(const char* password, int passwordSz, byte* salt,
     (void)length;
     (void)enc;
 
-    WOLFSSL_ENTER("wc_CryptKey");
+    WOLFSSL_ENTER_FN();
 
     if (length < 0)
         return BAD_LENGTH_E;

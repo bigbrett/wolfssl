@@ -45,7 +45,7 @@
 WOLFSSL_X509_STORE_CTX* wolfSSL_X509_STORE_CTX_new(void)
 {
     WOLFSSL_X509_STORE_CTX* ctx;
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_new");
+    WOLFSSL_ENTER_FN();
 
     ctx = (WOLFSSL_X509_STORE_CTX*)XMALLOC(sizeof(WOLFSSL_X509_STORE_CTX), NULL,
                                     DYNAMIC_TYPE_X509_CTX);
@@ -67,7 +67,7 @@ int wolfSSL_X509_STORE_CTX_init(WOLFSSL_X509_STORE_CTX* ctx,
 {
     int ret = 0;
     (void)sk;
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_init");
+    WOLFSSL_ENTER_FN();
 
     if (ctx != NULL) {
         ctx->store = store;
@@ -125,7 +125,7 @@ int wolfSSL_X509_STORE_CTX_init(WOLFSSL_X509_STORE_CTX* ctx,
 /* free's extra data */
 void wolfSSL_X509_STORE_CTX_free(WOLFSSL_X509_STORE_CTX* ctx)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_free");
+    WOLFSSL_ENTER_FN();
     if (ctx != NULL) {
 #ifdef HAVE_EX_DATA_CLEANUP_HOOKS
         wolfSSL_CRYPTO_cleanup_ex_data(&ctx->ex_data);
@@ -200,7 +200,7 @@ int GetX509Error(int e)
  */
 int wolfSSL_X509_verify_cert(WOLFSSL_X509_STORE_CTX* ctx)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_verify_cert");
+    WOLFSSL_ENTER_FN();
 
     if (ctx != NULL && ctx->store != NULL && ctx->store->cm != NULL
          && ctx->current_cert != NULL && ctx->current_cert->derCert != NULL) {
@@ -274,7 +274,7 @@ int wolfSSL_X509_verify_cert(WOLFSSL_X509_STORE_CTX* ctx)
     WOLFSSL_X509* wolfSSL_X509_STORE_CTX_get_current_cert(
                                                     WOLFSSL_X509_STORE_CTX* ctx)
     {
-        WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_get_current_cert");
+        WOLFSSL_ENTER_FN();
         if (ctx)
             return ctx->current_cert;
         return NULL;
@@ -283,7 +283,7 @@ int wolfSSL_X509_verify_cert(WOLFSSL_X509_STORE_CTX* ctx)
 
     int wolfSSL_X509_STORE_CTX_get_error(WOLFSSL_X509_STORE_CTX* ctx)
     {
-        WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_get_error");
+        WOLFSSL_ENTER_FN();
         if (ctx != NULL)
             return ctx->error;
         return 0;
@@ -292,7 +292,7 @@ int wolfSSL_X509_verify_cert(WOLFSSL_X509_STORE_CTX* ctx)
 
     int wolfSSL_X509_STORE_CTX_get_error_depth(WOLFSSL_X509_STORE_CTX* ctx)
     {
-        WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_get_error_depth");
+        WOLFSSL_ENTER_FN();
         if(ctx)
             return ctx->error_depth;
         return WOLFSSL_FATAL_ERROR;
@@ -301,7 +301,7 @@ int wolfSSL_X509_verify_cert(WOLFSSL_X509_STORE_CTX* ctx)
 /* get X509_STORE_CTX ex_data, max idx is MAX_EX_DATA */
 void* wolfSSL_X509_STORE_CTX_get_ex_data(WOLFSSL_X509_STORE_CTX* ctx, int idx)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_get_ex_data");
+    WOLFSSL_ENTER_FN();
 #ifdef HAVE_EX_DATA
     if (ctx != NULL) {
         return wolfSSL_CRYPTO_get_ex_data(&ctx->ex_data, idx);
@@ -318,7 +318,7 @@ void* wolfSSL_X509_STORE_CTX_get_ex_data(WOLFSSL_X509_STORE_CTX* ctx, int idx)
     void wolfSSL_X509_STORE_CTX_set_verify_cb(WOLFSSL_X509_STORE_CTX *ctx,
                                   WOLFSSL_X509_STORE_CTX_verify_cb verify_cb)
     {
-        WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_set_verify_cb");
+        WOLFSSL_ENTER_FN();
         if(ctx == NULL)
             return;
         ctx->verify_cb = verify_cb;
@@ -331,7 +331,7 @@ void* wolfSSL_X509_STORE_CTX_get_ex_data(WOLFSSL_X509_STORE_CTX* ctx, int idx)
 WOLFSSL_X509_STORE* wolfSSL_X509_STORE_CTX_get0_store(
         WOLFSSL_X509_STORE_CTX* ctx)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_get0_store");
+    WOLFSSL_ENTER_FN();
 
     if (ctx == NULL)
         return NULL;
@@ -390,7 +390,7 @@ void wolfSSL_X509_STORE_CTX_set_flags(WOLFSSL_X509_STORE_CTX *ctx,
 int wolfSSL_X509_STORE_CTX_set_ex_data(WOLFSSL_X509_STORE_CTX* ctx, int idx,
                                        void *data)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_set_ex_data");
+    WOLFSSL_ENTER_FN();
 #ifdef HAVE_EX_DATA
     if (ctx != NULL)
     {
@@ -413,7 +413,7 @@ int wolfSSL_X509_STORE_CTX_set_ex_data_with_cleanup(
     void *data,
     wolfSSL_ex_data_cleanup_routine_t cleanup_routine)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_set_ex_data_with_cleanup");
+    WOLFSSL_ENTER_FN();
     if (ctx != NULL)
     {
         return wolfSSL_CRYPTO_set_ex_data_with_cleanup(&ctx->ex_data, idx, data,
@@ -426,7 +426,7 @@ int wolfSSL_X509_STORE_CTX_set_ex_data_with_cleanup(
 #if defined(WOLFSSL_APACHE_HTTPD) || defined(OPENSSL_ALL)
 void wolfSSL_X509_STORE_CTX_set_depth(WOLFSSL_X509_STORE_CTX* ctx, int depth)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_set_depth");
+    WOLFSSL_ENTER_FN();
     if (ctx)
         ctx->depth = depth;
 }
@@ -439,7 +439,7 @@ WOLFSSL_X509* wolfSSL_X509_STORE_CTX_get0_current_issuer(
     int ret;
     WOLFSSL_X509* issuer;
 
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_get0_current_issuer");
+    WOLFSSL_ENTER_FN();
 
     if (ctx == NULL) {
         return NULL;
@@ -458,7 +458,7 @@ WOLFSSL_X509* wolfSSL_X509_STORE_CTX_get0_current_issuer(
  */
 void wolfSSL_X509_STORE_CTX_set_error(WOLFSSL_X509_STORE_CTX* ctx, int er)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_set_error");
+    WOLFSSL_ENTER_FN();
 
     if (ctx != NULL) {
         ctx->error = er;
@@ -469,7 +469,7 @@ void wolfSSL_X509_STORE_CTX_set_error(WOLFSSL_X509_STORE_CTX* ctx, int er)
 void wolfSSL_X509_STORE_CTX_set_error_depth(WOLFSSL_X509_STORE_CTX* ctx,
                                                                       int depth)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_set_error_depth");
+    WOLFSSL_ENTER_FN();
 
     if (ctx != NULL) {
         ctx->error_depth = depth;
@@ -478,7 +478,7 @@ void wolfSSL_X509_STORE_CTX_set_error_depth(WOLFSSL_X509_STORE_CTX* ctx,
 
 WOLFSSL_STACK* wolfSSL_X509_STORE_CTX_get_chain(WOLFSSL_X509_STORE_CTX* ctx)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_CTX_get_chain");
+    WOLFSSL_ENTER_FN();
 
     if (ctx == NULL) {
         return NULL;
@@ -611,7 +611,7 @@ WOLF_STACK_OF(WOLFSSL_X509)* wolfSSL_X509_STORE_get1_certs(
     WOLF_STACK_OF(WOLFSSL_X509)* filteredCerts = NULL;
     WOLFSSL_X509* filteredCert = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_get1_certs");
+    WOLFSSL_ENTER_FN();
 
     if (name == NULL) {
         err = 1;
@@ -719,7 +719,7 @@ WOLFSSL_X509_STORE* wolfSSL_X509_STORE_new(void)
 {
     int ret;
     WOLFSSL_X509_STORE* store = NULL;
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_new");
+    WOLFSSL_ENTER_FN();
 
     if ((store = (WOLFSSL_X509_STORE*)XMALLOC(sizeof(WOLFSSL_X509_STORE), NULL,
                                     DYNAMIC_TYPE_X509_STORE)) == NULL)
@@ -834,7 +834,7 @@ void wolfSSL_X509_STORE_free(WOLFSSL_X509_STORE* store)
  */
 void* wolfSSL_X509_STORE_get_ex_data(WOLFSSL_X509_STORE* store, int idx)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_get_ex_data");
+    WOLFSSL_ENTER_FN();
 #ifdef HAVE_EX_DATA
     if (store != NULL && idx < MAX_EX_DATA && idx >= 0) {
         return wolfSSL_CRYPTO_get_ex_data(&store->ex_data, idx);
@@ -876,7 +876,7 @@ int wolfSSL_X509_STORE_up_ref(WOLFSSL_X509_STORE* store)
 int wolfSSL_X509_STORE_set_ex_data(WOLFSSL_X509_STORE* store, int idx,
                                                                      void *data)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_set_ex_data");
+    WOLFSSL_ENTER_FN();
 #ifdef HAVE_EX_DATA
     if (store != NULL && idx < MAX_EX_DATA) {
         return wolfSSL_CRYPTO_set_ex_data(&store->ex_data, idx, data);
@@ -903,7 +903,7 @@ int wolfSSL_X509_STORE_set_ex_data_with_cleanup(
     void *data,
     wolfSSL_ex_data_cleanup_routine_t cleanup_routine)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_set_ex_data_with_cleanup");
+    WOLFSSL_ENTER_FN();
     if (store != NULL && idx < MAX_EX_DATA) {
         return wolfSSL_CRYPTO_set_ex_data_with_cleanup(&store->ex_data, idx,
                                                        data, cleanup_routine);
@@ -921,7 +921,7 @@ int wolfSSL_X509_STORE_set_ex_data_with_cleanup(
     void wolfSSL_X509_STORE_set_verify_cb(WOLFSSL_X509_STORE *st,
                                  WOLFSSL_X509_STORE_CTX_verify_cb verify_cb)
     {
-        WOLFSSL_ENTER("wolfSSL_X509_STORE_set_verify_cb");
+        WOLFSSL_ENTER_FN();
         if (st != NULL) {
             st->verify_cb = verify_cb;
         }
@@ -931,7 +931,7 @@ int wolfSSL_X509_STORE_set_ex_data_with_cleanup(
 WOLFSSL_X509_LOOKUP* wolfSSL_X509_STORE_add_lookup(WOLFSSL_X509_STORE* store,
                                                WOLFSSL_X509_LOOKUP_METHOD* m)
 {
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_add_lookup");
+    WOLFSSL_ENTER_FN();
     if (store == NULL || m == NULL)
         return NULL;
 
@@ -946,7 +946,7 @@ int wolfSSL_X509_STORE_add_cert(WOLFSSL_X509_STORE* store, WOLFSSL_X509* x509)
 {
     int result = WOLFSSL_FATAL_ERROR;
 
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_add_cert");
+    WOLFSSL_ENTER_FN();
     if (store != NULL && store->cm != NULL && x509 != NULL
                                                 && x509->derCert != NULL) {
         DerBuffer* derCert = NULL;
@@ -974,7 +974,7 @@ int wolfSSL_X509_STORE_set_flags(WOLFSSL_X509_STORE* store, unsigned long flag)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_set_flags");
+    WOLFSSL_ENTER_FN();
 
     if (store == NULL)
         return WOLFSSL_FAILURE;
@@ -1014,7 +1014,7 @@ WOLFSSL_API int wolfSSL_X509_STORE_load_locations(WOLFSSL_X509_STORE *str,
     ReadDirCtx  readCtx[1];
 #endif
 
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_load_locations");
+    WOLFSSL_ENTER_FN();
 
     if (str == NULL || str->cm == NULL || (file == NULL  && dir == NULL))
         return WOLFSSL_FAILURE;
@@ -1107,7 +1107,7 @@ int wolfSSL_X509_CA_num(WOLFSSL_X509_STORE* store)
     int cnt_ret = 0;
     Signer **table;
 
-    WOLFSSL_ENTER("wolfSSL_X509_CA_num");
+    WOLFSSL_ENTER_FN();
     if (store == NULL || store->cm == NULL){
         WOLFSSL_MSG("invalid parameter");
         return WOLFSSL_FAILURE;
@@ -1228,7 +1228,7 @@ WOLF_STACK_OF(WOLFSSL_X509_OBJECT)* wolfSSL_X509_STORE_get0_objects(
     WOLFSSL_STACK* ret = NULL;
     WOLFSSL_STACK* cert_stack = NULL;
     WOLFSSL_X509* x509 = NULL;
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_get0_objects");
+    WOLFSSL_ENTER_FN();
 
     if (store == NULL || store->cm == NULL) {
         WOLFSSL_MSG("Missing or empty store");

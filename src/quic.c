@@ -302,7 +302,7 @@ void wolfSSL_quic_free(WOLFSSL* ssl)
 
 static int ctx_check_quic_compat(const WOLFSSL_CTX* ctx)
 {
-    WOLFSSL_ENTER("ctx_check_quic_compat");
+    WOLFSSL_ENTER_FN();
     if (ctx->method->version.major != SSLv3_MAJOR
         || ctx->method->version.minor != TLSv1_3_MINOR
         || (ctx->method->downgrade && ctx->minDowngrade < TLSv1_3_MINOR)) {
@@ -318,7 +318,7 @@ static int ctx_check_quic_compat(const WOLFSSL_CTX* ctx)
 
 static int check_method_sanity(const WOLFSSL_QUIC_METHOD* m)
 {
-    WOLFSSL_ENTER("check_method_sanity");
+    WOLFSSL_ENTER_FN();
     if (m && m->set_encryption_secrets
         && m->add_handshake_data
         && m->flush_flight
@@ -331,7 +331,7 @@ static int check_method_sanity(const WOLFSSL_QUIC_METHOD* m)
 int wolfSSL_CTX_set_quic_method(WOLFSSL_CTX* ctx,
                                 const WOLFSSL_QUIC_METHOD* quic_method)
 {
-    WOLFSSL_ENTER("wolfSSL_CTX_set_quic_method");
+    WOLFSSL_ENTER_FN();
     if (ctx_check_quic_compat(ctx) != WOLFSSL_SUCCESS
         || check_method_sanity(quic_method) != WOLFSSL_SUCCESS) {
         return WOLFSSL_FAILURE;
@@ -344,7 +344,7 @@ int wolfSSL_CTX_set_quic_method(WOLFSSL_CTX* ctx,
 int wolfSSL_set_quic_method(WOLFSSL* ssl,
                             const WOLFSSL_QUIC_METHOD* quic_method)
 {
-    WOLFSSL_ENTER("wolfSSL_set_quic_method");
+    WOLFSSL_ENTER_FN();
     if (ctx_check_quic_compat(ssl->ctx) != WOLFSSL_SUCCESS
         || check_method_sanity(quic_method) != WOLFSSL_SUCCESS) {
         return WOLFSSL_FAILURE;
@@ -379,7 +379,7 @@ int wolfSSL_set_quic_transport_params(WOLFSSL* ssl,
     const QuicTransportParam* tp;
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_set_quic_transport_params");
+    WOLFSSL_ENTER_FN();
 
     if (!params || params_len == 0) {
         tp = NULL;
@@ -564,7 +564,7 @@ int wolfSSL_quic_do_handshake(WOLFSSL* ssl)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_quic_do_handshake");
+    WOLFSSL_ENTER_FN();
 
     if (!wolfSSL_is_quic(ssl)) {
         WOLFSSL_MSG("WOLFSSL_QUIC_DO_HANDSHAKE not a QUIC SSL");
@@ -629,7 +629,7 @@ int wolfSSL_quic_read_write(WOLFSSL* ssl)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_quic_read_write");
+    WOLFSSL_ENTER_FN();
 
     if (!wolfSSL_is_quic(ssl)) {
         WOLFSSL_MSG("WOLFSSL_QUIC_READ_WRITE not a QUIC SSL");
@@ -654,7 +654,7 @@ int wolfSSL_process_quic_post_handshake(WOLFSSL* ssl)
 {
     int ret = WOLFSSL_SUCCESS, nret;
 
-    WOLFSSL_ENTER("wolfSSL_process_quic_post_handshake");
+    WOLFSSL_ENTER_FN();
 
     if (!wolfSSL_is_quic(ssl)) {
         WOLFSSL_MSG("WOLFSSL_QUIC_POST_HS not a QUIC SSL");
@@ -691,7 +691,7 @@ int wolfSSL_provide_quic_data(WOLFSSL* ssl, WOLFSSL_ENCRYPTION_LEVEL level,
     int ret = WOLFSSL_SUCCESS;
     size_t l;
 
-    WOLFSSL_ENTER("wolfSSL_provide_quic_data");
+    WOLFSSL_ENTER_FN();
     if (!wolfSSL_is_quic(ssl)) {
         WOLFSSL_MSG("WOLFSSL_QUIC_PROVIDE_DATA not a QUIC SSL");
         ret = WOLFSSL_FAILURE;
@@ -756,7 +756,7 @@ int wolfSSL_quic_receive(WOLFSSL* ssl, byte* buf, word32 sz)
     word32 n = 0;
     int transferred = 0;
 
-    WOLFSSL_ENTER("wolfSSL_quic_receive");
+    WOLFSSL_ENTER_FN();
     while (sz > 0) {
         n = 0;
         if (ssl->quic.input_head) {
@@ -802,7 +802,7 @@ static int wolfSSL_quic_send_internal(WOLFSSL* ssl)
     word32 idx, length;
     byte* output;
 
-    WOLFSSL_ENTER("wolfSSL_quic_send");
+    WOLFSSL_ENTER_FN();
 
     idx = ssl->buffers.outputBuffer.idx;
     length = ssl->buffers.outputBuffer.length;
@@ -866,7 +866,7 @@ int wolfSSL_quic_forward_secrets(WOLFSSL* ssl, int ktype, int side)
     WOLFSSL_ENCRYPTION_LEVEL level;
     int ret = 0;
 
-    WOLFSSL_ENTER("wolfSSL_quic_forward_secrets");
+    WOLFSSL_ENTER_FN();
     switch (ktype) {
         case early_data_key:
             level = wolfssl_encryption_early_data;
@@ -927,7 +927,7 @@ int wolfSSL_quic_keys_active(WOLFSSL* ssl, enum encrypt_side side)
 {
     int ret = 0;
 
-    WOLFSSL_ENTER("wolfSSL_quic_keys_active");
+    WOLFSSL_ENTER_FN();
     /* Keys derived from recent secrets have been activated */
     if (side == ENCRYPT_AND_DECRYPT_SIDE || side == ENCRYPT_SIDE_ONLY) {
         /* If there is data in the output buffers, it was supposed to be
@@ -1147,7 +1147,7 @@ int wolfSSL_quic_hkdf_extract(uint8_t* dest, const WOLFSSL_EVP_MD* md,
     size_t destlen = (size_t)wolfSSL_EVP_MD_size(md);
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_quic_hkdf_extract");
+    WOLFSSL_ENTER_FN();
 
     pctx = wolfSSL_EVP_PKEY_CTX_new_id(NID_hkdf, NULL);
     if (pctx == NULL) {
@@ -1184,7 +1184,7 @@ int wolfSSL_quic_hkdf_expand(uint8_t* dest, size_t destlen,
     WOLFSSL_EVP_PKEY_CTX* pctx = NULL;
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_quic_hkdf_expand");
+    WOLFSSL_ENTER_FN();
 
     pctx = wolfSSL_EVP_PKEY_CTX_new_id(NID_hkdf, NULL);
     if (pctx == NULL) {
@@ -1224,7 +1224,7 @@ int wolfSSL_quic_hkdf(uint8_t* dest, size_t destlen,
     WOLFSSL_EVP_PKEY_CTX* pctx = NULL;
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_quic_hkdf");
+    WOLFSSL_ENTER_FN();
 
     pctx = wolfSSL_EVP_PKEY_CTX_new_id(NID_hkdf, NULL);
     if (pctx == NULL) {

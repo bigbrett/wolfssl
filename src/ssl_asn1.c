@@ -94,7 +94,7 @@ void* wolfSSL_ASN1_item_new(const WOLFSSL_ASN1_ITEM* tpl)
     const WOLFSSL_ASN1_TEMPLATE *mem = NULL;
     size_t i;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_item_new");
+    WOLFSSL_ENTER_FN();
 
     if (tpl != NULL) {
         ret = (void *)XMALLOC(tpl->size, NULL, DYNAMIC_TYPE_OPENSSL);
@@ -149,7 +149,7 @@ void wolfSSL_ASN1_item_free(void *items, const WOLFSSL_ASN1_ITEM *tpl)
     const WOLFSSL_ASN1_TEMPLATE *mem = NULL;
     size_t i;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_item_free");
+    WOLFSSL_ENTER_FN();
 
     if (items != NULL) {
         for (mem = tpl->members, i = 0; i < tpl->mcount; mem++, i++) {
@@ -267,7 +267,7 @@ static int wolfssl_i2d_asn1_items(const void* src, byte*buf,
     int ret;
     size_t i;
 
-    WOLFSSL_ENTER("wolfssl_i2d_asn1_items");
+    WOLFSSL_ENTER_FN();
 
     for (mem = members, i = 0; i < mcount; mem++, i++) {
         ret = wolfssl_i2d_asn1_item((void**)(((byte*)src) + mem->offset),
@@ -351,7 +351,7 @@ int wolfSSL_ASN1_item_i2d(const void* src, byte** dest,
     int len = 0;
     byte* buf = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_item_i2d");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((src == NULL) || (tpl == NULL)) {
@@ -661,7 +661,7 @@ WOLFSSL_ASN1_INTEGER* wolfSSL_ASN1_INTEGER_dup(const WOLFSSL_ASN1_INTEGER* src)
 {
     WOLFSSL_ASN1_INTEGER* dup = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_INTEGER_dup");
+    WOLFSSL_ENTER_FN();
 
     /* Check for object to duplicate. */
     if (src != NULL) {
@@ -708,7 +708,7 @@ int wolfSSL_ASN1_INTEGER_cmp(const WOLFSSL_ASN1_INTEGER* a,
 {
     int ret = 0;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_INTEGER_cmp");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((a == NULL) || (b == NULL)) {
@@ -811,7 +811,7 @@ int wolfSSL_i2d_ASN1_INTEGER(const WOLFSSL_ASN1_INTEGER* a, unsigned char** out)
     int ret = 0;
     byte* buf = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_i2d_ASN1_INTEGER");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((a == NULL) || (a->data == NULL) || (a->length <= 0) || (out == NULL)) {
@@ -879,7 +879,7 @@ WOLFSSL_ASN1_INTEGER* wolfSSL_d2i_ASN1_INTEGER(WOLFSSL_ASN1_INTEGER** a,
     word32 idx = 1;
     int len = 0;
 
-    WOLFSSL_ENTER("wolfSSL_d2i_ASN1_INTEGER");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((in == NULL) || (*in == NULL) || (inSz <= 2)) {
@@ -1005,7 +1005,7 @@ int wolfSSL_a2i_ASN1_INTEGER(WOLFSSL_BIO *bio, WOLFSSL_ASN1_INTEGER *asn1,
     word32 outLen = 0;
     const int hdrSz = 1 + MAX_LENGTH_SZ;
 
-    WOLFSSL_ENTER("wolfSSL_a2i_ASN1_INTEGER");
+    WOLFSSL_ENTER_FN();
 
     if ((bio == NULL) || (asn1 == NULL) || (buf == NULL) || (size <= 0)) {
         WOLFSSL_MSG("Bad parameter");
@@ -1086,7 +1086,7 @@ int wolfSSL_i2a_ASN1_INTEGER(BIO *bp, const WOLFSSL_ASN1_INTEGER *a)
     byte buf[WOLFSSL_ASN1_INTEGER_MAX * 2 + 1];
     word32 bufLen;
 
-    WOLFSSL_ENTER("wolfSSL_i2a_ASN1_INTEGER");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((bp == NULL) || (a == NULL)) {
@@ -1209,7 +1209,7 @@ int wolfSSL_i2c_ASN1_INTEGER(WOLFSSL_ASN1_INTEGER *a, unsigned char **pp)
     unsigned char padVal = 0;
     word32 idx = 1;
 
-    WOLFSSL_ENTER("wolfSSL_i2c_ASN1_INTEGER");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((a == NULL) || ((pp != NULL) && (*pp == NULL))) {
@@ -1265,7 +1265,7 @@ WOLFSSL_BIGNUM *wolfSSL_ASN1_INTEGER_to_BN(const WOLFSSL_ASN1_INTEGER *ai,
     int len = 0;
     WOLFSSL_BIGNUM* ret = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_INTEGER_to_BN");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (ai == NULL) {
@@ -1316,7 +1316,7 @@ WOLFSSL_ASN1_INTEGER* wolfSSL_BN_to_ASN1_INTEGER(const WOLFSSL_BIGNUM *bn,
     int numBits = 0;
     byte firstByte = 0;
 
-    WOLFSSL_ENTER("wolfSSL_BN_to_ASN1_INTEGER");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (bn == NULL) {
@@ -1410,7 +1410,7 @@ long wolfSSL_ASN1_INTEGER_get(const WOLFSSL_ASN1_INTEGER* a)
     long ret = 1;
     WOLFSSL_BIGNUM* bn = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_INTEGER_get");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (a == NULL) {
@@ -1588,7 +1588,7 @@ WOLFSSL_ASN1_OBJECT* wolfSSL_ASN1_OBJECT_dup(WOLFSSL_ASN1_OBJECT* obj)
 {
     WOLFSSL_ASN1_OBJECT* dupl = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_OBJECT_dup");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (obj == NULL) {
@@ -1659,7 +1659,7 @@ int wolfSSL_ASN1_get_object(const unsigned char **in, long *len, int *tag,
     byte t = 0;
     int ret = 0x80;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_get_object");
+    WOLFSSL_ENTER_FN();
 
     if ((in == NULL) || (*in == NULL) || (len == NULL) || (tag == NULL) ||
             (cls == NULL) || (inLen <= 0)) {
@@ -1714,7 +1714,7 @@ WOLFSSL_ASN1_OBJECT *wolfSSL_d2i_ASN1_OBJECT(WOLFSSL_ASN1_OBJECT **a,
     int tag = 0;
     int cls;
 
-    WOLFSSL_ENTER("wolfSSL_d2i_ASN1_OBJECT");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((der == NULL) || (*der == NULL) || (length <= 0)) {
@@ -1761,7 +1761,7 @@ int wolfSSL_i2d_ASN1_OBJECT(WOLFSSL_ASN1_OBJECT *a, unsigned char **pp)
 {
     int len = 0;
 
-    WOLFSSL_ENTER("wolfSSL_i2d_ASN1_OBJECT");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters */
     if ((a == NULL) || (a->obj == NULL)) {
@@ -1818,7 +1818,7 @@ WOLFSSL_ASN1_OBJECT *wolfSSL_c2i_ASN1_OBJECT(WOLFSSL_ASN1_OBJECT **a,
     int err = 0;
     WOLFSSL_ASN1_OBJECT* ret = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_c2i_ASN1_OBJECT");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((pp == NULL) || (*pp == NULL) || (len <= 0)) {
@@ -1876,7 +1876,7 @@ WOLFSSL_ASN1_OBJECT *wolfSSL_c2i_ASN1_OBJECT(WOLFSSL_ASN1_OBJECT **a,
  */
 int wolfSSL_i2t_ASN1_OBJECT(char *buf, int buf_len, WOLFSSL_ASN1_OBJECT *a)
 {
-    WOLFSSL_ENTER("wolfSSL_i2t_ASN1_OBJECT");
+    WOLFSSL_ENTER_FN();
 
     return wolfSSL_OBJ_obj2txt(buf, buf_len, a, 0);
 }
@@ -1898,7 +1898,7 @@ int wolfSSL_i2a_ASN1_OBJECT(WOLFSSL_BIO *bp, WOLFSSL_ASN1_OBJECT *a)
     const char invalid_str[] = "<INVALID>";
     char buf[80];
 
-    WOLFSSL_ENTER("wolfSSL_i2a_ASN1_OBJECT");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (bp == NULL) {
@@ -1945,7 +1945,7 @@ int wolfSSL_i2a_ASN1_OBJECT(WOLFSSL_BIO *bp, WOLFSSL_ASN1_OBJECT *a)
  */
 WOLFSSL_STACK* wolfSSL_sk_new_asn1_obj(void)
 {
-    WOLFSSL_ENTER("wolfSSL_sk_new_asn1_obj");
+    WOLFSSL_ENTER_FN();
 
     return wolfssl_sk_new_type(STACK_TYPE_OBJ);
 }
@@ -1971,7 +1971,7 @@ void wolfSSL_sk_ASN1_OBJECT_free(WOLF_STACK_OF(WOLFSSL_ASN1_OBJECT)* sk)
 void wolfSSL_sk_ASN1_OBJECT_pop_free(WOLF_STACK_OF(WOLFSSL_ASN1_OBJECT)* sk,
     void (*f) (WOLFSSL_ASN1_OBJECT*))
 {
-    WOLFSSL_ENTER("wolfSSL_sk_ASN1_OBJECT_pop_free");
+    WOLFSSL_ENTER_FN();
     wolfSSL_sk_pop_free(sk, (wolfSSL_sk_freefunc)f);
 }
 
@@ -1988,7 +1988,7 @@ int wolfSSL_sk_ASN1_OBJECT_push(WOLF_STACK_OF(WOLFSSL_ASN1_OBJECT)* sk,
 {
     int ret = 0;
 
-    WOLFSSL_ENTER("wolfSSL_sk_ASN1_OBJECT_push");
+    WOLFSSL_ENTER_FN();
 
     /* Push on when we have a stack and object to work with. */
     if ((sk != NULL) && (obj != NULL)) {
@@ -2028,7 +2028,7 @@ WOLFSSL_ASN1_STRING* wolfSSL_ASN1_STRING_new(void)
     WOLFSSL_ASN1_STRING* asn1;
 
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_new");
+    WOLFSSL_ENTER_FN();
 #endif
 
     asn1 = (WOLFSSL_ASN1_STRING*)XMALLOC(sizeof(WOLFSSL_ASN1_STRING), NULL,
@@ -2051,7 +2051,7 @@ WOLFSSL_ASN1_STRING* wolfSSL_ASN1_STRING_type_new(int type)
     WOLFSSL_ASN1_STRING* asn1;
 
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_type_new");
+    WOLFSSL_ENTER_FN();
 #endif
 
     asn1 = wolfSSL_ASN1_STRING_new();
@@ -2069,7 +2069,7 @@ WOLFSSL_ASN1_STRING* wolfSSL_ASN1_STRING_type_new(int type)
 void wolfSSL_ASN1_STRING_free(WOLFSSL_ASN1_STRING* asn1)
 {
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_free");
+    WOLFSSL_ENTER_FN();
 #endif
 
     /* Check we have an object to free. */
@@ -2121,7 +2121,7 @@ WOLFSSL_ASN1_STRING* wolfSSL_ASN1_STRING_dup(WOLFSSL_ASN1_STRING* asn1)
 {
     WOLFSSL_ASN1_STRING* dupl = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_dup");
+    WOLFSSL_ENTER_FN();
 
     /* Check we have an object to duplicate. */
     if (asn1 == NULL) {
@@ -2163,7 +2163,7 @@ int wolfSSL_ASN1_STRING_cmp(const WOLFSSL_ASN1_STRING *a,
     const WOLFSSL_ASN1_STRING *b)
 {
     int ret;
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_cmp");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((a == NULL) || (b == NULL)) {
@@ -2214,7 +2214,7 @@ int wolfSSL_ASN1_UNIVERSALSTRING_to_string(WOLFSSL_ASN1_STRING *s)
     int ret = 1;
     char* p;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_UNIVERSALSTRING_to_string");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (s == NULL) {
@@ -2370,7 +2370,7 @@ char* wolfSSL_i2s_ASN1_STRING(WOLFSSL_v3_ext_method *method,
 {
     char* ret = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_i2s_ASN1_STRING");
+    WOLFSSL_ENTER_FN();
     (void)method;
 
     /* Validate parameters. */
@@ -2406,7 +2406,7 @@ int wolfSSL_ASN1_STRING_type(const WOLFSSL_ASN1_STRING* asn1)
     int type = 0;
 
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_type");
+    WOLFSSL_ENTER_FN();
 #endif
 
     if (asn1 != NULL) {
@@ -2428,7 +2428,7 @@ const unsigned char* wolfSSL_ASN1_STRING_get0_data(
 {
     char* data = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_get0_data");
+    WOLFSSL_ENTER_FN();
 
     if (asn != NULL) {
         data = asn->data;
@@ -2448,7 +2448,7 @@ unsigned char* wolfSSL_ASN1_STRING_data(WOLFSSL_ASN1_STRING* asn)
     char* data = NULL;
 
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_data");
+    WOLFSSL_ENTER_FN();
 #endif
 
     if (asn != NULL) {
@@ -2469,7 +2469,7 @@ int wolfSSL_ASN1_STRING_length(WOLFSSL_ASN1_STRING* asn)
     int len = 0;
 
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_length");
+    WOLFSSL_ENTER_FN();
 #endif
 
     if (asn) {
@@ -2496,7 +2496,7 @@ int wolfSSL_ASN1_STRING_set(WOLFSSL_ASN1_STRING* asn1, const void* data, int sz)
     int ret = 1;
 
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_set");
+    WOLFSSL_ENTER_FN();
 #endif
 
     /* Validate parameters. */
@@ -2621,7 +2621,7 @@ int wolfSSL_ASN1_STRING_canon(WOLFSSL_ASN1_STRING* asn_out,
 {
     int ret = 1;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_canon");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((asn_out == NULL) || (asn_in == NULL)) {
@@ -2708,7 +2708,7 @@ int wolfSSL_ASN1_STRING_print(WOLFSSL_BIO *bio, WOLFSSL_ASN1_STRING *str)
 {
     int len = 0;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_print");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((bio != NULL) && (str != NULL)) {
@@ -2931,7 +2931,7 @@ int wolfSSL_ASN1_STRING_print_ex(WOLFSSL_BIO *bio, WOLFSSL_ASN1_STRING *str,
     int str_len = -1;
     int type_len = 0;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_STRING_PRINT_ex");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((bio == NULL) || (str == NULL)) {
@@ -2995,7 +2995,7 @@ int wolfSSL_ASN1_STRING_print_ex(WOLFSSL_BIO *bio, WOLFSSL_ASN1_STRING *str,
  */
 void wolfSSL_ASN1_GENERALIZEDTIME_free(WOLFSSL_ASN1_TIME* asn1Time)
 {
-    WOLFSSL_ENTER("wolfSSL_ASN1_GENERALIZEDTIME_free");
+    WOLFSSL_ENTER_FN();
     if (asn1Time != NULL) {
         XMEMSET(asn1Time->data, 0, sizeof(asn1Time->data));
     }
@@ -3040,7 +3040,7 @@ int wolfSSL_ASN1_GENERALIZEDTIME_print(WOLFSSL_BIO* bio,
 {
     int ret = 1;
     const char* p = NULL;
-    WOLFSSL_ENTER("wolfSSL_ASN1_GENERALIZEDTIME_print");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((bio == NULL) || (asnTime == NULL)) {
@@ -3246,7 +3246,7 @@ int wolfSSL_ASN1_TIME_diff(int *days, int *secs, const WOLFSSL_ASN1_TIME *from,
 {
     int ret = 1;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_TIME_diff");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (days == NULL) {
@@ -3297,7 +3297,7 @@ int wolfSSL_ASN1_TIME_compare(const WOLFSSL_ASN1_TIME *a,
     int days;
     int secs;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_TIME_compare");
+    WOLFSSL_ENTER_FN();
 
     /* Calculate difference in time between a and b. */
     if (wolfSSL_ASN1_TIME_diff(&days, &secs, a, b) != 1) {
@@ -3343,7 +3343,7 @@ WOLFSSL_ASN1_TIME* wolfSSL_ASN1_TIME_adj(WOLFSSL_ASN1_TIME* a, time_t t,
     time_t offset_day_sec = offset_day * sec_per_day;
     time_t t_adj          = t + offset_day_sec + offset_sec;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_TIME_adj");
+    WOLFSSL_ENTER_FN();
 
     /* Get time string as either UTC or GeneralizedTime. */
     time_get = GetFormattedTime(&t_adj, (byte*)time_str, MAX_TIME_STRING_SZ);
@@ -3375,7 +3375,7 @@ int wolfSSL_ASN1_TIME_get_length(const WOLFSSL_ASN1_TIME *t)
 {
     int len = 0;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_TIME_get_length");
+    WOLFSSL_ENTER_FN();
 
     if (t != NULL) {
         len = t->length;
@@ -3396,7 +3396,7 @@ unsigned char* wolfSSL_ASN1_TIME_get_data(const WOLFSSL_ASN1_TIME *t)
 {
     unsigned char* data = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_TIME_get_data");
+    WOLFSSL_ENTER_FN();
 
     if (t != NULL) {
         data = (unsigned char*)t->data;
@@ -3416,7 +3416,7 @@ int wolfSSL_ASN1_TIME_check(const WOLFSSL_ASN1_TIME* a)
     int ret = 1;
     char buf[MAX_TIME_STRING_SZ];
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_TIME_check");
+    WOLFSSL_ENTER_FN();
 
     /* If can convert to human readable then format good. */
     if (wolfSSL_ASN1_TIME_to_string((WOLFSSL_ASN1_TIME*)a, buf,
@@ -3442,7 +3442,7 @@ int wolfSSL_ASN1_TIME_set_string(WOLFSSL_ASN1_TIME *t, const char *str)
     int ret = 1;
     int slen = 0;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_TIME_set_string");
+    WOLFSSL_ENTER_FN();
 
     if (str == NULL) {
         WOLFSSL_MSG("Bad parameter");
@@ -3482,7 +3482,7 @@ WOLFSSL_ASN1_TIME* wolfSSL_ASN1_TIME_to_generalizedtime(WOLFSSL_ASN1_TIME *t,
 {
     WOLFSSL_ASN1_TIME *ret = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_TIME_to_generalizedtime");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (t == NULL) {
@@ -3555,7 +3555,7 @@ WOLFSSL_ASN1_TIME* wolfSSL_ASN1_TIME_to_generalizedtime(WOLFSSL_ASN1_TIME *t,
  */
 char* wolfSSL_ASN1_TIME_to_string(WOLFSSL_ASN1_TIME* t, char* buf, int len)
 {
-    WOLFSSL_ENTER("wolfSSL_ASN1_TIME_to_string");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((t == NULL) || (buf == NULL) || (len < 5)) {
@@ -3812,7 +3812,7 @@ int wolfSSL_ASN1_TIME_to_tm(const WOLFSSL_ASN1_TIME* asnTime, struct tm* tm)
 {
     int ret = 1;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_TIME_to_tm");
+    WOLFSSL_ENTER_FN();
 
     /* If asnTime is NULL, then the current time is converted. */
     if (asnTime == NULL) {
@@ -3844,7 +3844,7 @@ int wolfSSL_ASN1_TIME_print(WOLFSSL_BIO* bio, const WOLFSSL_ASN1_TIME* asnTime)
 {
     int  ret = 1;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_TIME_print");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((bio == NULL) || (asnTime == NULL)) {
@@ -3896,7 +3896,7 @@ int wolfSSL_ASN1_UTCTIME_print(WOLFSSL_BIO* bio, const WOLFSSL_ASN1_UTCTIME* a)
 {
     int ret = 1;
 
-    WOLFSSL_ENTER("wolfSSL_ASN1_UTCTIME_print");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((bio == NULL) || (a == NULL)) {

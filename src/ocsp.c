@@ -52,7 +52,7 @@
 
 int InitOCSP(WOLFSSL_OCSP* ocsp, WOLFSSL_CERT_MANAGER* cm)
 {
-    WOLFSSL_ENTER("InitOCSP");
+    WOLFSSL_ENTER_FN();
 
     ForceZero(ocsp, sizeof(WOLFSSL_OCSP));
 
@@ -67,7 +67,7 @@ int InitOCSP(WOLFSSL_OCSP* ocsp, WOLFSSL_CERT_MANAGER* cm)
 
 static int InitOcspEntry(OcspEntry* entry, OcspRequest* request)
 {
-    WOLFSSL_ENTER("InitOcspEntry");
+    WOLFSSL_ENTER_FN();
 
     ForceZero(entry, sizeof(OcspEntry));
 
@@ -85,7 +85,7 @@ static void FreeOcspEntry(OcspEntry* entry, void* heap)
     if (entry == NULL || !entry->ownStatus)
         return;
 
-    WOLFSSL_ENTER("FreeOcspEntry");
+    WOLFSSL_ENTER_FN();
 
     for (status = entry->status; status; status = next) {
         next = status->next;
@@ -114,7 +114,7 @@ void FreeOCSP(WOLFSSL_OCSP* ocsp, int dynamic)
 {
     OcspEntry *entry, *next;
 
-    WOLFSSL_ENTER("FreeOCSP");
+    WOLFSSL_ENTER_FN();
 
     for (entry = ocsp->ocspList; entry; entry = next) {
         next = entry->next;
@@ -152,7 +152,7 @@ int CheckCertOCSP_ex(WOLFSSL_OCSP* ocsp, DecodedCert* cert, WOLFSSL* ssl)
     OcspRequest ocspRequest[1];
 #endif
 
-    WOLFSSL_ENTER("CheckCertOCSP");
+    WOLFSSL_ENTER_FN();
 
 
 #ifdef WOLFSSL_SMALL_STACK
@@ -187,7 +187,7 @@ int CheckCertOCSP(WOLFSSL_OCSP* ocsp, DecodedCert* cert)
 static int GetOcspEntry(WOLFSSL_OCSP* ocsp, OcspRequest* request,
                                                               OcspEntry** entry)
 {
-    WOLFSSL_ENTER("GetOcspEntry");
+    WOLFSSL_ENTER_FN();
 
     *entry = NULL;
 
@@ -229,7 +229,7 @@ static int GetOcspStatus(WOLFSSL_OCSP* ocsp, OcspRequest* request,
 {
     int ret = OCSP_INVALID_STATUS;
 
-    WOLFSSL_ENTER("GetOcspStatus");
+    WOLFSSL_ENTER_FN();
 
     (void)heap;
     *status = NULL;
@@ -446,7 +446,7 @@ int CheckOcspRequest(WOLFSSL_OCSP* ocsp, OcspRequest* ocspRequest,
     WOLFSSL*    ssl;
     void*       ioCtx;
 
-    WOLFSSL_ENTER("CheckOcspRequest");
+    WOLFSSL_ENTER_FN();
 
     if (ocsp == NULL || ocspRequest == NULL)
         return BAD_FUNC_ARG;
@@ -601,7 +601,7 @@ int CheckOcspResponder(OcspResponse *bs, DecodedCert *cert, void* vp)
 
     (void)vp;
 
-    WOLFSSL_ENTER("CheckOcspResponder");
+    WOLFSSL_ENTER_FN();
 
     /* In the future if this API is used more then it could be beneficial to
      * implement calling InitDecodedCert and ParseCertRelative here
@@ -1178,7 +1178,7 @@ int wolfSSL_i2d_OCSP_REQUEST_bio(WOLFSSL_BIO* out,
     int size = -1;
     unsigned char* data = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_i2d_OCSP_REQUEST_bio");
+    WOLFSSL_ENTER_FN();
     if (out == NULL || req == NULL)
         return WOLFSSL_FAILURE;
 
@@ -1412,7 +1412,7 @@ int wolfSSL_OCSP_id_get0_info(WOLFSSL_ASN1_STRING **name,
   WOLFSSL_ASN1_OBJECT **pmd, WOLFSSL_ASN1_STRING **keyHash,
   WOLFSSL_ASN1_INTEGER **serial, WOLFSSL_OCSP_CERTID *cid)
 {
-    WOLFSSL_ENTER("wolfSSL_OCSP_id_get0_info");
+    WOLFSSL_ENTER_FN();
 
     if (cid == NULL)
         return 0;
@@ -1478,7 +1478,7 @@ int wolfSSL_OCSP_request_add1_nonce(OcspRequest* req, unsigned char* val,
 {
     WC_RNG rng;
 
-    WOLFSSL_ENTER("wolfSSL_OCSP_request_add1_nonce");
+    WOLFSSL_ENTER_FN();
 
     if (req == NULL || sz > MAX_OCSP_NONCE_SZ) {
         WOLFSSL_MSG("Bad parameter");
@@ -1528,7 +1528,7 @@ int wolfSSL_OCSP_check_nonce(OcspRequest* req, WOLFSSL_OCSP_BASICRESP* bs)
     int reqNonceSz = 0;
     int rspNonceSz = 0;
 
-    WOLFSSL_ENTER("wolfSSL_OCSP_check_nonce");
+    WOLFSSL_ENTER_FN();
 
     if (req != NULL) {
         reqNonce = req->nonce;

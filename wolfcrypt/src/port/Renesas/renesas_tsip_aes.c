@@ -109,7 +109,7 @@ WOLFSSL_LOCAL int tsip_Tls13AesEncrypt(
     e_tsip_tls13_phase_t phase;
     tsip_aes_key_index_t* key = NULL;
 
-    WOLFSSL_ENTER("tsip_Tls13AesEncrypt");
+    WOLFSSL_ENTER_FN();
 
     if ((ssl == NULL) || (input == NULL) || (output == NULL) || (sz == 0)) {
         return BAD_FUNC_ARG;
@@ -256,7 +256,7 @@ WOLFSSL_LOCAL int tsip_Tls13AesDecrypt(
     e_tsip_tls13_phase_t     phase;
     tsip_aes_key_index_t* key = NULL;
 
-    WOLFSSL_ENTER("tsip_Tls13AesDecrypt");
+    WOLFSSL_ENTER_FN();
 
     if ((ssl == NULL) || (input == NULL) || (output == NULL) || (sz == 0)) {
         return BAD_FUNC_ARG;
@@ -387,7 +387,7 @@ WOLFSSL_LOCAL int wc_tsip_AesCipher(int devIdArg, wc_CryptoInfo* info,
     int ret = NOT_COMPILED_IN;
     TsipUserCtx* cbInfo = (TsipUserCtx*)ctx;
 
-    WOLFSSL_ENTER("wc_tsip_AesCipher");
+    WOLFSSL_ENTER_FN();
 
     if (info == NULL || ctx == NULL)
         return BAD_FUNC_ARG;
@@ -631,7 +631,7 @@ int wc_tsip_AesGcmEncrypt(
     tsip_aes_key_index_t key_client_aes;
     TsipUserCtx *userCtx;
 
-    WOLFSSL_ENTER("wc_tsip_AesGcmEncrypt");
+    WOLFSSL_ENTER_FN();
 
     if (aes == NULL || ctx == NULL || (ivSz == 0)   ||
        (sz != 0       && (in == NULL  || out == NULL)) ||
@@ -829,7 +829,7 @@ int wc_tsip_AesGcmDecrypt(
     tsip_aes_key_index_t key_server_aes;
     TsipUserCtx *userCtx;
 
-    WOLFSSL_ENTER("wc_tsip_AesGcmDecrypt");
+    WOLFSSL_ENTER_FN();
 
     if (aes == NULL || in == NULL || out == NULL || sz == 0 || ctx == NULL ||
         iv == 0 ||

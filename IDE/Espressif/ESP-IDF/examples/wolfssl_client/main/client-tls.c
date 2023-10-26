@@ -137,7 +137,7 @@ void tls_smp_client_task()
     WOLFSSL_CTX *ctx;
     WOLFSSL *ssl;
 
-    WOLFSSL_ENTER("tls_smp_client_task");
+    WOLFSSL_ENTER_FN();
 
     doPeerCheck = 0;
     sendGet = 0;

@@ -888,7 +888,7 @@ int DoClientHelloStateless(WOLFSSL* ssl, const byte* input, word32 helloSz,
     WolfSSL_CH ch;
     byte isTls13 = 0;
 
-    WOLFSSL_ENTER("DoClientHelloStateless");
+    WOLFSSL_ENTER_FN();
     if (isFirstCHFrag) {
 #ifdef WOLFSSL_DTLS_CH_FRAG
         WOLFSSL_MSG("\tProcessing fragmented ClientHello");

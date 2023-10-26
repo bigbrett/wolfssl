@@ -280,7 +280,7 @@ static int TestEmbedSendTo(WOLFSSL* ssl, char *buf, int sz, void *ctx)
 
     (void)ssl;
 
-    WOLFSSL_ENTER("TestEmbedSendTo");
+    WOLFSSL_ENTER_FN();
 
     if (dtlsCtx->failOnce) {
         word32 seq = 0;

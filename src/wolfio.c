@@ -195,7 +195,7 @@ int BioReceive(WOLFSSL* ssl, char* buf, int sz, void* ctx)
 {
     int recvd = WOLFSSL_CBIO_ERR_GENERAL;
 
-    WOLFSSL_ENTER("BioReceive");
+    WOLFSSL_ENTER_FN();
 
     if (ssl->biord == NULL) {
         WOLFSSL_MSG("WOLFSSL biord not set");
@@ -256,7 +256,7 @@ int BioSend(WOLFSSL* ssl, char *buf, int sz, void *ctx)
 {
     int sent = WOLFSSL_CBIO_ERR_GENERAL;
 
-    WOLFSSL_ENTER("BioSend");
+    WOLFSSL_ENTER_FN();
 
     if (ssl->biowr == NULL) {
         WOLFSSL_MSG("WOLFSSL biowr not set");
@@ -450,7 +450,7 @@ int EmbedReceiveFrom(WOLFSSL *ssl, char *buf, int sz, void *ctx)
     word32 invalidPeerPackets = 0;
 #endif
 
-    WOLFSSL_ENTER("EmbedReceiveFrom");
+    WOLFSSL_ENTER_FN();
 
     if (dtlsCtx->connected) {
         peer = NULL;
@@ -646,7 +646,7 @@ int EmbedSendTo(WOLFSSL* ssl, char *buf, int sz, void *ctx)
     const SOCKADDR_S* peer = NULL;
     XSOCKLENT peerSz = 0;
 
-    WOLFSSL_ENTER("EmbedSendTo");
+    WOLFSSL_ENTER_FN();
 
     if (!isDGramSock(sd)) {
         /* Probably a TCP socket. peer and peerSz MUST be NULL and 0 */
@@ -687,7 +687,7 @@ int EmbedReceiveFromMcast(WOLFSSL *ssl, char *buf, int sz, void *ctx)
     int recvd;
     int sd = dtlsCtx->rfd;
 
-    WOLFSSL_ENTER("EmbedReceiveFromMcast");
+    WOLFSSL_ENTER_FN();
 
     recvd = (int)DTLS_RECVFROM_FUNCTION(sd, buf, sz, ssl->rflags, NULL, NULL);
 
@@ -1533,7 +1533,7 @@ int wolfIO_HttpProcessResponse(int sfd, const char** appStrList,
                      phr_http_end
     } state = phr_init;
 
-    WOLFSSL_ENTER("wolfIO_HttpProcessResponse");
+    WOLFSSL_ENTER_FN();
 
     *respBuf = NULL;
     start = end = NULL;
@@ -2385,7 +2385,7 @@ int MicriumReceiveFrom(WOLFSSL *ssl, char *buf, int sz, void *ctx)
     NET_SOCK_RTN_CODE ret;
     NET_ERR err;
 
-    WOLFSSL_ENTER("MicriumReceiveFrom");
+    WOLFSSL_ENTER_FN();
 
 #ifdef WOLFSSL_DTLS
     {
@@ -2464,7 +2464,7 @@ int MicriumSendTo(WOLFSSL* ssl, char *buf, int sz, void *ctx)
     NET_SOCK_RTN_CODE ret;
     NET_ERR err;
 
-    WOLFSSL_ENTER("MicriumSendTo");
+    WOLFSSL_ENTER_FN();
 
     ret = NetSock_TxDataTo(sd, buf, sz, ssl->wflags,
                            (NET_SOCK_ADDR*)dtlsCtx->peer.sa,

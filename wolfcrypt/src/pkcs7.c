@@ -625,7 +625,7 @@ static int wc_SetContentType(int pkcs7TypeOID, byte* output, word32 outputSz)
 static int wc_GetContentType(const byte* input, word32* inOutIdx, word32* oid,
                              word32 maxIdx)
 {
-    WOLFSSL_ENTER("wc_GetContentType");
+    WOLFSSL_ENTER_FN();
     if (GetObjectId(input, inOutIdx, oid, oidIgnoreType, maxIdx) < 0) {
         WOLFSSL_LEAVE("wc_GetContentType", ASN_PARSE_E);
         return ASN_PARSE_E;
@@ -791,7 +791,7 @@ int wc_PKCS7_Init(PKCS7* pkcs7, void* heap, int devId)
 {
     word16 isDynamic;
 
-    WOLFSSL_ENTER("wc_PKCS7_Init");
+    WOLFSSL_ENTER_FN();
 
     if (pkcs7 == NULL) {
         return BAD_FUNC_ARG;
@@ -4286,7 +4286,7 @@ static int wc_PKCS7_ParseSignerInfo(PKCS7* pkcs7, byte* in, word32 inSz,
     word32 idx = *idxIn, localIdx;
     byte tag;
 
-    WOLFSSL_ENTER("wc_PKCS7_ParseSignerInfo");
+    WOLFSSL_ENTER_FN();
     /* require a signer if degenerate case not allowed */
     if (inSz == 0 && pkcs7->noDegenerate == 1) {
         WOLFSSL_MSG("Set to not allow degenerate cases");
@@ -9880,7 +9880,7 @@ static int wc_PKCS7_DecryptKekri(PKCS7* pkcs7, byte* in, word32 inSz,
     word32 tmpIdx = *idx;
 #endif
 
-    WOLFSSL_ENTER("wc_PKCS7_DecryptKekri");
+    WOLFSSL_ENTER_FN();
     switch (pkcs7->state) {
         case WC_PKCS7_DECRYPT_KEKRI:
         #ifndef NO_PKCS7_STREAM
@@ -10029,7 +10029,7 @@ static int wc_PKCS7_DecryptKari(PKCS7* pkcs7, byte* in, word32 inSz,
     word32 tmpIdx = (idx) ? *idx : 0;
 #endif
 
-    WOLFSSL_ENTER("wc_PKCS7_DecryptKari");
+    WOLFSSL_ENTER_FN();
     if (pkcs7 == NULL || pkiMsg == NULL ||
         idx == NULL || decryptedKey == NULL || decryptedKeySz == NULL) {
         return BAD_FUNC_ARG;
@@ -10291,7 +10291,7 @@ static int wc_PKCS7_DecryptRecipientInfos(PKCS7* pkcs7, byte* in,
         return BAD_FUNC_ARG;
     }
 
-    WOLFSSL_ENTER("wc_PKCS7_DecryptRecipientInfos");
+    WOLFSSL_ENTER_FN();
 #ifndef NO_PKCS7_STREAM
     tmpIdx = *idx;
 #endif

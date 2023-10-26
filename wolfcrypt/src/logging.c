@@ -706,7 +706,7 @@ unsigned long wc_PeekErrorNodeLineData(const char **file, int *line,
                                        const char **data, int *flags,
                                        int (*ignore_err)(int err))
 {
-    WOLFSSL_ENTER("wc_PeekErrorNodeLineData");
+    WOLFSSL_ENTER_FN();
 
     /* No data or flags stored - error display only in Nginx. */
     if (data != NULL) {
@@ -744,7 +744,7 @@ unsigned long wc_GetErrorNodeErr(void)
 {
     int ret;
 
-    WOLFSSL_ENTER("wc_GetErrorNodeErr");
+    WOLFSSL_ENTER_FN();
 
     ret = wc_PullErrorNode(NULL, NULL, NULL);
     if (ret < 0) {
@@ -770,7 +770,7 @@ void wc_ERR_print_errors_cb(int (*cb)(const char *str, size_t len, void *u),
 {
     size_t i;
 
-    WOLFSSL_ENTER("wc_ERR_print_errors_cb");
+    WOLFSSL_ENTER_FN();
 
     if (cb == NULL) {
         /* Invalid param */
@@ -1212,7 +1212,7 @@ unsigned long wc_PeekErrorNodeLineData(const char **file, int *line,
 {
     int idx;
 
-    WOLFSSL_ENTER("wc_PeekErrorNodeLineData");
+    WOLFSSL_ENTER_FN();
 
 /* No data or flags stored - error display only in Nginx. */
     if (data != NULL) {
@@ -1254,7 +1254,7 @@ unsigned long wc_GetErrorNodeErr(void)
 {
     int ret;
 
-    WOLFSSL_ENTER("wc_GetErrorNodeErr");
+    WOLFSSL_ENTER_FN();
 
     if (ERRQ_LOCK() != 0) {
         WOLFSSL_MSG("Lock debug mutex failed");
@@ -1304,7 +1304,7 @@ unsigned long wc_GetErrorNodeErr(void)
 void wc_ERR_print_errors_cb(int (*cb)(const char *str, size_t len, void *u),
                             void *u)
 {
-    WOLFSSL_ENTER("wc_ERR_print_errors_cb");
+    WOLFSSL_ENTER_FN();
 
     if (cb == NULL) {
         /* Invalid param */
@@ -1411,7 +1411,7 @@ unsigned long wc_PeekErrorNodeLineData(const char **file, int *line,
                                        const char **data, int *flags,
                                        int (*ignore_err)(int err))
 {
-    WOLFSSL_ENTER("wc_PeekErrorNodeLineData");
+    WOLFSSL_ENTER_FN();
 
     (void)line;
     (void)file;
@@ -1427,7 +1427,7 @@ unsigned long wc_PeekErrorNodeLineData(const char **file, int *line,
 
 unsigned long wc_GetErrorNodeErr(void)
 {
-    WOLFSSL_ENTER("wc_GetErrorNodeErr");
+    WOLFSSL_ENTER_FN();
     return (unsigned long)(0 - NOT_COMPILED_IN);
 }
 
@@ -1435,7 +1435,7 @@ unsigned long wc_GetErrorNodeErr(void)
 void wc_ERR_print_errors_cb(int (*cb)(const char *str, size_t len, void *u),
                             void *u)
 {
-    WOLFSSL_ENTER("wc_ERR_print_errors_cb");
+    WOLFSSL_ENTER_FN();
     (void)cb;
     (void)u;
 }
@@ -1455,7 +1455,7 @@ static int wc_ERR_dump_to_file (const char *str, size_t len, void *u)
 
 void wc_ERR_print_errors_fp(XFILE fp)
 {
-    WOLFSSL_ENTER("wc_ERR_print_errors_fp");
+    WOLFSSL_ENTER_FN();
 
     /* Send all errors to the wc_ERR_dump_to_file function */
     wc_ERR_print_errors_cb(wc_ERR_dump_to_file, fp);

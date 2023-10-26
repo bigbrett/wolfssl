@@ -88,7 +88,7 @@ WOLFSSL_CERT_MANAGER* wolfSSL_CertManagerNew_ex(void* heap)
     int err = 0;
     WOLFSSL_CERT_MANAGER* cm;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerNew");
+    WOLFSSL_ENTER_FN();
 
     /* Allocate memory for certificate manager. */
     cm = (WOLFSSL_CERT_MANAGER*)XMALLOC(sizeof(WOLFSSL_CERT_MANAGER), heap,
@@ -168,7 +168,7 @@ WOLFSSL_CERT_MANAGER* wolfSSL_CertManagerNew(void)
  */
 void wolfSSL_CertManagerFree(WOLFSSL_CERT_MANAGER* cm)
 {
-    WOLFSSL_ENTER("wolfSSL_CertManagerFree");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (cm != NULL) {
@@ -352,7 +352,7 @@ WOLFSSL_STACK* wolfSSL_CertManagerGetCerts(WOLFSSL_CERT_MANAGER* cm)
     int i = 0;
     int err = 0;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerGetCerts");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (cm == NULL) {
@@ -425,7 +425,7 @@ int wolfSSL_CertManagerUnloadCAs(WOLFSSL_CERT_MANAGER* cm)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerUnloadCAs");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (cm == NULL) {
@@ -459,7 +459,7 @@ int wolfSSL_CertManagerUnload_trust_peers(WOLFSSL_CERT_MANAGER* cm)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerUnload_trust_peers");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (cm == NULL) {
@@ -505,7 +505,7 @@ int wolfSSL_CertManagerLoadCABuffer_ex(WOLFSSL_CERT_MANAGER* cm,
     int ret = WOLFSSL_SUCCESS;
     WOLFSSL_CTX* tmp = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerLoadCABuffer_ex");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (cm == NULL) {
@@ -568,7 +568,7 @@ int wolfSSL_CertManagerLoadCABuffer(WOLFSSL_CERT_MANAGER* cm,
  */
 void wolfSSL_CertManagerSetVerify(WOLFSSL_CERT_MANAGER* cm, VerifyCallback vc)
 {
-    WOLFSSL_ENTER("wolfSSL_CertManagerSetVerify");
+    WOLFSSL_ENTER_FN();
     if (cm != NULL) {
         cm->verifyCallback = vc;
     }
@@ -603,7 +603,7 @@ int CM_VerifyBuffer_ex(WOLFSSL_CERT_MANAGER* cm, const unsigned char* buff,
     DecodedCert  cert[1];
 #endif
 
-    WOLFSSL_ENTER("CM_VerifyBuffer_ex");
+    WOLFSSL_ENTER_FN();
 
     (void)prev_err;
 
@@ -737,7 +737,7 @@ int wolfSSL_CertManagerVerifyBuffer(WOLFSSL_CERT_MANAGER* cm,
 {
     int ret;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerVerifyBuffer");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((cm == NULL) || (buff == NULL) || (sz <= 0)) {
@@ -786,7 +786,7 @@ int wolfSSL_CertManagerVerify(WOLFSSL_CERT_MANAGER* cm, const char* fname,
     long   sz = 0;
     XFILE  file = XBADFILE;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerVerify");
+    WOLFSSL_ENTER_FN();
 
 #ifndef WOLFSSL_SMALL_STACK
     buff = staticBuffer;
@@ -865,7 +865,7 @@ int wolfSSL_CertManagerLoadCA(WOLFSSL_CERT_MANAGER* cm, const char* file,
     int ret = WOLFSSL_SUCCESS;
     WOLFSSL_CTX* tmp = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerLoadCA");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. file and path validated in:
      *   wolfSSL_CTX_load_verify_locations*/
@@ -1240,7 +1240,7 @@ static WC_INLINE int cm_do_mem_save_cert_cache(WOLFSSL_CERT_MANAGER* cm,
     int realSz;
     int i;
 
-    WOLFSSL_ENTER("cm_do_mem_save_cert_cache");
+    WOLFSSL_ENTER_FN();
 
     /* Calculate amount of memory required to store CA certificate table. */
     realSz = cm_get_cert_cache_mem_size(cm);
@@ -1292,7 +1292,7 @@ int CM_SaveCertCache(WOLFSSL_CERT_MANAGER* cm, const char* fname)
     XFILE file;
     int   ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("CM_SaveCertCache");
+    WOLFSSL_ENTER_FN();
 
     /* Open file for writing. */
     file = XFOPEN(fname, "w+b");
@@ -1361,7 +1361,7 @@ int CM_RestoreCertCache(WOLFSSL_CERT_MANAGER* cm, const char* fname)
     int   memSz = 0;
     byte* mem = NULL;
 
-    WOLFSSL_ENTER("CM_RestoreCertCache");
+    WOLFSSL_ENTER_FN();
 
     /* Open file for reading. */
     file = XFOPEN(fname, "rb");
@@ -1413,7 +1413,7 @@ int CM_MemSaveCertCache(WOLFSSL_CERT_MANAGER* cm, void* mem, int sz, int* used)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("CM_MemSaveCertCache");
+    WOLFSSL_ENTER_FN();
 
     /* Lock CA table. */
     if (wc_LockMutex(&cm->caLock) != 0) {
@@ -1456,7 +1456,7 @@ int CM_MemRestoreCertCache(WOLFSSL_CERT_MANAGER* cm, const void* mem, int sz)
     byte*            current = (byte*)mem + sizeof(CertCacheHeader);
     byte*            end     = (byte*)mem + sz;  /* don't go over */
 
-    WOLFSSL_ENTER("CM_MemRestoreCertCache");
+    WOLFSSL_ENTER_FN();
 
     /* Check memory available is bigger than cache header. */
     if (current > end) {
@@ -1518,7 +1518,7 @@ int CM_GetCertCacheMemSize(WOLFSSL_CERT_MANAGER* cm)
 {
     int ret;
 
-    WOLFSSL_ENTER("CM_GetCertCacheMemSize");
+    WOLFSSL_ENTER_FN();
 
     /* Lock CA table. */
     if (wc_LockMutex(&cm->caLock) != 0) {
@@ -1557,7 +1557,7 @@ int wolfSSL_CertManagerEnableCRL(WOLFSSL_CERT_MANAGER* cm, int options)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerEnableCRL");
+    WOLFSSL_ENTER_FN();
 
     (void)options;
 
@@ -1639,7 +1639,7 @@ int wolfSSL_CertManagerDisableCRL(WOLFSSL_CERT_MANAGER* cm)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerDisableCRL");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (cm == NULL) {
@@ -1671,7 +1671,7 @@ int wolfSSL_CertManagerLoadCRLBuffer(WOLFSSL_CERT_MANAGER* cm,
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerLoadCRLBuffer");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((cm == NULL) || (buff == NULL) || (sz <= 0)) {
@@ -1704,7 +1704,7 @@ int wolfSSL_CertManagerFreeCRL(WOLFSSL_CERT_MANAGER* cm)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerFreeCRL");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (cm == NULL) {
@@ -1739,7 +1739,7 @@ int wolfSSL_CertManagerCheckCRL(WOLFSSL_CERT_MANAGER* cm,
     DecodedCert  cert[1];
 #endif
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerCheckCRL");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((cm == NULL) || (der == NULL) || (sz <= 0)) {
@@ -1792,7 +1792,7 @@ int wolfSSL_CertManagerSetCRL_Cb(WOLFSSL_CERT_MANAGER* cm, CbMissingCRL cb)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerSetCRL_Cb");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (cm == NULL) {
@@ -1848,7 +1848,7 @@ int wolfSSL_CertManagerLoadCRL(WOLFSSL_CERT_MANAGER* cm, const char* path,
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerLoadCRL");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((cm == NULL) || (path == NULL)) {
@@ -1886,7 +1886,7 @@ int wolfSSL_CertManagerLoadCRLFile(WOLFSSL_CERT_MANAGER* cm, const char* file,
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerLoadCRLFile");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((cm == NULL) || (file == NULL)) {
@@ -1934,7 +1934,7 @@ int wolfSSL_CertManagerEnableOCSP(WOLFSSL_CERT_MANAGER* cm, int options)
 
     (void)options;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerEnableOCSP");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (cm == NULL) {
@@ -2007,7 +2007,7 @@ int wolfSSL_CertManagerDisableOCSP(WOLFSSL_CERT_MANAGER* cm)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerDisableOCSP");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (cm == NULL) {
@@ -2037,7 +2037,7 @@ int wolfSSL_CertManagerEnableOCSPStapling(WOLFSSL_CERT_MANAGER* cm)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerEnableOCSPStapling");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (cm == NULL) {
@@ -2105,7 +2105,7 @@ int wolfSSL_CertManagerDisableOCSPStapling(WOLFSSL_CERT_MANAGER* cm)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerDisableOCSPStapling");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (cm == NULL) {
@@ -2135,7 +2135,7 @@ int wolfSSL_CertManagerEnableOCSPMustStaple(WOLFSSL_CERT_MANAGER* cm)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerEnableOCSPMustStaple");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (cm == NULL) {
@@ -2167,7 +2167,7 @@ int wolfSSL_CertManagerDisableOCSPMustStaple(WOLFSSL_CERT_MANAGER* cm)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerDisableOCSPMustStaple");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (cm == NULL) {
@@ -2210,7 +2210,7 @@ int wolfSSL_CertManagerCheckOCSP(WOLFSSL_CERT_MANAGER* cm,
     DecodedCert  cert[1];
 #endif
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerCheckOCSP");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((cm == NULL) || (der == NULL) || (sz <= 0)) {
@@ -2271,7 +2271,7 @@ int wolfSSL_CertManagerCheckOCSPResponse(WOLFSSL_CERT_MANAGER *cm,
 {
     int ret = 0;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerCheckOCSPResponse");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((cm == NULL) || (response == NULL)) {
@@ -2299,7 +2299,7 @@ int wolfSSL_CertManagerSetOCSPOverrideURL(WOLFSSL_CERT_MANAGER* cm,
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerSetOCSPOverrideURL");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (cm == NULL) {
@@ -2346,7 +2346,7 @@ int wolfSSL_CertManagerSetOCSP_Cb(WOLFSSL_CERT_MANAGER* cm, CbOCSPIO ioCb,
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("wolfSSL_CertManagerSetOCSP_Cb");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (cm == NULL) {

@@ -131,7 +131,7 @@ static int psa_ecc_keygen_cb(WOLFSSL* ssl, struct ecc_key* key,
 
     (void)ssl;
 
-    WOLFSSL_ENTER("psa_ecc_keygen_cb");
+    WOLFSSL_ENTER_FN();
 
     if (psa_ctx == NULL)
         return BAD_FUNC_ARG;
@@ -219,7 +219,7 @@ static int psa_ecc_shared_secret_cb(WOLFSSL* ssl, struct ecc_key* other_key,
     if (psa_ctx == NULL)
         return BAD_FUNC_ARG;
 
-    WOLFSSL_ENTER("psa_ecc_shared_secret_cb");
+    WOLFSSL_ENTER_FN();
 
     /* client before tls13 must create the key and export it in pubkeyDer. The
        server key is stored in other_key */
@@ -298,7 +298,7 @@ static int psa_ecc_sign_cb(WOLFSSL* ssl, const unsigned char* input,
     (void)keyDer;
     (void)keySz;
 
-    WOLFSSL_ENTER("psa_ecc_sign_cb");
+    WOLFSSL_ENTER_FN();
 
     if (psa_ctx == NULL)
         return BAD_FUNC_ARG;
@@ -389,7 +389,7 @@ static int psa_ecc_verify_cb(WOLFSSL* ssl, const byte* sig, word32 sig_length,
 
     (void)ssl;
     (void)ctx;
-    WOLFSSL_ENTER("psa_ecc_verify_cb");
+    WOLFSSL_ENTER_FN();
 
     /* Get correct hash algorithm that matches input hash length */
     hash_algo = psa_map_hash_alg(hash_length);
@@ -449,7 +449,7 @@ static int psa_hkdf_extract_cb(byte* prk, const byte* salt,
 
     (void)ctx;
 
-    WOLFSSL_ENTER("psa hkdf cb");
+    WOLFSSL_ENTER_FN();
 
     if (salt_length != 0 && salt == NULL)
         return BAD_FUNC_ARG;

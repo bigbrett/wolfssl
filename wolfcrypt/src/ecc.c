@@ -5384,7 +5384,7 @@ static int ecc_make_pub_ex(ecc_key* key, ecc_curve_spec* curve,
  */
 int wc_ecc_make_pub(ecc_key* key, ecc_point* pubOut)
 {
-    WOLFSSL_ENTER("wc_ecc_make_pub");
+    WOLFSSL_ENTER_FN();
 
     return wc_ecc_make_pub_ex(key, pubOut, NULL);
 }
@@ -5403,7 +5403,7 @@ int wc_ecc_make_pub_ex(ecc_key* key, ecc_point* pubOut, WC_RNG* rng)
     int err = MP_OKAY;
     DECLARE_CURVE_SPECS(ECC_CURVE_FIELD_COUNT);
 
-    WOLFSSL_ENTER("wc_ecc_make_pub_ex");
+    WOLFSSL_ENTER_FN();
 
     if (key == NULL) {
         return BAD_FUNC_ARG;

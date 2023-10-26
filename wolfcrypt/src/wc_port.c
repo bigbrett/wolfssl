@@ -139,7 +139,7 @@ int wolfCrypt_Init(void)
 {
     int ret = 0;
     if (initRefCount == 0) {
-        WOLFSSL_ENTER("wolfCrypt_Init");
+        WOLFSSL_ENTER_FN();
 
     #ifdef WOLFSSL_CHECK_MEM_ZERO
         /* Initialize the mutex for access to the list of memory locations that
@@ -417,7 +417,7 @@ int wolfCrypt_Cleanup(void)
         initRefCount = 0;
 
     if (initRefCount == 0) {
-        WOLFSSL_ENTER("wolfCrypt_Cleanup");
+        WOLFSSL_ENTER_FN();
 
 #ifdef HAVE_ECC
     #ifdef FP_ECC

@@ -126,7 +126,7 @@ WOLFSSL_LOCAL void wc_fspsm_hw_unlock(void)
 /* Open sce driver for use */
 WOLFSSL_LOCAL int wc_fspsm_Open()
 {
-    WOLFSSL_ENTER("wc_fspsm_Open");
+    WOLFSSL_ENTER_FN();
     int ret;
     if ((ret = wc_fspsm_hw_lock()) == 0) {
 
@@ -165,7 +165,7 @@ WOLFSSL_LOCAL int wc_fspsm_Open()
 /* close SCE driver */
 WOLFSSL_LOCAL void wc_fspsm_Close()
 {
-    WOLFSSL_ENTER("sce Close");
+    WOLFSSL_ENTER_FN();
     int ret;
 
     if ((ret = wc_fspsm_hw_lock()) == 0) {
@@ -459,7 +459,7 @@ static uint32_t GetSceCipherSuite(
                     uint8_t cipherSuiteFirst,
                     uint8_t cipherSuite)
 {
-    WOLFSSL_ENTER("GetSceCipherSuite");
+    WOLFSSL_ENTER_FN();
     uint32_t sceCipher;
 
     if (cipherSuiteFirst == CIPHER_BYTE)
@@ -523,7 +523,7 @@ static uint32_t GetSceCipherSuite(
 WOLFSSL_LOCAL int wc_fspsm_usable(const WOLFSSL *ssl,
                                                 uint8_t session_key_generated)
 {
-    WOLFSSL_ENTER("fspsm_usable");
+    WOLFSSL_ENTER_FN();
     uint32_t sceCipher;
     byte side;
     const Ciphers *enc;
@@ -576,7 +576,7 @@ WOLFSSL_LOCAL int wc_fspsm_Sha256GenerateHmac(const WOLFSSL *ssl,
                 const uint8_t* myInner, uint32_t innerSz,const uint8_t* in,
                 uint32_t sz, byte* digest)
 {
-    WOLFSSL_ENTER("fspsm_Sha256HmacGenerate");
+    WOLFSSL_ENTER_FN();
 
     FSPSM_HMAC_HANDLE _handle;
     FSPSM_HMAC_WKEY wrapped_key;
@@ -628,7 +628,7 @@ WOLFSSL_LOCAL int wc_fspsm_Sha256VerifyHmac(const WOLFSSL *ssl,
         const uint8_t* message, uint32_t messageSz,
         uint32_t macSz, uint32_t content)
 {
-    WOLFSSL_ENTER("fspsm_Sha256HmacVerify");
+    WOLFSSL_ENTER_FN();
 
     FSPSM_HMAC_HANDLE _handle;
     FSPSM_HMAC_WKEY wrapped_key;
@@ -686,7 +686,7 @@ WOLFSSL_LOCAL int wc_fspsm_generateVerifyData(
                             const uint8_t *side, const uint8_t *handshake_hash,
                             uint8_t *hashes /* out */)
 {
-    WOLFSSL_ENTER("fspsm_generateVerifyData");
+    WOLFSSL_ENTER_FN();
     int ret ;
     uint32_t l_side = SCE_TLS_GENERATE_CLIENT_VERIFY;
 
@@ -880,7 +880,7 @@ WOLFSSL_LOCAL int wc_fspsm_generateMasterSecret(
         const uint8_t *sr, /* server random */
         uint8_t *ms)
 {
-    WOLFSSL_ENTER("fspsm_generateMasterSecretEx");
+    WOLFSSL_ENTER_FN();
     int ret;
 
     if ((pr == NULL) || (cr == NULL) || (sr == NULL) ||
@@ -913,7 +913,7 @@ WOLFSSL_LOCAL int wc_fspsm_generateMasterSecret(
 WOLFSSL_LOCAL int wc_fspsm_generatePremasterSecret(uint8_t *premaster,
                                                         uint32_t preSz)
 {
-    WOLFSSL_ENTER("fspsm_generatePremasterSecret");
+    WOLFSSL_ENTER_FN();
     int ret;
 
     if (premaster == NULL)
@@ -991,7 +991,7 @@ WOLFSSL_LOCAL int wc_fspsm_tls_CertVerify(
         uint32_t      key_e_start,uint32_t key_e_len,
         uint8_t*      fspsm_encPublickey)
 {
-    WOLFSSL_ENTER("fspsm_tls_CertVerify");
+    WOLFSSL_ENTER_FN();
     int ret;
     uint8_t *sigforSCE;
     uint8_t *pSig;
@@ -1093,7 +1093,7 @@ WOLFSSL_LOCAL int wc_fspsm_tls_RootCertVerify(
     /* call to generate encrypted public key for certificate verification */
     uint8_t *signature = (uint8_t*)ca_cert_sig;
 
-    WOLFSSL_ENTER("wc_fspsm_tls_RootCertVerify");
+    WOLFSSL_ENTER_FN();
 
     if (cert == NULL)
       return BAD_FUNC_ARG;
@@ -1137,7 +1137,7 @@ WOLFSSL_LOCAL int wc_fspsm_storeKeyCtx(WOLFSSL* ssl, FSPSM_ST* info)
 {
     int ret = 0;
 
-    WOLFSSL_ENTER("fspsm_storeKeyCtx");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL || info == NULL)
         ret = BAD_FUNC_ARG;
@@ -1178,7 +1178,7 @@ WOLFSSL_API void wc_fspsm_inform_user_keys(
     uint8_t* encrypted_user_tls_key,
     uint32_t encrypted_user_tls_key_type)
 {
-    WOLFSSL_ENTER("sce_inform_user_keys");
+    WOLFSSL_ENTER_FN();
     g_user_key_info.encrypted_provisioning_key = NULL;
     g_user_key_info.iv = NULL;
     g_user_key_info.encrypted_user_tls_key = NULL;

@@ -893,7 +893,7 @@ static const byte exporterMasterLabel[EXPORTER_MASTER_LABEL_SZ + 1] =
 static int DeriveExporterSecret(WOLFSSL* ssl, byte* key)
 {
     int ret;
-    WOLFSSL_ENTER("Derive Exporter Secret");
+    WOLFSSL_ENTER_FN();
     if (ssl == NULL || ssl->arrays == NULL) {
         return BAD_FUNC_ARG;
     }
@@ -2536,7 +2536,7 @@ static int EncryptTls13(WOLFSSL* ssl, byte* output, const byte* input,
     word32 event_flags = WC_ASYNC_FLAG_CALL_AGAIN;
 #endif
 
-    WOLFSSL_ENTER("EncryptTls13");
+    WOLFSSL_ENTER_FN();
 
     (void)output;
     (void)input;
@@ -2927,7 +2927,7 @@ int DecryptTls13(WOLFSSL* ssl, byte* output, const byte* input, word16 sz,
     word16 macSz  = ssl->specs.aead_mac_size;
     word32 nonceSz = 0;
 
-    WOLFSSL_ENTER("DecryptTls13");
+    WOLFSSL_ENTER_FN();
 
 #if defined(WOLFSSL_RENESAS_TSIP_TLS)
     ret = tsip_Tls13AesDecrypt(ssl, output, input, sz);
@@ -3205,7 +3205,7 @@ int BuildTls13Message(WOLFSSL* ssl, byte* output, int outSz, const byte* input,
     BuildMsg13Args* args;
     BuildMsg13Args  lcl_args;
 
-    WOLFSSL_ENTER("BuildTls13Message");
+    WOLFSSL_ENTER_FN();
 
 #ifdef WOLFSSL_ASYNC_CRYPT
     ret = WC_NO_PENDING_E;
@@ -3972,7 +3972,7 @@ static int WritePSKBinders(WOLFSSL* ssl, byte* output, word32 idx)
     byte          binderKey[WC_MAX_DIGEST_SIZE];
     word16        len;
 
-    WOLFSSL_ENTER("WritePSKBinders");
+    WOLFSSL_ENTER_FN();
 
     ext = TLSX_Find(ssl->extensions, TLSX_PRE_SHARED_KEY);
     if (ext == NULL)
@@ -4228,7 +4228,7 @@ int SendTls13ClientHello(WOLFSSL* ssl)
     const Suites* suites;
 
     WOLFSSL_START(WC_FUNC_CLIENT_HELLO_SEND);
-    WOLFSSL_ENTER("SendTls13ClientHello");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL) {
         return BAD_FUNC_ARG;
@@ -4976,7 +4976,7 @@ int DoTls13ServerHello(WOLFSSL* ssl, const byte* input, word32* inOutIdx,
 #endif
 
     WOLFSSL_START(WC_FUNC_SERVER_HELLO_DO);
-    WOLFSSL_ENTER("DoTls13ServerHello");
+    WOLFSSL_ENTER_FN();
 
     tls12minor = TLSv1_2_MINOR;
 
@@ -5525,7 +5525,7 @@ static int DoTls13EncryptedExtensions(WOLFSSL* ssl, const byte* input,
     word16 totalExtSz;
 
     WOLFSSL_START(WC_FUNC_ENCRYPTED_EXTENSIONS_DO);
-    WOLFSSL_ENTER("DoTls13EncryptedExtensions");
+    WOLFSSL_ENTER_FN();
 
 #ifdef WOLFSSL_CALLBACKS
     if (ssl->hsInfoOn) AddPacketName(ssl, "EncryptedExtensions");
@@ -5601,7 +5601,7 @@ static int DoTls13CertificateRequest(WOLFSSL* ssl, const byte* input,
 #endif
 
     WOLFSSL_START(WC_FUNC_CERTIFICATE_REQUEST_DO);
-    WOLFSSL_ENTER("DoTls13CertificateRequest");
+    WOLFSSL_ENTER_FN();
 
     XMEMSET(&peerSuites, 0, sizeof(Suites));
 
@@ -5837,7 +5837,7 @@ static int FindPsk(WOLFSSL* ssl, PreSharedKey* psk, const byte* suite, int* err)
     int         found = 0;
     byte        foundSuite[SUITE_LEN];
 
-    WOLFSSL_ENTER("FindPsk");
+    WOLFSSL_ENTER_FN();
 
     ret = FindPskSuite(ssl, psk, ssl->arrays->psk_key, &ssl->arrays->psk_keySz,
                        suite, &found, foundSuite);
@@ -5902,7 +5902,7 @@ static int DoPreSharedKeys(WOLFSSL* ssl, const byte* input, word32 inputSz,
         (void) suite; /* to avoid unused var warning when not used */
     #endif
 
-    WOLFSSL_ENTER("DoPreSharedKeys");
+    WOLFSSL_ENTER_FN();
 
     (void)suite;
 
@@ -6096,7 +6096,7 @@ static int CheckPreSharedKeys(WOLFSSL* ssl, const byte* input, word32 helloSz,
     byte   suite[2];
 #endif
 
-    WOLFSSL_ENTER("CheckPreSharedKeys");
+    WOLFSSL_ENTER_FN();
 
     ext = TLSX_Find(ssl->extensions, TLSX_PRE_SHARED_KEY);
     if (ext == NULL) {
@@ -6602,7 +6602,7 @@ int DoTls13ClientHello(WOLFSSL* ssl, const byte* input, word32* inOutIdx,
 #endif
 
     WOLFSSL_START(WC_FUNC_CLIENT_HELLO_DO);
-    WOLFSSL_ENTER("DoTls13ClientHello");
+    WOLFSSL_ENTER_FN();
 
 #ifdef WOLFSSL_ASYNC_CRYPT
     if (ssl->async == NULL) {
@@ -7162,7 +7162,7 @@ int SendTls13ServerHello(WOLFSSL* ssl, byte extMsgType)
 #endif
 
     WOLFSSL_START(WC_FUNC_SERVER_HELLO_SEND);
-    WOLFSSL_ENTER("SendTls13ServerHello");
+    WOLFSSL_ENTER_FN();
 
     /* When ssl->options.dtlsStateful is not set then cookie is calculated in
      * dtls.c */
@@ -7358,7 +7358,7 @@ static int SendTls13EncryptedExtensions(WOLFSSL* ssl)
     int    sendSz;
 
     WOLFSSL_START(WC_FUNC_ENCRYPTED_EXTENSIONS_SEND);
-    WOLFSSL_ENTER("SendTls13EncryptedExtensions");
+    WOLFSSL_ENTER_FN();
 
     ssl->options.buildingMsg = 1;
     ssl->keys.encryptionOn = 1;
@@ -7523,7 +7523,7 @@ static int SendTls13CertificateRequest(WOLFSSL* ssl, byte* reqCtx,
 #endif
 
     WOLFSSL_START(WC_FUNC_CERTIFICATE_REQUEST_SEND);
-    WOLFSSL_ENTER("SendTls13CertificateRequest");
+    WOLFSSL_ENTER_FN();
 
     ssl->options.buildingMsg = 1;
 
@@ -8168,7 +8168,7 @@ static int SendTls13Certificate(WOLFSSL* ssl)
 #endif
 
     WOLFSSL_START(WC_FUNC_CERTIFICATE_SEND);
-    WOLFSSL_ENTER("SendTls13Certificate");
+    WOLFSSL_ENTER_FN();
 
     ssl->options.buildingMsg = 1;
 
@@ -8496,7 +8496,7 @@ static int SendTls13CertificateVerify(WOLFSSL* ssl)
 #endif /* WOLFSSL_DTLS13 */
 
     WOLFSSL_START(WC_FUNC_CERTIFICATE_VERIFY_SEND);
-    WOLFSSL_ENTER("SendTls13CertificateVerify");
+    WOLFSSL_ENTER_FN();
 
     ssl->options.buildingMsg = 1;
 
@@ -9048,7 +9048,7 @@ static int DoTls13Certificate(WOLFSSL* ssl, byte* input, word32* inOutIdx,
     int ret = 0;
 
     WOLFSSL_START(WC_FUNC_CERTIFICATE_DO);
-    WOLFSSL_ENTER("DoTls13Certificate");
+    WOLFSSL_ENTER_FN();
 
 #ifdef WOLFSSL_DTLS13
     if (ssl->options.dtls && ssl->options.handShakeDone) {
@@ -9136,7 +9136,7 @@ static int DoTls13CertificateVerify(WOLFSSL* ssl, byte* input,
 #endif
 
     WOLFSSL_START(WC_FUNC_CERTIFICATE_VERIFY_DO);
-    WOLFSSL_ENTER("DoTls13CertificateVerify");
+    WOLFSSL_ENTER_FN();
 
 #if defined(WOLFSSL_RENESAS_TSIP_TLS)
     ret = tsip_Tls13CertificateVerify(ssl, input, inOutIdx, totalSz);
@@ -9638,7 +9638,7 @@ int DoTls13Finished(WOLFSSL* ssl, const byte* input, word32* inOutIdx,
     byte   mac[WC_MAX_DIGEST_SIZE];
 
     WOLFSSL_START(WC_FUNC_FINISHED_DO);
-    WOLFSSL_ENTER("DoTls13Finished");
+    WOLFSSL_ENTER_FN();
 
 #if !defined(NO_CERTS) && !defined(WOLFSSL_NO_CLIENT_AUTH)
     /* verify the client sent certificate if required */
@@ -9819,7 +9819,7 @@ static int SendTls13Finished(WOLFSSL* ssl)
 #endif /* WOLFSSL_DTLS13 */
 
     WOLFSSL_START(WC_FUNC_FINISHED_SEND);
-    WOLFSSL_ENTER("SendTls13Finished");
+    WOLFSSL_ENTER_FN();
 
     ssl->options.buildingMsg = 1;
 #ifdef WOLFSSL_DTLS13
@@ -10080,7 +10080,7 @@ static int SendTls13KeyUpdate(WOLFSSL* ssl)
     word32 i = RECORD_HEADER_SZ + HANDSHAKE_HEADER_SZ;
 
     WOLFSSL_START(WC_FUNC_KEY_UPDATE_SEND);
-    WOLFSSL_ENTER("SendTls13KeyUpdate");
+    WOLFSSL_ENTER_FN();
 
 #ifdef WOLFSSL_DTLS13
     if (ssl->options.dtls)
@@ -10184,7 +10184,7 @@ static int DoTls13KeyUpdate(WOLFSSL* ssl, const byte* input, word32* inOutIdx,
     word32 i = *inOutIdx;
 
     WOLFSSL_START(WC_FUNC_KEY_UPDATE_DO);
-    WOLFSSL_ENTER("DoTls13KeyUpdate");
+    WOLFSSL_ENTER_FN();
 
     /* check against totalSz */
     if (OPAQUE8_LEN != totalSz)
@@ -10274,7 +10274,7 @@ static int SendTls13EndOfEarlyData(WOLFSSL* ssl)
     word32 idx = RECORD_HEADER_SZ + HANDSHAKE_HEADER_SZ;
 
     WOLFSSL_START(WC_FUNC_END_OF_EARLY_DATA_SEND);
-    WOLFSSL_ENTER("SendTls13EndOfEarlyData");
+    WOLFSSL_ENTER_FN();
 
     length = 0;
     sendSz = idx + length + MAX_MSG_EXTRA;
@@ -10330,7 +10330,7 @@ static int DoTls13EndOfEarlyData(WOLFSSL* ssl, const byte* input,
     (void)input;
 
     WOLFSSL_START(WC_FUNC_END_OF_EARLY_DATA_DO);
-    WOLFSSL_ENTER("DoTls13EndOfEarlyData");
+    WOLFSSL_ENTER_FN();
 
     if ((*inOutIdx - begin) != size)
         return BUFFER_ERROR;
@@ -10411,7 +10411,7 @@ static int DoTls13NewSessionTicket(WOLFSSL* ssl, const byte* input,
     byte        nonceLength;
 
     WOLFSSL_START(WC_FUNC_NEW_SESSION_TICKET_DO);
-    WOLFSSL_ENTER("DoTls13NewSessionTicket");
+    WOLFSSL_ENTER_FN();
 
     /* Lifetime hint. */
     if ((*inOutIdx - begin) + SESSION_HINT_SZ > size)
@@ -10517,7 +10517,7 @@ static int DoTls13NewSessionTicket(WOLFSSL* ssl, const byte* input,
     (void)ssl;
     (void)input;
 
-    WOLFSSL_ENTER("DoTls13NewSessionTicket");
+    WOLFSSL_ENTER_FN();
 
     *inOutIdx += size + ssl->keys.padSz;
 #endif /* HAVE_SESSION_TICKET */
@@ -10664,7 +10664,7 @@ static int SendTls13NewSessionTicket(WOLFSSL* ssl)
     word32 idx = RECORD_HEADER_SZ + HANDSHAKE_HEADER_SZ;
 
     WOLFSSL_START(WC_FUNC_NEW_SESSION_TICKET_SEND);
-    WOLFSSL_ENTER("SendTls13NewSessionTicket");
+    WOLFSSL_ENTER_FN();
 
 #ifdef WOLFSSL_DTLS13
     if (ssl->options.dtls)
@@ -11356,7 +11356,7 @@ int DoTls13HandShakeMsgType(WOLFSSL* ssl, byte* input, word32* inOutIdx,
 
     (void)totalSz;
 
-    WOLFSSL_ENTER("DoTls13HandShakeMsgType");
+    WOLFSSL_ENTER_FN();
 
     /* make sure we can read the message */
     if (*inOutIdx + size > totalSz)
@@ -11735,7 +11735,7 @@ int DoTls13HandShakeMsg(WOLFSSL* ssl, byte* input, word32* inOutIdx,
     byte   type;
     word32 size = 0;
 
-    WOLFSSL_ENTER("DoTls13HandShakeMsg");
+    WOLFSSL_ENTER_FN();
 
     if (ssl->arrays == NULL) {
 
@@ -11849,7 +11849,7 @@ int wolfSSL_connect_TLSv13(WOLFSSL* ssl)
     int advanceState;
     int ret = 0;
 
-    WOLFSSL_ENTER("wolfSSL_connect_TLSv13");
+    WOLFSSL_ENTER_FN();
 
 #ifdef HAVE_ERRNO_H
     errno = 0;
@@ -12715,7 +12715,7 @@ int wolfSSL_CTX_set_groups(WOLFSSL_CTX* ctx, int* groups, int count)
 {
     int ret, i;
 
-    WOLFSSL_ENTER("wolfSSL_CTX_set_groups");
+    WOLFSSL_ENTER_FN();
     if (ctx == NULL || groups == NULL || count > WOLFSSL_MAX_GROUP_COUNT)
         return BAD_FUNC_ARG;
     if (!IsAtLeastTLSv1_3(ctx->method->version))
@@ -12754,7 +12754,7 @@ int wolfSSL_set_groups(WOLFSSL* ssl, int* groups, int count)
 {
     int ret, i;
 
-    WOLFSSL_ENTER("wolfSSL_set_groups");
+    WOLFSSL_ENTER_FN();
     if (ssl == NULL || groups == NULL || count > WOLFSSL_MAX_GROUP_COUNT)
         return BAD_FUNC_ARG;
     if (!IsAtLeastTLSv1_3(ssl->version))
@@ -12792,7 +12792,7 @@ int wolfSSL_set_groups(WOLFSSL* ssl, int* groups, int count)
 void wolfSSL_CTX_set_psk_client_cs_callback(WOLFSSL_CTX* ctx,
                                             wc_psk_client_cs_callback cb)
 {
-    WOLFSSL_ENTER("wolfSSL_CTX_set_psk_client_cs_callback");
+    WOLFSSL_ENTER_FN();
 
     if (ctx == NULL)
         return;
@@ -12813,7 +12813,7 @@ void wolfSSL_set_psk_client_cs_callback(WOLFSSL* ssl,
     byte haveRSA = 1;
     int  keySz   = 0;
 
-    WOLFSSL_ENTER("wolfSSL_set_psk_client_cs_callback");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL)
         return;
@@ -12845,7 +12845,7 @@ void wolfSSL_set_psk_client_cs_callback(WOLFSSL* ssl,
 void wolfSSL_CTX_set_psk_client_tls13_callback(WOLFSSL_CTX* ctx,
                                                wc_psk_client_tls13_callback cb)
 {
-    WOLFSSL_ENTER("wolfSSL_CTX_set_psk_client_tls13_callback");
+    WOLFSSL_ENTER_FN();
 
     if (ctx == NULL)
         return;
@@ -12866,7 +12866,7 @@ void wolfSSL_set_psk_client_tls13_callback(WOLFSSL* ssl,
     byte haveRSA = 1;
     int  keySz   = 0;
 
-    WOLFSSL_ENTER("wolfSSL_set_psk_client_tls13_callback");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL)
         return;
@@ -12898,7 +12898,7 @@ void wolfSSL_set_psk_client_tls13_callback(WOLFSSL* ssl,
 void wolfSSL_CTX_set_psk_server_tls13_callback(WOLFSSL_CTX* ctx,
                                                wc_psk_server_tls13_callback cb)
 {
-    WOLFSSL_ENTER("wolfSSL_CTX_set_psk_server_tls13_callback");
+    WOLFSSL_ENTER_FN();
     if (ctx == NULL)
         return;
     ctx->havePSK = 1;
@@ -12917,7 +12917,7 @@ void wolfSSL_set_psk_server_tls13_callback(WOLFSSL* ssl,
     byte haveRSA = 1;
     int  keySz   = 0;
 
-    WOLFSSL_ENTER("wolfSSL_set_psk_server_tls13_callback");
+    WOLFSSL_ENTER_FN();
     if (ssl == NULL)
         return;
 
@@ -12993,7 +12993,7 @@ int wolfSSL_accept_TLSv13(WOLFSSL* ssl)
 #endif
     int ret = 0;
 
-    WOLFSSL_ENTER("wolfSSL_accept_TLSv13");
+    WOLFSSL_ENTER_FN();
 
 #ifdef HAVE_ERRNO_H
     errno = 0;
@@ -13614,7 +13614,7 @@ int wolfSSL_write_early_data(WOLFSSL* ssl, const void* data, int sz, int* outSz)
 {
     int ret = 0;
 
-    WOLFSSL_ENTER("wolfSSL_write_early_data");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL || data == NULL || sz < 0 || outSz == NULL)
         return BAD_FUNC_ARG;
@@ -13676,7 +13676,7 @@ int wolfSSL_read_early_data(WOLFSSL* ssl, void* data, int sz, int* outSz)
 {
     int ret = 0;
 
-    WOLFSSL_ENTER("wolfSSL_read_early_data");
+    WOLFSSL_ENTER_FN();
 
 
     if (ssl == NULL || data == NULL || sz < 0 || outSz == NULL)
@@ -13750,7 +13750,7 @@ int wolfSSL_get_early_data_status(const WOLFSSL* ssl)
 #ifdef HAVE_SECRET_CALLBACK
 int wolfSSL_set_tls13_secret_cb(WOLFSSL* ssl, Tls13SecretCb cb, void* ctx)
 {
-    WOLFSSL_ENTER("wolfSSL_set_tls13_secret_cb");
+    WOLFSSL_ENTER_FN();
     if (ssl == NULL)
         return WOLFSSL_FATAL_ERROR;
 

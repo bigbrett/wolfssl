@@ -71,7 +71,7 @@ TsipUserCtx *gCbCtx[MAX_FSPSM_CBINDEX];
 WOLFSSL_LOCAL int Renesas_cmn_Cleanup(WOLFSSL* ssl)
 {
     int ret = 0;
-    WOLFSSL_ENTER("Renesas_cmn_Cleanup");
+    WOLFSSL_ENTER_FN();
     (void) ssl;
 
 #if defined(WOLFSSL_RENESAS_TSIP_TLS)
@@ -90,7 +90,7 @@ WOLFSSL_LOCAL int Renesas_cmn_RsaSignCb(WOLFSSL* ssl,
                                 void* ctx)
 {
     int ret = CRYPTOCB_UNAVAILABLE;
-    WOLFSSL_ENTER("Renesas_cmn_RsaSignCb");
+    WOLFSSL_ENTER_FN();
 
     /* This is just a stub function that provides no logic */
 
@@ -109,7 +109,7 @@ WOLFSSL_LOCAL int Renesas_cmn_RsaSignCheckCb(WOLFSSL* ssl,
                                 void* ctx)
 {
     int ret = CRYPTOCB_UNAVAILABLE;
-    WOLFSSL_ENTER("Renesas_cmn_RsaSignCheckCb");
+    WOLFSSL_ENTER_FN();
 
     #if defined(WOLFSSL_RENESAS_TSIP)
 
@@ -128,7 +128,7 @@ WOLFSSL_LOCAL int Renesas_cmn_EccSignCb(WOLFSSL* ssl,
                                 void* ctx)
 {
     int ret = CRYPTOCB_UNAVAILABLE;
-    WOLFSSL_ENTER("Renesas_cmn_EccSignCb");
+    WOLFSSL_ENTER_FN();
 
     /* This is just a stub function that provides no logic */
 
@@ -149,7 +149,7 @@ static int Renesas_cmn_CryptoDevCb(int devIdArg, wc_CryptoInfo* info, void* ctx)
 {
     int ret = NOT_COMPILED_IN; /* return this to bypass HW and use SW */
 
-    WOLFSSL_ENTER("Renesas_cmn_CryptoDevCb");
+    WOLFSSL_ENTER_FN();
 
 #if defined(WOLFSSL_RENESAS_TSIP_TLS) \
     || defined(WOLFSSL_RENESAS_TSIP_CRYPTONLY)
@@ -540,7 +540,7 @@ void wc_CryptoCb_CleanupRenesasCmn(int* id)
  */
 WOLFSSL_LOCAL byte Renesas_cmn_checkCA(word32 cmIdx)
 {
-    WOLFSSL_ENTER("Renesas_cmn_checkCA");
+    WOLFSSL_ENTER_FN();
     return (cmIdx == g_CAscm_Idx? 1:0);
 }
 
@@ -549,7 +549,7 @@ WOLFSSL_LOCAL byte Renesas_cmn_checkCA(word32 cmIdx)
  */
 static byte fspsm_tsip_rootCAverified(void)
 {
-    WOLFSSL_ENTER("fspsm_tsip_rootCAverified");
+    WOLFSSL_ENTER_FN();
     return (g_CAscm_Idx != (uint32_t)-1 ? 1:0);
 }
 /* Renesas Security Library Common Callback
@@ -569,7 +569,7 @@ WOLFSSL_LOCAL int Renesas_cmn_RsaVerify(WOLFSSL* ssl, unsigned char* sig,
 {
     int ret = 0;
 
-    WOLFSSL_ENTER("Renesas_cmn_RsaVerify");
+    WOLFSSL_ENTER_FN();
 
 #if defined(WOLFSSL_RENESAS_TSIP_TLS)
     ret = wc_tsip_RsaVerify(ssl, sig, sigSz, out, key, keySz, ctx);
@@ -621,7 +621,7 @@ WOLFSSL_LOCAL int Renesas_cmn_EccVerify(WOLFSSL* ssl, const unsigned char* sig,
 {
     int ret = 0;
 
-    WOLFSSL_ENTER("Renesas_cmn_EccVerify");
+    WOLFSSL_ENTER_FN();
 
 #if defined(WOLFSSL_RENESAS_TSIP)
     ret = wc_tsip_EccVerify(ssl, sig, sigSz, hash, hashSz, key, keySz,
@@ -671,7 +671,7 @@ int wc_Renesas_cmn_RootCertVerify(const byte* cert, word32 cert_len,
 {
     int ret;
 
-    WOLFSSL_ENTER("wc_Renesas_cmn_RootCertVerify");
+    WOLFSSL_ENTER_FN();
 
     if (fspsm_tsip_rootCAverified() == 0) {
 
@@ -717,7 +717,7 @@ WOLFSSL_LOCAL int Renesas_cmn_TlsFinished(WOLFSSL* ssl, const byte *side,
     (void)hashSz;
     (void)ctx;
 
-    WOLFSSL_ENTER("Renesas_cmn_TlsFinished");
+    WOLFSSL_ENTER_FN();
 
     if (Renesas_cmn_usable(ssl, 1)) {
  #if defined(WOLFSSL_RENESAS_TSIP_TLS)
@@ -747,7 +747,7 @@ static int Renesas_cmn_EncryptKeys(WOLFSSL* ssl, void* ctx)
 {
     int ret;
 
-    WOLFSSL_ENTER("Renesas_cmn_EncryptKeys");
+    WOLFSSL_ENTER_FN();
 
     /* sanity check */
     if (ssl == NULL || ctx == NULL)
@@ -796,7 +796,7 @@ WOLFSSL_LOCAL int Renesas_cmn_generateSessionKey(WOLFSSL* ssl, void* ctx)
 #endif
     (void)ctx;
 
-    WOLFSSL_ENTER("Renesas_cmn_generateSessionKey");
+    WOLFSSL_ENTER_FN();
     if (Renesas_cmn_usable(ssl, 0)) {
 #if defined(WOLFSSL_RENESAS_TSIP_TLS)
         ret = wc_tsip_generateSessionKey(ssl, (TsipUserCtx*)ctx, cbInfo->devId);
@@ -841,7 +841,7 @@ WOLFSSL_LOCAL int Renesas_cmn_generatePremasterSecret(WOLFSSL* ssl,
     (void) ctx;
     (void) ssl;
 
-    WOLFSSL_ENTER("Renesas_cmn_generatePremasterSecret");
+    WOLFSSL_ENTER_FN();
 
 #if defined(WOLFSSL_RENESAS_TSIP_TLS)
     if (Renesas_cmn_usable(ssl, 0)) {
@@ -881,7 +881,7 @@ WOLFSSL_LOCAL int Renesas_cmn_genMasterSecret(struct WOLFSSL* ssl, void* ctx)
     (void) ret;
     (void) ctx;
 
-    WOLFSSL_ENTER("Renesas_cmn_genMasterSecret");
+    WOLFSSL_ENTER_FN();
 
  #if defined(WOLFSSL_RENESAS_TSIP_TLS)
 
@@ -976,7 +976,7 @@ WOLFSSL_LOCAL int Renesas_cmn_RsaEnc(WOLFSSL* ssl, const unsigned char* in,
     (void)keySz;
     (void)EncSz;
 
-    WOLFSSL_ENTER("Renesas_cmn_RsaEnc");
+    WOLFSSL_ENTER_FN();
 
     /* sanity check */
     if (ssl == NULL || in == NULL || out == NULL || keyDer == NULL ||
@@ -1035,7 +1035,7 @@ WOLFSSL_LOCAL int Renesas_cmn_VerifyHmac(WOLFSSL *ssl, const byte* message,
     int ret;
     (void)ctx;
 
-    WOLFSSL_ENTER("Renesas_cmn_VerifyHmac");
+    WOLFSSL_ENTER_FN();
 
 #if defined(WOLFSSL_RENESAS_TSIP_TLS)
     if (tsip_usable(ssl, 1)) {
@@ -1074,7 +1074,7 @@ WOLFSSL_LOCAL int Renesas_cmn_TLS_hmac(WOLFSSL* ssl, byte* digest,
     int ret;
     byte   myInner[WOLFSSL_TLS_HMAC_INNER_SZ];
 
-    WOLFSSL_ENTER("Renesas_cmn_TLS_hmac");
+    WOLFSSL_ENTER_FN();
 
 #if defined(WOLFSSL_RENESAS_TSIP_TLS)
     if (Renesas_cmn_usable(ssl, 1)) {
@@ -1145,7 +1145,7 @@ WOLFSSL_LOCAL int Renesas_cmn_SigPkCbRsaVerify(unsigned char* sig,
     (void)keyDer;
     (void)keySz;
 
-    WOLFSSL_ENTER("Renesas_cmn_SigPkCbRsaVerify");
+    WOLFSSL_ENTER_FN();
 
     /* sanity check */
     if (sig == NULL || out == NULL || keyDer == NULL || ctx == NULL)
@@ -1228,7 +1228,7 @@ WOLFSSL_LOCAL int Renesas_cmn_SigPkCbEccVerify(const unsigned char* sig,
     (void)hash;
     (void)hashSz;
 
-    WOLFSSL_ENTER("Renesas_cmn_SigPkCbEccVerify");
+    WOLFSSL_ENTER_FN();
 
     /* sanity check */
     if (sig == NULL || keyDer == NULL || hash == NULL || ctx == NULL ||

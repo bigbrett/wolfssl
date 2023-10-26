@@ -64292,7 +64292,7 @@ static int MyRpkVerifyCb(int mode, WOLFSSL_X509_STORE_CTX* strctx)
     int ret = WOLFSSL_SUCCESS;
     (void)mode;
     (void)strctx;
-    WOLFSSL_ENTER("MyRpkVerifyCb");
+    WOLFSSL_ENTER_FN();
     return ret;
 }
 #endif /* WOLFSSL_ALWAYS_VERIFY_CB */

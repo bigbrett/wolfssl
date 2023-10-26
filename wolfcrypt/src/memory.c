@@ -650,7 +650,7 @@ int wolfSSL_load_static_memory(byte* buffer, word32 sz, int flag,
     word32 memSz = (word32)sizeof(wc_Memory);
     word32 padSz = -(int)memSz & (WOLFSSL_STATIC_ALIGN - 1);
 
-    WOLFSSL_ENTER("wolfSSL_load_static_memory");
+    WOLFSSL_ENTER_FN();
 
     if (buffer == NULL) {
         return BAD_FUNC_ARG;
@@ -733,7 +733,7 @@ int wolfSSL_StaticBufferSz(byte* buffer, word32 sz, int flag)
     word32 memSz = (word32)sizeof(wc_Memory);
     word32 padSz = -(int)memSz & (WOLFSSL_STATIC_ALIGN - 1);
 
-    WOLFSSL_ENTER("wolfSSL_static_size");
+    WOLFSSL_ENTER_FN();
 
     if (buffer == NULL) {
         return BAD_FUNC_ARG;

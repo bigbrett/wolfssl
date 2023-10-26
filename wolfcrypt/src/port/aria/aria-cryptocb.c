@@ -103,7 +103,7 @@ int wc_AriaInitSha(MC_HSESSION* hSession, MC_ALGID algo)
 int wc_AriaShaUpdate(MC_HSESSION hSession, byte* data, word32 len)
 {
     MC_RV rv = MC_OK;
-    WOLFSSL_ENTER("AriaShaUpdate");
+    WOLFSSL_ENTER_FN();
 
     if (data == NULL) {
         return BAD_FUNC_ARG;
@@ -123,7 +123,7 @@ int wc_AriaShaUpdate(MC_HSESSION hSession, byte* data, word32 len)
 int wc_AriaShaFinal(MC_HSESSION hSession, byte* out, word32* len)
 {
     MC_RV rv = MC_OK;
-    WOLFSSL_ENTER("AriaShaFinal");
+    WOLFSSL_ENTER_FN();
 
     if (out == NULL || len == NULL) {
         return BAD_FUNC_ARG;
@@ -148,7 +148,7 @@ int wc_AriaShaFinal(MC_HSESSION hSession, byte* out, word32* len)
 int wc_AriaFree(MC_HSESSION* hSession, MC_HOBJECT *obj1)
 {
     MC_RV rv = MC_OK;
-    WOLFSSL_ENTER("AriaFree");
+    WOLFSSL_ENTER_FN();
 
     if (hSession == NULL && obj1 != NULL) {
         return BAD_FUNC_ARG;
@@ -188,7 +188,7 @@ int wc_AriaSign(byte* in, word32 inSz, byte* out, word32* outSz, ecc_key* key)
     byte keyAsn1[ARIA_KEYASN1_MAXSZ];
     word32 keyAsn1Sz=(word32)sizeof(keyAsn1);
 
-    WOLFSSL_ENTER("AriaSign");
+    WOLFSSL_ENTER_FN();
 
     if (in == NULL || out == NULL || outSz == NULL || key == NULL) {
         return BAD_FUNC_ARG;
@@ -263,7 +263,7 @@ int wc_AriaVerify(byte* sig, word32 sigSz, byte* hash, word32 hashSz,
     byte keyarr[ARIA_KEYASN1_MAXSZ];
     word32 keySz=sizeof(keyarr);
 
-    WOLFSSL_ENTER("AriaVerify");
+    WOLFSSL_ENTER_FN();
 
     if (sig == NULL || hash == NULL || res == NULL || key == NULL) {
         return BAD_FUNC_ARG;
@@ -343,7 +343,7 @@ int wc_AriaDerive(ecc_key* private_key, ecc_key* public_key,
     byte privAsn1[ARIA_KEYASN1_MAXSZ];
     word32 privAsn1Sz=sizeof(privAsn1);
 
-    WOLFSSL_ENTER("AriaDerive");
+    WOLFSSL_ENTER_FN();
 
     if (private_key == NULL || public_key == NULL ||
             out == NULL || outSz == NULL) {

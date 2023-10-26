@@ -139,7 +139,7 @@ int wolfssl_bn_set_value(WOLFSSL_BIGNUM** bn, mp_int* mpi)
     WOLFSSL_BIGNUM* a = NULL;
 
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfssl_bn_set_value");
+    WOLFSSL_ENTER_FN();
 #endif
 
     /* Validate parameters. */
@@ -198,7 +198,7 @@ WOLFSSL_BIGNUM* wolfSSL_BN_new(void)
     WOLFSSL_BIGNUM* bn = NULL;
 
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfSSL_BN_new");
+    WOLFSSL_ENTER_FN();
 #endif
 
     /* Allocate memory for big number. */
@@ -227,7 +227,7 @@ WOLFSSL_BIGNUM* wolfSSL_BN_new(void)
 void wolfSSL_BN_init(WOLFSSL_BIGNUM* bn)
 {
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfSSL_BN_init");
+    WOLFSSL_ENTER_FN();
 #endif
 
     /* Validate parameter. */
@@ -247,7 +247,7 @@ void wolfSSL_BN_init(WOLFSSL_BIGNUM* bn)
 void wolfSSL_BN_free(WOLFSSL_BIGNUM* bn)
 {
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfSSL_BN_free");
+    WOLFSSL_ENTER_FN();
 #endif
 
     /* Validate parameter. */
@@ -272,7 +272,7 @@ void wolfSSL_BN_free(WOLFSSL_BIGNUM* bn)
 void wolfSSL_BN_clear_free(WOLFSSL_BIGNUM* bn)
 {
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfSSL_BN_clear_free");
+    WOLFSSL_ENTER_FN();
 #endif
 
     /* Validate parameter. */
@@ -294,7 +294,7 @@ void wolfSSL_BN_clear_free(WOLFSSL_BIGNUM* bn)
 void wolfSSL_BN_clear(WOLFSSL_BIGNUM* bn)
 {
 #ifdef WOLFSSL_DEBUG_OPENSSL
-    WOLFSSL_ENTER("wolfSSL_BN_clear");
+    WOLFSSL_ENTER_FN();
 #endif
 
     /* Validate parameter. */
@@ -318,7 +318,7 @@ const WOLFSSL_BIGNUM* wolfSSL_BN_value_one(void)
 {
     WOLFSSL_BIGNUM* one;
 
-    WOLFSSL_ENTER("wolfSSL_BN_value_one");
+    WOLFSSL_ENTER_FN();
 
     /* Get the global object. */
     one = bn_one;
@@ -370,7 +370,7 @@ WOLFSSL_BIGNUM* wolfSSL_BN_dup(const WOLFSSL_BIGNUM* bn)
     int err = 0;
     WOLFSSL_BIGNUM* ret = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_BN_dup");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (BN_IS_NULL(bn)) {
@@ -406,7 +406,7 @@ WOLFSSL_BIGNUM* wolfSSL_BN_dup(const WOLFSSL_BIGNUM* bn)
  */
 WOLFSSL_BIGNUM* wolfSSL_BN_copy(WOLFSSL_BIGNUM* r, const WOLFSSL_BIGNUM* bn)
 {
-    WOLFSSL_ENTER("wolfSSL_BN_copy");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(r) || BN_IS_NULL(bn)) {
@@ -450,7 +450,7 @@ int wolfSSL_BN_bn2bin(const WOLFSSL_BIGNUM* bn, unsigned char* r)
 {
     int ret;
 
-    WOLFSSL_ENTER("wolfSSL_BN_bn2bin");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(bn)) {
@@ -489,7 +489,7 @@ WOLFSSL_BIGNUM* wolfSSL_BN_bin2bn(const unsigned char* data, int len,
 {
     WOLFSSL_BIGNUM* bn = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_BN_bin2bn");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((data == NULL) || (len < 0)) {
@@ -588,7 +588,7 @@ static char* wolfssl_bn_bn2radix(const WOLFSSL_BIGNUM* bn, int radix)
  */
 char* wolfSSL_BN_bn2hex(const WOLFSSL_BIGNUM *bn)
 {
-    WOLFSSL_ENTER("wolfSSL_BN_bn2hex");
+    WOLFSSL_ENTER_FN();
     return wolfssl_bn_bn2radix(bn, MP_RADIX_HEX);
 }
 
@@ -666,7 +666,7 @@ static int wolfssl_bn_radix2bn(WOLFSSL_BIGNUM** bn, const char* str, int radix)
  */
 int wolfSSL_BN_hex2bn(WOLFSSL_BIGNUM** bn, const char* str)
 {
-    WOLFSSL_ENTER("wolfSSL_BN_hex2bn");
+    WOLFSSL_ENTER_FN();
     return wolfssl_bn_radix2bn(bn, str, MP_RADIX_HEX);
 }
 
@@ -680,7 +680,7 @@ int wolfSSL_BN_hex2bn(WOLFSSL_BIGNUM** bn, const char* str)
  */
 char* wolfSSL_BN_bn2dec(const WOLFSSL_BIGNUM *bn)
 {
-    WOLFSSL_ENTER("wolfSSL_BN_bn2hex");
+    WOLFSSL_ENTER_FN();
     return wolfssl_bn_bn2radix(bn, MP_RADIX_DEC);
 }
 #else
@@ -692,7 +692,7 @@ char* wolfSSL_BN_bn2dec(const WOLFSSL_BIGNUM *bn)
 char* wolfSSL_BN_bn2dec(const WOLFSSL_BIGNUM* bn)
 {
     (void)bn;
-    WOLFSSL_ENTER("wolfSSL_BN_bn2dec");
+    WOLFSSL_ENTER_FN();
     return NULL;
 }
 #endif /* defined(WOLFSSL_KEY_GEN) || defined(HAVE_COMP_KEY) */
@@ -718,7 +718,7 @@ char* wolfSSL_BN_bn2dec(const WOLFSSL_BIGNUM* bn)
  */
 int wolfSSL_BN_dec2bn(WOLFSSL_BIGNUM** bn, const char* str)
 {
-    WOLFSSL_ENTER("wolfSSL_BN_bn2dec");
+    WOLFSSL_ENTER_FN();
     return wolfssl_bn_radix2bn(bn, str, MP_RADIX_DEC);
 }
 #else
@@ -732,7 +732,7 @@ int wolfSSL_BN_dec2bn(WOLFSSL_BIGNUM** bn, const char* str)
 {
     (void)bn;
     (void)str;
-    WOLFSSL_ENTER("wolfSSL_BN_bn2dec");
+    WOLFSSL_ENTER_FN();
     return 0;
 }
 #endif
@@ -753,7 +753,7 @@ int wolfSSL_BN_num_bytes(const WOLFSSL_BIGNUM* bn)
 {
     int ret;
 
-    WOLFSSL_ENTER("wolfSSL_BN_num_bytes");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (BN_IS_NULL(bn)) {
@@ -779,7 +779,7 @@ int wolfSSL_BN_num_bits(const WOLFSSL_BIGNUM* bn)
 {
     int ret;
 
-    WOLFSSL_ENTER("wolfSSL_BN_num_bits");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (BN_IS_NULL(bn)) {
@@ -829,7 +829,7 @@ int wolfSSL_BN_is_odd(const WOLFSSL_BIGNUM* bn)
 {
     int ret;
 
-    WOLFSSL_ENTER("wolfSSL_BN_is_odd");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (BN_IS_NULL(bn)) {
@@ -858,7 +858,7 @@ int wolfSSL_mask_bits(WOLFSSL_BIGNUM* bn, int n)
 {
     (void)bn;
     (void)n;
-    WOLFSSL_ENTER("wolfSSL_BN_mask_bits");
+    WOLFSSL_ENTER_FN();
     WOLFSSL_STUB("BN_mask_bits");
     return 0;
 }
@@ -1044,7 +1044,7 @@ WOLFSSL_BN_ULONG wolfSSL_BN_get_word(const WOLFSSL_BIGNUM* bn)
 {
     WOLFSSL_BN_ULONG ret;
 
-    WOLFSSL_ENTER("wolfSSL_BN_get_word");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (BN_IS_NULL(bn)) {
@@ -1077,7 +1077,7 @@ int wolfSSL_BN_set_word(WOLFSSL_BIGNUM* bn, unsigned long w)
 {
     int ret = 1;
 
-    WOLFSSL_ENTER("wolfSSL_BN_set_word");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(bn)) {
@@ -1118,7 +1118,7 @@ int wolfSSL_BN_cmp(const WOLFSSL_BIGNUM* a, const WOLFSSL_BIGNUM* b)
     int ret;
     int bIsNull;
 
-    WOLFSSL_ENTER("wolfSSL_BN_cmp");
+    WOLFSSL_ENTER_FN();
 
     /* Must know whether b is NULL. */
     bIsNull = BN_IS_NULL(b);
@@ -1168,7 +1168,7 @@ int wolfSSL_BN_is_zero(const WOLFSSL_BIGNUM* bn)
 {
     int ret;
 
-    WOLFSSL_ENTER("wolfSSL_BN_is_zero");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (BN_IS_NULL(bn)) {
@@ -1195,7 +1195,7 @@ int wolfSSL_BN_is_one(const WOLFSSL_BIGNUM* bn)
 {
     int ret;
 
-    WOLFSSL_ENTER("wolfSSL_BN_is_one");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (BN_IS_NULL(bn)) {
@@ -1222,7 +1222,7 @@ int wolfSSL_BN_is_word(const WOLFSSL_BIGNUM* bn, WOLFSSL_BN_ULONG w)
 {
     int ret;
 
-    WOLFSSL_ENTER("wolfSSL_BN_is_word");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameter. */
     if (BN_IS_NULL(bn)) {
@@ -1381,7 +1381,7 @@ int wolfSSL_BN_add_word(WOLFSSL_BIGNUM *bn, WOLFSSL_BN_ULONG w)
 {
     int ret;
 
-    WOLFSSL_ENTER("wolfSSL_BN_add_word");
+    WOLFSSL_ENTER_FN();
 
     ret = wolfssl_bn_add_word_int(bn, w, 0);
 
@@ -1403,7 +1403,7 @@ int wolfSSL_BN_sub_word(WOLFSSL_BIGNUM* bn, WOLFSSL_BN_ULONG w)
 {
     int ret;
 
-    WOLFSSL_ENTER("wolfSSL_BN_sub_word");
+    WOLFSSL_ENTER_FN();
 
     ret = wolfssl_bn_add_word_int(bn, w, 1);
 
@@ -1426,7 +1426,7 @@ WOLFSSL_BN_ULONG wolfSSL_BN_mod_word(const WOLFSSL_BIGNUM *bn,
 {
     WOLFSSL_BN_ULONG ret = 0;
 
-    WOLFSSL_ENTER("wolfSSL_BN_mod_word");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(bn)) {
@@ -1508,7 +1508,7 @@ int wolfSSL_BN_lshift(WOLFSSL_BIGNUM *r, const WOLFSSL_BIGNUM *bn, int n)
 {
     int ret = 1;
 
-    WOLFSSL_ENTER("wolfSSL_BN_lshift");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(r) || BN_IS_NULL(bn)) {
@@ -1542,7 +1542,7 @@ int wolfSSL_BN_rshift(WOLFSSL_BIGNUM *r, const WOLFSSL_BIGNUM *bn, int n)
 {
     int ret = 1;
 
-    WOLFSSL_ENTER("wolfSSL_BN_rshift");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(r) || BN_IS_NULL(bn)) {
@@ -1585,7 +1585,7 @@ int wolfSSL_BN_add(WOLFSSL_BIGNUM *r, WOLFSSL_BIGNUM *a, WOLFSSL_BIGNUM *b)
 {
     int ret = 1;
 
-    WOLFSSL_ENTER("wolfSSL_BN_add");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(r) || BN_IS_NULL(a) || BN_IS_NULL(b)) {
@@ -1618,7 +1618,7 @@ int wolfSSL_BN_sub(WOLFSSL_BIGNUM* r, const WOLFSSL_BIGNUM* a,
 {
     int ret = 1;
 
-    WOLFSSL_ENTER("wolfSSL_BN_sub");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(r) || BN_IS_NULL(a) || BN_IS_NULL(b)) {
@@ -1654,7 +1654,7 @@ int wolfSSL_BN_mul(WOLFSSL_BIGNUM *r, WOLFSSL_BIGNUM *a, WOLFSSL_BIGNUM *b,
 
     (void)ctx;
 
-    WOLFSSL_ENTER("wolfSSL_BN_mul");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(r) || BN_IS_NULL(a) || BN_IS_NULL(b)) {
@@ -1694,7 +1694,7 @@ int wolfSSL_BN_div(WOLFSSL_BIGNUM* dv, WOLFSSL_BIGNUM* rem,
     /* BN context not needed. */
     (void)ctx;
 
-    WOLFSSL_ENTER("wolfSSL_BN_div");
+    WOLFSSL_ENTER_FN();
 
     if (BN_IS_NULL(res)) {
         res = wolfSSL_BN_new();
@@ -1737,7 +1737,7 @@ int wolfSSL_BN_mod(WOLFSSL_BIGNUM* r, const WOLFSSL_BIGNUM* a,
 
     (void)c;
 
-    WOLFSSL_ENTER("wolfSSL_BN_mod");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(r) || BN_IS_NULL(a) || BN_IS_NULL(b)) {
@@ -1778,7 +1778,7 @@ int wolfSSL_BN_mod_add(WOLFSSL_BIGNUM *r, const WOLFSSL_BIGNUM *a,
     /* BN context not needed. */
     (void)ctx;
 
-    WOLFSSL_ENTER("wolfSSL_BN_add");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(r) || BN_IS_NULL(a) || BN_IS_NULL(b) || BN_IS_NULL(m)) {
@@ -1817,7 +1817,7 @@ int wolfSSL_BN_mod_mul(WOLFSSL_BIGNUM *r, const WOLFSSL_BIGNUM *a,
     /* BN context not needed. */
     (void)ctx;
 
-    WOLFSSL_ENTER("wolfSSL_BN_mod_mul");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(r) || BN_IS_NULL(a) || BN_IS_NULL(b) || BN_IS_NULL(m)) {
@@ -1856,7 +1856,7 @@ int wolfSSL_BN_mod_exp(WOLFSSL_BIGNUM *r, const WOLFSSL_BIGNUM *a,
     /* BN context not needed. */
     (void)ctx;
 
-    WOLFSSL_ENTER("wolfSSL_BN_mod_exp");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(r) || BN_IS_NULL(a) || BN_IS_NULL(e) || BN_IS_NULL(m)) {
@@ -1894,7 +1894,7 @@ WOLFSSL_BIGNUM *wolfSSL_BN_mod_inverse(WOLFSSL_BIGNUM *r, WOLFSSL_BIGNUM *a,
     /* BN context not needed. */
     (void)ctx;
 
-    WOLFSSL_ENTER("wolfSSL_BN_mod_inverse");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(a) || BN_IS_NULL(m) || ((r != NULL) &&
@@ -1953,7 +1953,7 @@ int wolfSSL_BN_gcd(WOLFSSL_BIGNUM* r, WOLFSSL_BIGNUM* a, WOLFSSL_BIGNUM* b,
     /* BN context not needed. */
     (void)ctx;
 
-    WOLFSSL_ENTER("wolfSSL_BN_gcd");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(r) || BN_IS_NULL(a) || BN_IS_NULL(b)) {
@@ -1997,7 +1997,7 @@ int wolfSSL_BN_rand(WOLFSSL_BIGNUM* bn, int bits, int top, int bottom)
     word32 len = (word32)((bits + 7) / 8);
     WC_RNG* rng;
 
-    WOLFSSL_ENTER("wolfSSL_BN_rand");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(bn)) {
@@ -2121,7 +2121,7 @@ int wolfSSL_BN_rand_range(WOLFSSL_BIGNUM *r, const WOLFSSL_BIGNUM *range)
 {
     int ret = 1;
 
-    WOLFSSL_ENTER("wolfSSL_BN_rand_range");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if (BN_IS_NULL(r) || BN_IS_NULL(range)) {
@@ -2200,7 +2200,7 @@ int wolfSSL_BN_generate_prime_ex(WOLFSSL_BIGNUM* prime, int bits,
     /* Callback not used. */
     (void)cb;
 
-    WOLFSSL_ENTER("wolfSSL_BN_generate_prime_ex");
+    WOLFSSL_ENTER_FN();
 
     /* Check unsupported parameters. */
     if ((safe == 1) || (add != NULL) || (rem != NULL)) {
@@ -2264,7 +2264,7 @@ int wolfSSL_BN_is_prime_ex(const WOLFSSL_BIGNUM *bn, int checks,
     (void)ctx;
     (void)cb;
 
-    WOLFSSL_ENTER("wolfSSL_BN_is_prime_ex");
+    WOLFSSL_ENTER_FN();
 
     if (BN_IS_NULL(bn)) {
         WOLFSSL_MSG("bn NULL error");
@@ -2321,7 +2321,7 @@ int wolfSSL_BN_print_fp(XFILE fp, const WOLFSSL_BIGNUM *bn)
     int ret = 1;
     char* buf = NULL;
 
-    WOLFSSL_ENTER("wolfSSL_BN_print_fp");
+    WOLFSSL_ENTER_FN();
 
     /* Validate parameters. */
     if ((fp == XBADFILE) || BN_IS_NULL(bn)) {
@@ -2361,7 +2361,7 @@ WOLFSSL_BN_CTX* wolfSSL_BN_CTX_new(void)
 {
     /* wolfcrypt doesn't need BN context. */
     static int ctx;
-    WOLFSSL_ENTER("wolfSSL_BN_CTX_new");
+    WOLFSSL_ENTER_FN();
     return (WOLFSSL_BN_CTX*)&ctx;
 }
 
@@ -2374,7 +2374,7 @@ WOLFSSL_BN_CTX* wolfSSL_BN_CTX_new(void)
 void wolfSSL_BN_CTX_init(WOLFSSL_BN_CTX* ctx)
 {
     (void)ctx;
-    WOLFSSL_ENTER("wolfSSL_BN_CTX_init");
+    WOLFSSL_ENTER_FN();
 }
 
 
@@ -2387,7 +2387,7 @@ void wolfSSL_BN_CTX_init(WOLFSSL_BN_CTX* ctx)
 void wolfSSL_BN_CTX_free(WOLFSSL_BN_CTX* ctx)
 {
     (void)ctx;
-    WOLFSSL_ENTER("wolfSSL_BN_CTX_free");
+    WOLFSSL_ENTER_FN();
     /* Don't do anything since using dummy, static BN context. */
 }
 
@@ -2402,7 +2402,7 @@ WOLFSSL_BIGNUM *wolfSSL_BN_CTX_get(WOLFSSL_BN_CTX *ctx)
     /* ctx is not used - returning a new big number. */
     (void)ctx;
 
-    WOLFSSL_ENTER("wolfSSL_BN_CTX_get");
+    WOLFSSL_ENTER_FN();
 
     /* Return a new big number. */
     return wolfSSL_BN_new();
@@ -2419,7 +2419,7 @@ void wolfSSL_BN_CTX_start(WOLFSSL_BN_CTX *ctx)
 {
     (void)ctx;
 
-    WOLFSSL_ENTER("wolfSSL_BN_CTX_start");
+    WOLFSSL_ENTER_FN();
     WOLFSSL_STUB("BN_CTX_start");
     WOLFSSL_MSG("wolfSSL_BN_CTX_start TBD");
 }

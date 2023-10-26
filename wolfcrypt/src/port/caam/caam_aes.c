@@ -106,7 +106,7 @@ int  wc_AesCbcEncrypt(Aes* aes, byte* out,
 {
     word32  blocks;
 
-    WOLFSSL_ENTER("wc_AesCbcEncrypt");
+    WOLFSSL_ENTER_FN();
     if (aes == NULL || out == NULL || in == NULL) {
         return BAD_FUNC_ARG;
     }
@@ -159,7 +159,7 @@ int  wc_AesCbcDecrypt(Aes* aes, byte* out,
 {
     word32  blocks;
 
-    WOLFSSL_ENTER("wc_AesCbcDecrypt");
+    WOLFSSL_ENTER_FN();
     if (aes == NULL || out == NULL || in == NULL) {
         return BAD_FUNC_ARG;
     }

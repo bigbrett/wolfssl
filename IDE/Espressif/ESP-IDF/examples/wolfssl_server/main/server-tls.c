@@ -139,7 +139,7 @@ void tls_smp_server_task()
     WOLFSSL_CTX* ctx;
     WOLFSSL*     ssl;
 
-    WOLFSSL_ENTER("tls_smp_server_task");
+    WOLFSSL_ENTER_FN();
 
 #ifdef DEBUG_WOLFSSL
     WOLFSSL_MSG("Debug ON");

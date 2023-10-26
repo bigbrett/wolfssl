@@ -118,7 +118,7 @@ WOLFSSL_API int tsip_use_PublicKey_buffer_TLS(WOLFSSL* ssl,
     int ret = 0;
     TsipUserCtx* tuc = NULL;
 
-    WOLFSSL_ENTER("tsip_use_PublicKey_buffer_TLS");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL
     || keyBuf == NULL || keyBufLen == 0) {
@@ -148,7 +148,7 @@ WOLFSSL_API int tsip_use_PrivateKey_buffer_TLS(struct WOLFSSL* ssl,
     int ret = 0;
     TsipUserCtx* tuc = NULL;
 
-    WOLFSSL_ENTER("tsip_use_PrivateKey_buffer_TLS");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL || keyBuf == NULL || keyBufLen == 0 ) {
         ret = BAD_FUNC_ARG;
@@ -187,7 +187,7 @@ WOLFSSL_API int tsip_use_PublicKey_buffer_crypt(TsipUserCtx *uc,
     int ret = 0;
     TsipUserCtx* tuc = NULL;
 
-    WOLFSSL_ENTER("tsip_use_PublicKey_buffer_crypt");
+    WOLFSSL_ENTER_FN();
 
     if (uc == NULL
     || keyBuf == NULL || keyBufLen == 0) {
@@ -217,7 +217,7 @@ WOLFSSL_API int tsip_use_PrivateKey_buffer_crypt(TsipUserCtx *uc,
     int ret = 0;
     TsipUserCtx* tuc = NULL;
 
-    WOLFSSL_ENTER("tsip_use_PrivateKey_buffer_crypt");
+    WOLFSSL_ENTER_FN();
 
     if (uc == NULL || keyBuf == NULL || keyBufLen == 0 ) {
         ret = BAD_FUNC_ARG;
@@ -247,7 +247,7 @@ WOLFSSL_API int  tsip_set_clientPrivateKeyEnc(const byte* encKey, int keyType)
 {
     int ret = 0;
 
-    WOLFSSL_ENTER("tsip_set_clientPrivateKeyEnc");
+    WOLFSSL_ENTER_FN();
 
     if (ret == 0) {
         g_user_key_info.encrypted_user_private_key      = (uint8_t*)encKey;
@@ -321,7 +321,7 @@ WOLFSSL_LOCAL int tsip_Tls13GenEccKeyPair(WOLFSSL* ssl, KeyShareEntry* kse)
     ecc_key*        ecckey = NULL;
     TsipUserCtx*    tuc = NULL;
 
-    WOLFSSL_ENTER("tsip_Tls13GenEccKeyPair");
+    WOLFSSL_ENTER_FN();
     
     if (ssl == NULL || kse == NULL)
         ret = BAD_FUNC_ARG;
@@ -443,7 +443,7 @@ WOLFSSL_LOCAL int tsip_Tls13GenSharedSecret(struct WOLFSSL* ssl,
     uint8_t*        pubkeyraw = NULL;
     TsipUserCtx*    tuc = NULL;
 
-    WOLFSSL_ENTER("tsip_Tls13GenSharedSecret");
+    WOLFSSL_ENTER_FN();
     if (ssl == NULL || kse == NULL)
         ret = BAD_FUNC_ARG;
 
@@ -524,7 +524,7 @@ WOLFSSL_LOCAL int tsip_Tls13DeriveEarlySecret(struct WOLFSSL* ssl)
     int ret = 0;
     TsipUserCtx*    tuc = NULL;
 
-    WOLFSSL_ENTER("tsip_Tls13DeriveEarlySecret");
+    WOLFSSL_ENTER_FN();
     if (ssl == NULL)
         ret = BAD_FUNC_ARG;
 
@@ -563,7 +563,7 @@ WOLFSSL_LOCAL int tsip_Tls13DeriveHandshakeSecret(struct WOLFSSL* ssl)
     int isTLS13 = 0;
     TsipUserCtx*    tuc = NULL;
 
-    WOLFSSL_ENTER("tsip_Tls13DeriveHandshakeSecret");
+    WOLFSSL_ENTER_FN();
     if (ssl == NULL)
         ret = BAD_FUNC_ARG;
 
@@ -635,7 +635,7 @@ static int tsipTls13DeriveClientHandshakeKeys(struct WOLFSSL* ssl)
     byte            hash[WC_SHA256_DIGEST_SIZE];
 
 
-    WOLFSSL_ENTER("tsipTls13DeriveClientHandshakeKeys");
+    WOLFSSL_ENTER_FN();
     if (ssl == NULL)
         ret = BAD_FUNC_ARG;
 
@@ -719,7 +719,7 @@ static int tsipTls13DeriveServerHandshakeKeys(struct WOLFSSL* ssl)
     byte            hash[WC_SHA256_DIGEST_SIZE];
 
 
-    WOLFSSL_ENTER("tsipTls13DeriveServerHandshakeKeys");
+    WOLFSSL_ENTER_FN();
     if (ssl == NULL)
         ret = BAD_FUNC_ARG;
 
@@ -803,7 +803,7 @@ static int tsipTls13DeriveTrafficKeys(struct WOLFSSL* ssl)
     byte            hash[WC_SHA256_DIGEST_SIZE];
 
 
-    WOLFSSL_ENTER("tsipTls13DeriveTrafficKeys");
+    WOLFSSL_ENTER_FN();
     if (ssl == NULL)
         ret = BAD_FUNC_ARG;
 
@@ -893,7 +893,7 @@ static int tsipTls13UpdateClientTrafficKeys(struct WOLFSSL* ssl)
     int             isTLS13 = 0;
     TsipUserCtx*    tuc = NULL;
 
-     WOLFSSL_ENTER("tsipTls13UpdateClientTrafficKeys");
+     WOLFSSL_ENTER_FN();
 
     if (ssl == NULL)
         ret = BAD_FUNC_ARG;
@@ -965,7 +965,7 @@ static int tsipTls13UpdateServerTrafficKeys(struct WOLFSSL* ssl)
     int             isTLS13 = 0;
     TsipUserCtx*    tuc = NULL;
 
-     WOLFSSL_ENTER("tsipTls13UpdateServerTrafficKeys");
+     WOLFSSL_ENTER_FN();
 
     if (ssl == NULL)
         ret = BAD_FUNC_ARG;
@@ -1052,7 +1052,7 @@ WOLFSSL_LOCAL int tsip_Tls13DeriveKeys(struct WOLFSSL* ssl,
     int ret = 0;
     int provision;
 
-    WOLFSSL_ENTER("tsip_Tls13DeriveKeys");
+    WOLFSSL_ENTER_FN();
 
     if (side == ENCRYPT_AND_DECRYPT_SIDE) {
         provision = PROVISION_CLIENT_SERVER;
@@ -1136,7 +1136,7 @@ WOLFSSL_LOCAL int tsip_Tls13DeriveMasterSecret(struct WOLFSSL* ssl)
     int             isTLS13 = 0;
     TsipUserCtx*    tuc = NULL;
 
-    WOLFSSL_ENTER("tsip_Tls13DeriveMasterSecret");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL)
         ret = BAD_FUNC_ARG;
@@ -1217,7 +1217,7 @@ static int tsipTls13VerifyHandshake(struct WOLFSSL* ssl,
     TsipUserCtx*    tuc = NULL;
     word32          msgHash[WC_SHA256_DIGEST_SIZE/sizeof(word32)];
 
-    WOLFSSL_ENTER("tsipTls13VerifyHandshake");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL)
         ret = BAD_FUNC_ARG;
@@ -1314,7 +1314,7 @@ WOLFSSL_LOCAL int tsip_Tls13HandleFinished(
 {
     int ret = 0;
 
-    WOLFSSL_ENTER("tsip_Tls13HandleFinished");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL || input == NULL || inOutIdx == NULL) {
         ret = BAD_FUNC_ARG;
@@ -1366,7 +1366,7 @@ WOLFSSL_LOCAL int tsip_Tls13BuildMessage(struct WOLFSSL* ssl,
     RecordLayerHeader* rl = NULL;
     (void)outSz;
     
-    WOLFSSL_ENTER("tsip_Tls13BuildMessage");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL || output == NULL || input == NULL) {
         ret = BAD_FUNC_ARG;
@@ -1461,7 +1461,7 @@ WOLFSSL_LOCAL int tsip_Tls13SendFinished(
     int headerSz    = HANDSHAKE_HEADER_SZ;
     int recordSz;
 
-    WOLFSSL_ENTER("tsip_Tls13SendFinished");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL || output == NULL || input == NULL || outSz == 0) {
         ret  = BAD_FUNC_ARG;
@@ -1529,7 +1529,7 @@ WOLFSSL_LOCAL int tsip_Tls13CertificateVerify(struct WOLFSSL* ssl,
     TsipUserCtx*  tuc = NULL;
     e_tsip_tls13_signature_scheme_type_t sig_scheme;
     
-    WOLFSSL_ENTER("tsip_Tls13CertificateVerify");
+    WOLFSSL_ENTER_FN();
 
 
     if (ssl == NULL || input == NULL || inOutIdx == NULL) {
@@ -1680,7 +1680,7 @@ WOLFSSL_LOCAL int tsip_Tls13SendCertVerify(WOLFSSL* ssl)
     tsip_rsa_byte_data_t   rsa_sig,rsa_hash;
     tsip_ecdsa_byte_data_t ecdsa_sig,ecdsa_hash;
 
-    WOLFSSL_ENTER("tsip_Tls13SendCertVerify");
+    WOLFSSL_ENTER_FN();
     (void)derSig;
     (void)rsa_sig;
     (void)rsa_hash;
@@ -1933,7 +1933,7 @@ static uint32_t GetTsipCipherSuite(
                     uint8_t cipherSuiteFirst,
                     uint8_t cipherSuite)
 {
-    WOLFSSL_ENTER("GetTsipCipherSuite");
+    WOLFSSL_ENTER_FN();
     uint32_t tsipCipher;
 
     if (cipherSuiteFirst == CIPHER_BYTE)
@@ -2017,7 +2017,7 @@ static int tsip_ServerKeyExVerify(
     word32  qxLen = sizeof(qx), qyLen = sizeof(qy);
     TsipUserCtx*   userCtx = NULL;
 
-    WOLFSSL_ENTER("tsip_ServerKeyExVerify");
+    WOLFSSL_ENTER_FN();
 
     /* sanity check */
     if (ssl == NULL || sig == NULL || ctx == NULL)
@@ -2090,7 +2090,7 @@ int wc_tsip_RsaVerify(
 {
     int ret;
 
-    WOLFSSL_ENTER("tsip_RsaVerify");
+    WOLFSSL_ENTER_FN();
 
     if (tsip_usable(ssl, 0))
         ret = tsip_ServerKeyExVerify(0, ssl, sig, sigSz, ctx);
@@ -2129,7 +2129,7 @@ int wc_tsip_EccVerify(
     const byte  rs_size = R_TSIP_ECDSA_DATA_BYTE_SIZE/2;
     byte        offset = 0x3;
 
-    WOLFSSL_ENTER("wc_tsip_EccVerify");
+    WOLFSSL_ENTER_FN();
 
     /* check if TSIP can handle given cipher suite */
     if (!tsip_usable(ssl, 0)) {
@@ -2204,7 +2204,7 @@ int wc_tsip_EccSharedSecret(
     (void)ssl;
     (void)otherKey;
 
-    WOLFSSL_ENTER("wc_tsip_EccSharedSecret");
+    WOLFSSL_ENTER_FN();
     /* sanity check */
     if (ssl == NULL || pubKeyDer == NULL || pubKeySz == NULL ||
         out == NULL || outlen == NULL || ctx == NULL) {
@@ -2251,7 +2251,7 @@ int wc_tsip_EccSharedSecret(
 
 WOLFSSL_API void tsip_set_callbacks(WOLFSSL_CTX* ctx)
 {
-    WOLFSSL_ENTER("tsip_set_callbacks");
+    WOLFSSL_ENTER_FN();
     wolfSSL_CTX_SetEccVerifyCb(ctx, (CallbackEccVerify)Renesas_cmn_EccVerify);
     wolfSSL_CTX_SetRsaVerifyCb(ctx, (CallbackRsaVerify)Renesas_cmn_RsaVerify);
     wolfSSL_CTX_SetGenPreMasterCb(ctx, Renesas_cmn_generatePremasterSecret);
@@ -2286,7 +2286,7 @@ WOLFSSL_API void tsip_set_callbacks(WOLFSSL_CTX* ctx)
 
 WOLFSSL_API int tsip_set_callback_ctx(WOLFSSL* ssl, void* user_ctx)
 {
-    WOLFSSL_ENTER("tsip_set_callback_ctx");
+    WOLFSSL_ENTER_FN();
 
     TsipUserCtx* uCtx = (TsipUserCtx*)user_ctx;
     if (user_ctx == NULL) {
@@ -2357,7 +2357,7 @@ static int tsipImportPrivateKey(TsipUserCtx* tuc, int keyType)
     uint8_t* iv               = g_user_key_info.iv;
     uint8_t* encPrivKey;
 
-    WOLFSSL_ENTER("tsipImportPrivateKey");
+    WOLFSSL_ENTER_FN();
 
     if (tuc == NULL)
         return BAD_FUNC_ARG;
@@ -2447,7 +2447,7 @@ WOLFSSL_LOCAL int tsipImportPublicKey(TsipUserCtx* tuc, int keyType)
     uint8_t* iv               = g_user_key_info.iv;
     uint8_t* encPubKey;
 
-    WOLFSSL_ENTER("tsipImportPublicKey");
+    WOLFSSL_ENTER_FN();
 
     if (tuc == NULL ) {
         return BAD_FUNC_ARG;
@@ -2592,7 +2592,7 @@ int tsip_usable(const WOLFSSL *ssl, uint8_t session_key_generated)
     const Ciphers *enc;
     const Ciphers *dec;
 
-    WOLFSSL_ENTER("tsip_usable");
+    WOLFSSL_ENTER_FN();
 
     /* sanity check */
     if (ssl == NULL) {
@@ -2686,7 +2686,7 @@ WOLFSSL_LOCAL int tsip_Open(void)
 {
     int ret = TSIP_SUCCESS;
 
-    WOLFSSL_ENTER("tsip_Open");
+    WOLFSSL_ENTER_FN();
 
     if ((ret = tsip_hw_lock()) == 0) {
 
@@ -2780,7 +2780,7 @@ WOLFSSL_LOCAL int tsip_Open(void)
 /* close TSIP driver */
 WOLFSSL_LOCAL void tsip_Close(void)
 {
-    WOLFSSL_ENTER("tsip_Close");
+    WOLFSSL_ENTER_FN();
     int ret;
 
     if ((ret = tsip_hw_lock()) == 0) {
@@ -2831,7 +2831,7 @@ void tsip_inform_user_keys_ex(
     byte*     encrypted_user_tls_key,
     word32    encrypted_user_tls_key_type)
 {
-    WOLFSSL_ENTER("tsip_inform_user_keys_ex");
+    WOLFSSL_ENTER_FN();
     ForceZero(&g_user_key_info, sizeof(g_user_key_info));
     g_user_key_info.encrypted_provisioning_key = NULL;
     g_user_key_info.iv = NULL;
@@ -2893,7 +2893,7 @@ int wc_tsip_Sha1HmacGenerate(
         word32      sz,
         byte*       digest)
 {
-    WOLFSSL_ENTER("wc_tsip_Sha1HmacGenerate");
+    WOLFSSL_ENTER_FN();
 
     tsip_hmac_sha_handle_t _handle;
     tsip_hmac_sha_key_index_t key_index;
@@ -2950,7 +2950,7 @@ int wc_tsip_Sha256HmacGenerate(
         word32      sz,
         byte*       digest)
 {
-    WOLFSSL_ENTER("wc_tsip_Sha256HmacGenerate");
+    WOLFSSL_ENTER_FN();
 
     tsip_hmac_sha_handle_t _handle;
     tsip_hmac_sha_key_index_t key_index;
@@ -3018,7 +3018,7 @@ int wc_tsip_ShaXHmacVerify(
         word32      macSz,
         word32      content)
 {
-    WOLFSSL_ENTER("tsip_ShaXHmacVerify");
+    WOLFSSL_ENTER_FN();
 
     tsip_hmac_sha_handle_t    handle;
     tsip_hmac_sha_key_index_t wrapped_key;
@@ -3094,7 +3094,7 @@ int wc_tsip_generateVerifyData(
     int ret ;
     uint32_t l_side = R_TSIP_TLS_GENERATE_CLIENT_VERIFY;
 
-    WOLFSSL_ENTER("tsip_generateVerifyData");
+    WOLFSSL_ENTER_FN();
 
     if ((ms == NULL) || (side == NULL) || (handshake_hash == NULL) ||
         (hashes == NULL)) {
@@ -3133,7 +3133,7 @@ int wc_tsip_generateSessionKey(
     tsip_aes_key_index_t key_client_aes;
     tsip_aes_key_index_t key_server_aes;
 
-    WOLFSSL_ENTER("wc_tsip_generateSessionKey");
+    WOLFSSL_ENTER_FN();
 
     if (ssl== NULL)
       return BAD_FUNC_ARG;
@@ -3288,7 +3288,7 @@ int wc_tsip_generateMasterSecretEx(
 {
     int ret;
 
-    WOLFSSL_ENTER("tsip_generateMasterSecretEx");
+    WOLFSSL_ENTER_FN();
 
     if ((pr == NULL) || (cr == NULL) || (sr == NULL) ||
         (ms == NULL))
@@ -3325,7 +3325,7 @@ int wc_tsip_generateMasterSecret(
         byte*       ms)
 {
     int ret;
-    WOLFSSL_ENTER("tsip_generateMasterSecret");
+    WOLFSSL_ENTER_FN();
     if ((pr == NULL) || (cr == NULL) || (sr == NULL) ||
         (ms == NULL))
       return BAD_FUNC_ARG;
@@ -3358,7 +3358,7 @@ int wc_tsip_storeKeyCtx(WOLFSSL* ssl, TsipUserCtx* userCtx)
 {
     int ret = 0;
 
-    WOLFSSL_ENTER("tsip_storeKeyCtx");
+    WOLFSSL_ENTER_FN();
 
     if (ssl == NULL || userCtx == NULL)
         ret = BAD_FUNC_ARG;
@@ -3381,7 +3381,7 @@ int wc_tsip_storeKeyCtx(WOLFSSL* ssl, TsipUserCtx* userCtx)
 /* generate pre-Master secrete by TSIP */
 int wc_tsip_generatePremasterSecret(byte *premaster, word32 preSz)
 {
-    WOLFSSL_ENTER("tsip_generatePremasterSecret");
+    WOLFSSL_ENTER_FN();
     int ret;
 
     if (premaster == NULL)
@@ -3415,7 +3415,7 @@ int wc_tsip_generateEncryptPreMasterSecret(
 {
     int ret;
 
-    WOLFSSL_ENTER("tsip_generateEncryptPreMasterSecret");
+    WOLFSSL_ENTER_FN();
 
     if ((ssl == NULL) || (out == NULL) || (outSz == NULL))
       return BAD_FUNC_ARG;
@@ -3477,7 +3477,7 @@ int wc_tsip_tls_CertVerify(
     const byte rs_size = 0x20;
     byte offset = 0x3;
 
-    WOLFSSL_ENTER("wc_tsip_tls_CertVerify");
+    WOLFSSL_ENTER_FN();
 
     if (cert == NULL)
       return BAD_FUNC_ARG;
@@ -3589,7 +3589,7 @@ int wc_tsip_tls_RootCertVerify(
     /* call to generate encrypted public key for certificate verification */
     uint8_t *signature = (uint8_t*)ca_cert_sig;
 
-    WOLFSSL_ENTER("wc_tsip_tls_RootCertVerify");
+    WOLFSSL_ENTER_FN();
 
     if (cert == NULL)
       return BAD_FUNC_ARG;
@@ -3665,7 +3665,7 @@ WOLFSSL_LOCAL int tsip_SignRsaPkcs(wc_CryptoInfo* info, TsipUserCtx* tuc)
     WOLFSSL* ssl = NULL;
     uint8_t  tsip_hash_type;
 
-    WOLFSSL_ENTER("tsip_SignRsaPkcs");
+    WOLFSSL_ENTER_FN();
 
     if (info == NULL || tuc == NULL 
     #ifndef WOLFSSL_RENESAS_TSIP_CRYPTONLY
@@ -3821,7 +3821,7 @@ WOLFSSL_LOCAL int tsip_VerifyRsaPkcsCb(
     (void)keyDer;
     (void)keySz;
 
-    WOLFSSL_ENTER("tsip_VerifyRsaPkcsCb");
+    WOLFSSL_ENTER_FN();
 
     if (sig == NULL || out == NULL || ctx == NULL) {
             ret = BAD_FUNC_ARG;
@@ -3932,7 +3932,7 @@ WOLFSSL_LOCAL int tsip_SignEcdsa(wc_CryptoInfo* info, TsipUserCtx* tuc)
     int   sz = 0;
     WOLFSSL* ssl = NULL;
 
-    WOLFSSL_ENTER("tsip_SignEcdsa");
+    WOLFSSL_ENTER_FN();
 
     if (info == NULL || tuc == NULL) {
         ret = CRYPTOCB_UNAVAILABLE;

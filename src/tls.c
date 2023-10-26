@@ -1487,7 +1487,7 @@ static ALPN* TLSX_ALPN_New(char *protocol_name, word16 protocol_nameSz,
 {
     ALPN *alpn;
 
-    WOLFSSL_ENTER("TLSX_ALPN_New");
+    WOLFSSL_ENTER_FN();
 
     if (protocol_name == NULL ||
         protocol_nameSz > WOLFSSL_MAX_ALPN_PROTO_NAME_LEN) {
@@ -1696,7 +1696,7 @@ int ALPN_Select(WOLFSSL *ssl)
     byte sel_len = 0;
     int r = 0;
 
-    WOLFSSL_ENTER("ALPN_Select");
+    WOLFSSL_ENTER_FN();
     if (ssl->alpn_peer_requested == NULL)
         return 0;
 
@@ -10556,7 +10556,7 @@ static int TLSX_EarlyData_Write(word32 maxSz, byte* output, byte msgType,
 static int TLSX_EarlyData_Parse(WOLFSSL* ssl, const byte* input, word16 length,
                                  byte msgType)
 {
-    WOLFSSL_ENTER("TLSX_EarlyData_Parse");
+    WOLFSSL_ENTER_FN();
     if (msgType == client_hello) {
         if (length != 0)
             return BUFFER_E;
@@ -10671,7 +10671,7 @@ int TLSX_QuicTP_Use(WOLFSSL* ssl, TLSX_Type ext_type, int is_response)
     int ret = 0;
     TLSX* extension;
 
-    WOLFSSL_ENTER("TLSX_QuicTP_Use");
+    WOLFSSL_ENTER_FN();
     if (ssl->quic.transport_local == NULL) {
         /* RFC9000, ch 7.3: "An endpoint MUST treat the absence of [...]
          *     from either endpoint [...] as a connection error of type
@@ -10713,7 +10713,7 @@ static word16 TLSX_QuicTP_Write(QuicTransportParam *tp, byte* output)
 {
     word16 len = 0;
 
-    WOLFSSL_ENTER("TLSX_QuicTP_Write");
+    WOLFSSL_ENTER_FN();
     if (tp && tp->len) {
         XMEMCPY(output, tp->data, tp->len);
         len = tp->len;
@@ -14691,7 +14691,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                               (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                      heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("TLS_client_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method) {
         #if defined(WOLFSSL_TLS13)
             InitSSL_Method(method, MakeTLSv1_3());
@@ -14723,7 +14723,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                              (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                      heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("TLSv1_client_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method)
             InitSSL_Method(method, MakeTLSv1());
         return method;
@@ -14740,7 +14740,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                               (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                      heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("TLSv1_1_client_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method)
             InitSSL_Method(method, MakeTLSv1_1());
         return method;
@@ -14759,7 +14759,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                               (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                      heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("TLSv1_2_client_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method)
             InitSSL_Method(method, MakeTLSv1_2());
         return method;
@@ -14788,7 +14788,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                                  XMALLOC(sizeof(WOLFSSL_METHOD), heap,
                                          DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("TLSv1_3_client_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method)
             InitSSL_Method(method, MakeTLSv1_3());
         return method;
@@ -14807,7 +14807,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                               (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                      heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("DTLS_client_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method) {
         #if defined(WOLFSSL_DTLS13)
             InitSSL_Method(method, MakeDTLSv1_3());
@@ -14836,7 +14836,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                           (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                  heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("DTLSv1_client_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method)
             InitSSL_Method(method, MakeDTLSv1());
         return method;
@@ -14854,7 +14854,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                           (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                  heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("DTLSv1_2_client_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method)
             InitSSL_Method(method, MakeDTLSv1_2());
         (void)heap;
@@ -14881,7 +14881,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
     WOLFSSL_METHOD* wolfTLSv1_method_ex(void* heap)
     {
         WOLFSSL_METHOD* m;
-        WOLFSSL_ENTER("TLSv1_method");
+        WOLFSSL_ENTER_FN();
     #ifndef NO_WOLFSSL_CLIENT
         m = wolfTLSv1_client_method_ex(heap);
     #else
@@ -14906,7 +14906,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
     WOLFSSL_METHOD* wolfTLSv1_1_method_ex(void* heap)
     {
         WOLFSSL_METHOD* m;
-        WOLFSSL_ENTER("TLSv1_1_method");
+        WOLFSSL_ENTER_FN();
     #ifndef NO_WOLFSSL_CLIENT
         m = wolfTLSv1_1_client_method_ex(heap);
     #else
@@ -14931,7 +14931,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
     WOLFSSL_METHOD* wolfTLSv1_2_method_ex(void* heap)
     {
         WOLFSSL_METHOD* m;
-        WOLFSSL_ENTER("TLSv1_2_method");
+        WOLFSSL_ENTER_FN();
     #ifndef NO_WOLFSSL_CLIENT
         m = wolfTLSv1_2_client_method_ex(heap);
     #else
@@ -14956,7 +14956,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
     WOLFSSL_METHOD* wolfTLSv1_3_method_ex(void* heap)
     {
         WOLFSSL_METHOD* m;
-        WOLFSSL_ENTER("TLSv1_3_method");
+        WOLFSSL_ENTER_FN();
     #ifndef NO_WOLFSSL_CLIENT
         m = wolfTLSv1_3_client_method_ex(heap);
     #else
@@ -14977,7 +14977,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
     WOLFSSL_METHOD* wolfDTLS_method_ex(void* heap)
     {
         WOLFSSL_METHOD* m;
-        WOLFSSL_ENTER("DTLS_method_ex");
+        WOLFSSL_ENTER_FN();
     #ifndef NO_WOLFSSL_CLIENT
         m = wolfDTLS_client_method_ex(heap);
     #else
@@ -14997,7 +14997,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
     WOLFSSL_METHOD* wolfDTLSv1_method_ex(void* heap)
     {
         WOLFSSL_METHOD* m;
-        WOLFSSL_ENTER("DTLSv1_method_ex");
+        WOLFSSL_ENTER_FN();
     #ifndef NO_WOLFSSL_CLIENT
         m = wolfDTLSv1_client_method_ex(heap);
     #else
@@ -15017,7 +15017,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
     WOLFSSL_METHOD* wolfDTLSv1_2_method_ex(void* heap)
     {
         WOLFSSL_METHOD* m;
-        WOLFSSL_ENTER("DTLSv1_2_method");
+        WOLFSSL_ENTER_FN();
     #ifndef NO_WOLFSSL_CLIENT
         m = wolfDTLSv1_2_client_method_ex(heap);
     #else
@@ -15046,7 +15046,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                               (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                      heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("TLS_server_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method) {
         #if defined(WOLFSSL_TLS13)
             InitSSL_Method(method, MakeTLSv1_3());
@@ -15078,7 +15078,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                               (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                      heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("TLSv1_server_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method) {
             InitSSL_Method(method, MakeTLSv1());
             method->side = WOLFSSL_SERVER_END;
@@ -15097,7 +15097,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                               (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                      heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("TLSv1_1_server_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method) {
             InitSSL_Method(method, MakeTLSv1_1());
             method->side = WOLFSSL_SERVER_END;
@@ -15119,7 +15119,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                               (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                      heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("TLSv1_2_server_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method) {
             InitSSL_Method(method, MakeTLSv1_2());
             method->side = WOLFSSL_SERVER_END;
@@ -15150,7 +15150,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                               (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                      heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("TLSv1_3_server_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method) {
             InitSSL_Method(method, MakeTLSv1_3());
             method->side = WOLFSSL_SERVER_END;
@@ -15170,7 +15170,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                               (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                      heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("DTLS_server_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method) {
         #if defined(WOLFSSL_DTLS13)
             InitSSL_Method(method, MakeDTLSv1_3());
@@ -15199,7 +15199,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
                           (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                  heap, DYNAMIC_TYPE_METHOD);
         (void)heap;
-        WOLFSSL_ENTER("DTLSv1_server_method_ex");
+        WOLFSSL_ENTER_FN();
         if (method) {
             InitSSL_Method(method, MakeDTLSv1());
             method->side = WOLFSSL_SERVER_END;
@@ -15218,7 +15218,7 @@ int TLSX_Parse(WOLFSSL* ssl, const byte* input, word16 length, byte msgType,
         WOLFSSL_METHOD* method =
                           (WOLFSSL_METHOD*) XMALLOC(sizeof(WOLFSSL_METHOD),
                                                  heap, DYNAMIC_TYPE_METHOD);
-        WOLFSSL_ENTER("DTLSv1_2_server_method_ex");
+        WOLFSSL_ENTER_FN();
         (void)heap;
         if (method) {
             InitSSL_Method(method, MakeDTLSv1_2());

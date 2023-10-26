@@ -61,7 +61,7 @@ CRL Options:
 /* Initialize CRL members */
 int InitCRL(WOLFSSL_CRL* crl, WOLFSSL_CERT_MANAGER* cm)
 {
-    WOLFSSL_ENTER("InitCRL");
+    WOLFSSL_ENTER_FN();
     if(cm != NULL)
         crl->heap = cm->heap;
     else
@@ -96,7 +96,7 @@ int InitCRL(WOLFSSL_CRL* crl, WOLFSSL_CERT_MANAGER* cm)
 static int InitCRL_Entry(CRL_Entry* crle, DecodedCRL* dcrl, const byte* buff,
                          int verified, void* heap)
 {
-    WOLFSSL_ENTER("InitCRL_Entry");
+    WOLFSSL_ENTER_FN();
 
     XMEMCPY(crle->issuerHash, dcrl->issuerHash, CRL_DIGEST_SIZE);
     /* XMEMCPY(crle->crlHash, dcrl->crlHash, CRL_DIGEST_SIZE);
@@ -194,7 +194,7 @@ static void CRL_Entry_free(CRL_Entry* crle, void* heap)
     RevokedCert* tmp = crle->certs;
     RevokedCert* next;
 
-    WOLFSSL_ENTER("FreeCRL_Entry");
+    WOLFSSL_ENTER_FN();
 
     while (tmp) {
         next = tmp->next;
@@ -223,7 +223,7 @@ void FreeCRL(WOLFSSL_CRL* crl, int dynamic)
 {
     CRL_Entry* tmp = crl->crlList;
 
-    WOLFSSL_ENTER("FreeCRL");
+    WOLFSSL_ENTER_FN();
     if (crl->monitors[0].path)
         XFREE(crl->monitors[0].path, crl->heap, DYNAMIC_TYPE_CRL_MONITOR);
 
@@ -420,7 +420,7 @@ int CheckCertCRL_ex(WOLFSSL_CRL* crl, byte* issuerHash, byte* serial,
     int        foundEntry = 0;
     int        ret = 0;
 
-    WOLFSSL_ENTER("CheckCertCRL");
+    WOLFSSL_ENTER_FN();
     (void)issuerName;
 
     if ((serial == NULL || serialSz == 0) && serialHash == NULL) {
@@ -522,7 +522,7 @@ static int AddCRL(WOLFSSL_CRL* crl, DecodedCRL* dcrl, const byte* buff,
 {
     CRL_Entry* crle = NULL;
 
-    WOLFSSL_ENTER("AddCRL");
+    WOLFSSL_ENTER_FN();
 
     if (crl == NULL)
         return -1;
@@ -572,7 +572,7 @@ int BufferLoadCRL(WOLFSSL_CRL* crl, const byte* buff, long sz, int type,
     DecodedCRL   dcrl[1];
 #endif
 
-    WOLFSSL_ENTER("BufferLoadCRL");
+    WOLFSSL_ENTER_FN();
 
     if (crl == NULL || buff == NULL || sz == 0)
         return BAD_FUNC_ARG;
@@ -830,7 +830,7 @@ int wolfSSL_X509_STORE_add_crl(WOLFSSL_X509_STORE *store, WOLFSSL_X509_CRL *newc
 {
     WOLFSSL_X509_CRL *crl;
 
-    WOLFSSL_ENTER("wolfSSL_X509_STORE_add_crl");
+    WOLFSSL_ENTER_FN();
     if (store == NULL || newcrl == NULL || store->cm == NULL)
         return BAD_FUNC_ARG;
 
@@ -1044,7 +1044,7 @@ static THREAD_RETURN WOLFSSL_THREAD DoMonitor(void* arg)
 
     WOLFSSL_CRL* crl = (WOLFSSL_CRL*)arg;
 
-    WOLFSSL_ENTER("DoMonitor");
+    WOLFSSL_ENTER_FN();
 
     crl->mfd = kqueue();
     if (crl->mfd == -1) {
@@ -1180,7 +1180,7 @@ static THREAD_RETURN WOLFSSL_THREAD DoMonitor(void* arg)
     char        buff[8192];
 #endif
 
-    WOLFSSL_ENTER("DoMonitor");
+    WOLFSSL_ENTER_FN();
 
     crl->mfd = eventfd(0, 0);  /* our custom shutdown event */
     if (crl->mfd < 0) {
@@ -1353,7 +1353,7 @@ static THREAD_RETURN WOLFSSL_THREAD DoMonitor(void* arg)
     DWORD handlesLen = 0;
     int i;
 
-    WOLFSSL_ENTER("DoMonitor");
+    WOLFSSL_ENTER_FN();
 
     handles[0] = crl->mfd = CreateEventA(NULL, FALSE, FALSE, NULL);
     if (crl->mfd == NULL) {
@@ -1443,7 +1443,7 @@ static int StartMonitorCRL(WOLFSSL_CRL* crl)
 {
     int ret = WOLFSSL_SUCCESS;
 
-    WOLFSSL_ENTER("StartMonitorCRL");
+    WOLFSSL_ENTER_FN();
 
     if (crl == NULL)
         return BAD_FUNC_ARG;
@@ -1501,7 +1501,7 @@ int LoadCRL(WOLFSSL_CRL* crl, const char* path, int type, int monitor)
     ReadDirCtx  readCtx[1];
 #endif
 
-    WOLFSSL_ENTER("LoadCRL");
+    WOLFSSL_ENTER_FN();
     if (crl == NULL)
         return BAD_FUNC_ARG;
 

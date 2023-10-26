@@ -684,7 +684,7 @@ int wc_d2i_PKCS12(const byte* der, word32 derSz, WC_PKCS12* pkcs12)
     int size    = 0;
     int version = 0;
 
-    WOLFSSL_ENTER("wolfSSL_d2i_PKCS12");
+    WOLFSSL_ENTER_FN();
 
     if (der == NULL || pkcs12 == NULL) {
         return BAD_FUNC_ARG;
@@ -815,7 +815,7 @@ int wc_d2i_PKCS12_fp(const char* file, WC_PKCS12** pkcs12)
     WC_PKCS12* tmpPkcs12 = NULL;
     int callerAlloc = 1;
 
-    WOLFSSL_ENTER("wc_d2i_PKCS12_fp");
+    WOLFSSL_ENTER_FN();
 
     if (pkcs12 == NULL) {
         WOLFSSL_MSG("pkcs12 parameter NULL.");
@@ -1320,7 +1320,7 @@ int wc_PKCS12_parse(WC_PKCS12* pkcs12, const char* psw,
     int curIdx;
 #endif
 
-    WOLFSSL_ENTER("wc_PKCS12_parse");
+    WOLFSSL_ENTER_FN();
 
     if (pkcs12 == NULL || psw == NULL || cert == NULL || certSz == NULL ||
         pkey == NULL   || pkeySz == NULL) {
@@ -2598,7 +2598,7 @@ WC_PKCS12* wc_PKCS12_create(char* pass, word32 passSz, char* name,
     word32 certCiSz;
     word32 keyCiSz;
 
-    WOLFSSL_ENTER("wc_PKCS12_create");
+    WOLFSSL_ENTER_FN();
 
     if (wc_InitRng_ex(&rng, heap, INVALID_DEVID) != 0) {
         return NULL;

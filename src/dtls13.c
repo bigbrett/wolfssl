@@ -122,7 +122,7 @@ WOLFSSL_METHOD* wolfDTLSv1_3_client_method_ex(void* heap)
 {
     WOLFSSL_METHOD* method;
 
-    WOLFSSL_ENTER("DTLSv1_3_client_method_ex");
+    WOLFSSL_ENTER_FN();
     (void)heap;
 
     method = (WOLFSSL_METHOD*)XMALLOC(sizeof(WOLFSSL_METHOD), heap,
@@ -145,7 +145,7 @@ WOLFSSL_METHOD* wolfDTLSv1_3_server_method_ex(void* heap)
 {
     WOLFSSL_METHOD* method;
 
-    WOLFSSL_ENTER("DTLSv1_3_server_method_ex");
+    WOLFSSL_ENTER_FN();
     (void)heap;
 
     method = (WOLFSSL_METHOD*)XMALLOC(sizeof(WOLFSSL_METHOD), heap,
@@ -349,7 +349,7 @@ int Dtls13ProcessBufferedMessages(WOLFSSL* ssl)
     word32 idx = 0;
     int ret = 0;
 
-    WOLFSSL_ENTER("Dtls13ProcessBufferedMessages");
+    WOLFSSL_ENTER_FN();
 
     while (msg != NULL) {
         int downgraded = 0;
@@ -594,7 +594,7 @@ static Dtls13RtxRecord* Dtls13RtxNewRecord(WOLFSSL* ssl, byte* data,
     w64wrapper epochNumber;
     Dtls13RtxRecord* r;
 
-    WOLFSSL_ENTER("Dtls13RtxNewRecord");
+    WOLFSSL_ENTER_FN();
 
     if (ssl->dtls13EncryptEpoch == NULL)
         return NULL;
@@ -624,7 +624,7 @@ static Dtls13RtxRecord* Dtls13RtxNewRecord(WOLFSSL* ssl, byte* data,
 
 static void Dtls13RtxAddRecord(Dtls13Rtx* fsm, Dtls13RtxRecord* r)
 {
-    WOLFSSL_ENTER("Dtls13RtxAddRecord");
+    WOLFSSL_ENTER_FN();
 
     *fsm->rtxRecordTailPtr = r;
     fsm->rtxRecordTailPtr = &r->next;
@@ -646,7 +646,7 @@ void Dtls13RtxFlushBuffered(WOLFSSL* ssl, byte keepNewSessionTicket)
 {
     Dtls13RtxRecord *r, **prevNext;
 
-    WOLFSSL_ENTER("Dtls13RtxFlushBuffered");
+    WOLFSSL_ENTER_FN();
 
     prevNext = &ssl->dtls13Rtx.rtxRecords;
     r = ssl->dtls13Rtx.rtxRecords;
@@ -691,7 +691,7 @@ static int Dtls13RtxAddAck(WOLFSSL* ssl, w64wrapper epoch, w64wrapper seq)
 {
     Dtls13RecordNumber* rn;
 
-    WOLFSSL_ENTER("Dtls13RtxAddAck");
+    WOLFSSL_ENTER_FN();
 
     rn = Dtls13NewRecordNumber(epoch, seq, ssl->heap);
     if (rn == NULL)
@@ -709,7 +709,7 @@ static void Dtls13RtxFlushAcks(WOLFSSL* ssl)
 
     (void)ssl;
 
-    WOLFSSL_ENTER("Dtls13RtxFlushAcks");
+    WOLFSSL_ENTER_FN();
 
     list = ssl->dtls13Rtx.seenRecords;
 
@@ -813,7 +813,7 @@ static void Dtls13MaybeSaveClientHello(WOLFSSL* ssl)
 static int Dtls13RtxMsgRecvd(WOLFSSL* ssl, enum HandShakeType hs,
     word32 fragOffset)
 {
-    WOLFSSL_ENTER("Dtls13RtxMsgRecvd");
+    WOLFSSL_ENTER_FN();
 
     if (!ssl->options.handShakeDone &&
         ssl->keys.dtls_peer_handshake_number >=
@@ -1501,7 +1501,7 @@ static int Dtls13RtxSendBuffered(WOLFSSL* ssl)
     word32 now;
     int ret;
 
-    WOLFSSL_ENTER("Dtls13RtxSendBuffered");
+    WOLFSSL_ENTER_FN();
 
     now = LowResTimer();
     if (now - ssl->dtls13Rtx.lastRtx < DTLS13_MIN_RTX_INTERVAL) {
@@ -1977,7 +1977,7 @@ static void Dtls13EpochCopyKeys(WOLFSSL* ssl, Dtls13Epoch* e, Keys* k, int side)
     byte clientWrite, serverWrite;
     byte enc, dec;
 
-    WOLFSSL_ENTER("Dtls13SetEpochKeys");
+    WOLFSSL_ENTER_FN();
 
     clientWrite = serverWrite = 0;
     enc = dec = 0;
@@ -2155,7 +2155,7 @@ int Dtls13SetEpochKeys(WOLFSSL* ssl, w64wrapper epochNumber,
     Dtls13Epoch* e;
     byte enc, dec;
 
-    WOLFSSL_ENTER("Dtls13SetEpochKeys");
+    WOLFSSL_ENTER_FN();
 
     clientWrite = serverWrite = 0;
     enc = dec = 0;
@@ -2499,7 +2499,7 @@ int Dtls13DoScheduledWork(WOLFSSL* ssl)
 {
     int ret;
 
-    WOLFSSL_ENTER("Dtls13DoScheduledWork");
+    WOLFSSL_ENTER_FN();
 
     ssl->dtls13SendingAckOrRtx = 1;
 
@@ -2657,7 +2657,7 @@ int SendDtls13Ack(WOLFSSL* ssl)
     if (ssl->dtls13EncryptEpoch == NULL)
         return BAD_STATE_E;
 
-    WOLFSSL_ENTER("SendDtls13Ack");
+    WOLFSSL_ENTER_FN();
 
     ret = 0;
 
@@ -2726,7 +2726,7 @@ int Dtls13RtxProcessingCertificate(WOLFSSL* ssl, byte* input, word32 inputSize)
     Dtls13RtxRecord** prevNext = &ssl->dtls13Rtx.rtxRecords;
     byte ctxLength;
 
-    WOLFSSL_ENTER("Dtls13RtxProcessingCertificate");
+    WOLFSSL_ENTER_FN();
 
     if (inputSize <= 1) {
         WOLFSSL_MSG("Malformed Certificate");
