@@ -8405,7 +8405,7 @@ int wc_EncryptPKCS8Key(byte* key, word32 keySz, byte* out, word32* outSz,
     }
 #endif
 
-    WOLFSSL_LEAVE("wc_EncryptPKCS8Key", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -9842,7 +9842,7 @@ int wc_DhKeyDecode(const byte* input, word32* inOutIdx, DhKey* key, word32 inSz)
     #endif /* !HAVE_FIPS || HAVE_FIPS_VERSION > 2 */
 #endif /* WOLFSSL_DH_EXTRA */
 
-    WOLFSSL_LEAVE("wc_DhKeyDecode", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 #else
@@ -15111,7 +15111,7 @@ int TryDecodeRPKToKey(DecodedCert* cert)
         WOLFSSL_MSG("Looks like RPK certificate");
         cert->srcIdx = tmpIdx;
     }
-    WOLFSSL_LEAVE("TryDecodeRPKToKey", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* HAVE_RPK */
@@ -17215,7 +17215,7 @@ exit_cs:
     (void)keyOID;
     (void)sigOID;
 
-    WOLFSSL_LEAVE("ConfirmSignature", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
 #ifdef WOLFSSL_ASYNC_CRYPT
     if (ret == WC_PENDING_E)
@@ -19988,7 +19988,7 @@ exit:
             #endif /* !WOLFSSL_DUP_CERTPOL */
                 cert->extCertPoliciesNb++;
         #else
-                WOLFSSL_LEAVE("DecodeCertPolicy : unsupported mode", 0);
+                WOLFSSL_LEAVE_FN(0);
                 return 0;
         #endif
             }
@@ -19999,7 +19999,7 @@ exit:
     #endif
         );
 
-        WOLFSSL_LEAVE("DecodeCertPolicy", 0);
+        WOLFSSL_LEAVE_FN(0);
         return 0;
     #else /* WOLFSSL_ASN_TEMPLATE */
         word32 idx = 0;
@@ -20101,12 +20101,12 @@ exit:
             }
             #else
                 (void)data;
-                WOLFSSL_LEAVE("DecodeCertPolicy : unsupported mode", 0);
+                WOLFSSL_LEAVE_FN(0);
                 break;
             #endif
         }
 
-        WOLFSSL_LEAVE("DecodeCertPolicy", 0);
+        WOLFSSL_LEAVE_FN(0);
         return ret;
     #endif /* WOLFSSL_ASN_TEMPLATE */
     }
@@ -20331,7 +20331,7 @@ static int DecodeSubjInfoAcc(const byte* input, word32 sz, DecodedCert* cert)
         ret = ASN_PARSE_E;
     }
 
-    WOLFSSL_LEAVE("DecodeSubjInfoAcc", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_SUBJ_INFO_ACC */
@@ -35563,67 +35563,67 @@ int OcspResponseDecode(OcspResponse* resp, void* cm, void* heap, int noVerify)
 
     /* peel the outer SEQUENCE wrapper */
     if (GetSequence(source, &idx, &length, size) < 0) {
-        WOLFSSL_LEAVE("OcspResponseDecode", ASN_PARSE_E);
+        WOLFSSL_LEAVE_FN(ASN_PARSE_E);
         return ASN_PARSE_E;
     }
 
     /* First get the responseStatus, an ENUMERATED */
     if (GetEnumerated(source, &idx, &resp->responseStatus, size) < 0) {
-        WOLFSSL_LEAVE("OcspResponseDecode", ASN_PARSE_E);
+        WOLFSSL_LEAVE_FN(ASN_PARSE_E);
         return ASN_PARSE_E;
     }
 
     if (resp->responseStatus != OCSP_SUCCESSFUL) {
-        WOLFSSL_LEAVE("OcspResponseDecode", 0);
+        WOLFSSL_LEAVE_FN(0);
         return 0;
     }
 
     /* Next is an EXPLICIT record called ResponseBytes, OPTIONAL */
     if (idx >= size) {
-        WOLFSSL_LEAVE("OcspResponseDecode", ASN_PARSE_E);
+        WOLFSSL_LEAVE_FN(ASN_PARSE_E);
         return ASN_PARSE_E;
     }
     if (GetASNTag(source, &idx, &tag, size) < 0) {
-        WOLFSSL_LEAVE("OcspResponseDecode", ASN_PARSE_E);
+        WOLFSSL_LEAVE_FN(ASN_PARSE_E);
         return ASN_PARSE_E;
     }
     if (tag != (ASN_CONSTRUCTED | ASN_CONTEXT_SPECIFIC)) {
-        WOLFSSL_LEAVE("OcspResponseDecode", ASN_PARSE_E);
+        WOLFSSL_LEAVE_FN(ASN_PARSE_E);
         return ASN_PARSE_E;
     }
     if (GetLength(source, &idx, &length, size) < 0) {
-        WOLFSSL_LEAVE("OcspResponseDecode", ASN_PARSE_E);
+        WOLFSSL_LEAVE_FN(ASN_PARSE_E);
         return ASN_PARSE_E;
     }
 
     /* Get the responseBytes SEQUENCE */
     if (GetSequence(source, &idx, &length, size) < 0) {
-        WOLFSSL_LEAVE("OcspResponseDecode", ASN_PARSE_E);
+        WOLFSSL_LEAVE_FN(ASN_PARSE_E);
         return ASN_PARSE_E;
     }
 
     /* Check ObjectID for the resposeBytes */
     if (GetObjectId(source, &idx, &oid, oidOcspType, size) < 0) {
-        WOLFSSL_LEAVE("OcspResponseDecode", ASN_PARSE_E);
+        WOLFSSL_LEAVE_FN(ASN_PARSE_E);
         return ASN_PARSE_E;
     }
     if (oid != OCSP_BASIC_OID) {
-        WOLFSSL_LEAVE("OcspResponseDecode", ASN_PARSE_E);
+        WOLFSSL_LEAVE_FN(ASN_PARSE_E);
         return ASN_PARSE_E;
     }
     ret = GetOctetString(source, &idx, &length, size);
     if (ret < 0) {
-        WOLFSSL_LEAVE("OcspResponseDecode", ret);
+        WOLFSSL_LEAVE_FN(ret);
         return ret;
     }
 
     ret = DecodeBasicOcspResponse(source, &idx, resp, size, cm, heap, noVerify);
     if (ret < 0) {
-        WOLFSSL_LEAVE("OcspResponseDecode", ret);
+        WOLFSSL_LEAVE_FN(ret);
         return ret;
     }
 
-    WOLFSSL_LEAVE("OcspResponseDecode", 0);
+    WOLFSSL_LEAVE_FN(0);
     return 0;
 #else
     DECL_ASNGETDATA(dataASN, ocspResponseASN_Length);
@@ -35666,7 +35666,7 @@ int OcspResponseDecode(OcspResponse* resp, void* cm, void* heap, int noVerify)
     }
 
     FREE_ASNGETDATA(dataASN, resp->heap);
-    WOLFSSL_LEAVE("OcspResponseDecode", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 #endif /* WOLFSSL_ASN_TEMPLATE */
 }

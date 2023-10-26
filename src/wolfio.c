@@ -2983,7 +2983,7 @@ int LwIPNativeReceive(WOLFSSL* ssl, char* buf, int sz, void* ctx)
             }
         }
     }
-    WOLFSSL_LEAVE("LwIPNativeReceive", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -3017,7 +3017,7 @@ static err_t LwIPNativeReceiveCB(void* cb, struct tcp_pcb* pcb,
         return nlwip->recv_fn(nlwip->arg, pcb, pbuf, err);
     }
 
-    WOLFSSL_LEAVE("LwIPNativeReceiveCB", nlwip->pbuf->tot_len);
+    WOLFSSL_LEAVE_FN(nlwip->pbuf->tot_len);
     return ERR_OK;
 }
 

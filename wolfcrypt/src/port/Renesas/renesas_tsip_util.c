@@ -131,7 +131,7 @@ WOLFSSL_API int tsip_use_PublicKey_buffer_TLS(WOLFSSL* ssl,
         tuc->wrappedKeyType    = keyType;
     }
 
-    WOLFSSL_LEAVE("tsip_use_PublicKey_buffer", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 /* Set client encrypted private key data.
@@ -167,7 +167,7 @@ WOLFSSL_API int tsip_use_PrivateKey_buffer_TLS(struct WOLFSSL* ssl,
         }
     }
 
-    WOLFSSL_LEAVE("tsip_use_PrivateKey_buffer_TLS", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_RENESAS_TSIP_TLS */
@@ -200,7 +200,7 @@ WOLFSSL_API int tsip_use_PublicKey_buffer_crypt(TsipUserCtx *uc,
         tuc->wrappedKeyType    = keyType;
     }
 
-    WOLFSSL_LEAVE("tsip_use_PublicKey_buffer_crypt", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 /* Set client encrypted private key data.
@@ -229,7 +229,7 @@ WOLFSSL_API int tsip_use_PrivateKey_buffer_crypt(TsipUserCtx *uc,
         tuc->wrappedKeyType    = keyType;
     }
 
-    WOLFSSL_LEAVE("tsip_use_PrivateKey_buffer_crypt", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_RENESAS_TSIP_CRYPTONLY */
@@ -254,7 +254,7 @@ WOLFSSL_API int  tsip_set_clientPrivateKeyEnc(const byte* encKey, int keyType)
         g_user_key_info.encrypted_user_private_key_type = keyType;
     }
     
-    WOLFSSL_LEAVE("tsip_set_clientPrivateKeyEnc", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -418,7 +418,7 @@ WOLFSSL_LOCAL int tsip_Tls13GenEccKeyPair(WOLFSSL* ssl, KeyShareEntry* kse)
         if (kse->pubKey != NULL)
             XFREE(kse->pubKey, ssl->heap, DYNAMIC_TYPE_PUBLIC_KEY);
     }
-    WOLFSSL_LEAVE("tsip_Tls13GenEccKeyPair", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -511,7 +511,7 @@ WOLFSSL_LOCAL int tsip_Tls13GenSharedSecret(struct WOLFSSL* ssl,
         }
     }
 
-    WOLFSSL_LEAVE("tsip_Tls13GenSharedSecret", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -540,7 +540,7 @@ WOLFSSL_LOCAL int tsip_Tls13DeriveEarlySecret(struct WOLFSSL* ssl)
         }
     }
     
-    WOLFSSL_LEAVE("tsip_Tls13DeriveEarlySecret", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -618,7 +618,7 @@ WOLFSSL_LOCAL int tsip_Tls13DeriveHandshakeSecret(struct WOLFSSL* ssl)
         }
     }
 
-    WOLFSSL_LEAVE("tsip_Tls13DeriveHandshakeSecret", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -702,7 +702,7 @@ static int tsipTls13DeriveClientHandshakeKeys(struct WOLFSSL* ssl)
         }
     }
 
-    WOLFSSL_LEAVE("tsipTls13DeriveClientHandshakeKeys", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -786,7 +786,7 @@ static int tsipTls13DeriveServerHandshakeKeys(struct WOLFSSL* ssl)
         }
     }
 
-    WOLFSSL_LEAVE("tsipTls13DeriveServerHandshakeKeys", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -878,7 +878,7 @@ static int tsipTls13DeriveTrafficKeys(struct WOLFSSL* ssl)
         }
     }
 
-    WOLFSSL_LEAVE("tsipTls13DeriveTrafficKeys", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -950,7 +950,7 @@ static int tsipTls13UpdateClientTrafficKeys(struct WOLFSSL* ssl)
         }
     }
 
-    WOLFSSL_LEAVE("tsipTls13UpdateClientTrafficKeys", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -1022,7 +1022,7 @@ static int tsipTls13UpdateServerTrafficKeys(struct WOLFSSL* ssl)
         }
     }
 
-    WOLFSSL_LEAVE("tsipTls13UpdateServerTrafficKeys", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -1121,7 +1121,7 @@ WOLFSSL_LOCAL int tsip_Tls13DeriveKeys(struct WOLFSSL* ssl,
                 break;
         }
     }
-    WOLFSSL_LEAVE("tsip_Tls13DeriveKeys", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -1195,7 +1195,7 @@ WOLFSSL_LOCAL int tsip_Tls13DeriveMasterSecret(struct WOLFSSL* ssl)
         }
     }
 
-    WOLFSSL_LEAVE("tsip_Tls13DeriveMasterSecret", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -1285,7 +1285,7 @@ static int tsipTls13VerifyHandshake(struct WOLFSSL* ssl,
         }
     }
 
-    WOLFSSL_LEAVE("tsipTls13VerifyHandshake", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -1331,7 +1331,7 @@ WOLFSSL_LOCAL int tsip_Tls13HandleFinished(
         ssl->options.serverState = SERVER_FINISHED_COMPLETE;
     }
 
-    WOLFSSL_LEAVE("tsip_Tls13HandleFinished", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -1431,7 +1431,7 @@ WOLFSSL_LOCAL int tsip_Tls13BuildMessage(struct WOLFSSL* ssl,
         }
     }
 
-    WOLFSSL_LEAVE("tsip_Tls13BuildMessage", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -1498,7 +1498,7 @@ WOLFSSL_LOCAL int tsip_Tls13SendFinished(
             ret = recordSz;
         }
     }
-    WOLFSSL_LEAVE("tsip_Tls13SendFinished", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -1641,7 +1641,7 @@ WOLFSSL_LOCAL int tsip_Tls13CertificateVerify(struct WOLFSSL* ssl,
         }
     }
 
-    WOLFSSL_LEAVE("tsip_Tls13CertificateVerify", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -1921,7 +1921,7 @@ WOLFSSL_LOCAL int tsip_Tls13SendCertVerify(WOLFSSL* ssl)
         }
     }
 
-    WOLFSSL_LEAVE("tsip_Tls13SendCertVerify", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_TLS13 */
@@ -1960,7 +1960,7 @@ static uint32_t GetTsipCipherSuite(
                 tsipCipher = (uint32_t)WOLFSSL_TSIP_ILLEGAL_CIPHERSUITE;
                 break;
         }
-        WOLFSSL_LEAVE("GetTsipCipherSuite", tsipCipher);
+        WOLFSSL_LEAVE_FN(tsipCipher);
         return tsipCipher;
     }
     else if (cipherSuiteFirst == ECC_BYTE)
@@ -1994,7 +1994,7 @@ static uint32_t GetTsipCipherSuite(
         tsipCipher = (uint32_t)WOLFSSL_TSIP_ILLEGAL_CIPHERSUITE;
     }
 
-    WOLFSSL_LEAVE("GetTsipCipherSuite", tsipCipher);
+    WOLFSSL_LEAVE_FN(tsipCipher);
 
     return tsipCipher;
 }
@@ -2030,7 +2030,7 @@ static int tsip_ServerKeyExVerify(
 
     if (ret != 0) {
         WOLFSSL_MSG("failed to export peer ecc key");
-        WOLFSSL_LEAVE("tsip_ServerKeyExVerify", ret);
+        WOLFSSL_LEAVE_FN(ret);
         return ret;
     }
     /* make peer ecc key data for SCE */
@@ -2039,7 +2039,7 @@ static int tsip_ServerKeyExVerify(
                                                  DYNAMIC_TYPE_TMP_BUFFER);
     if (peerkey == NULL) {
         WOLFSSL_MSG("failed to malloc ecc key");
-        WOLFSSL_LEAVE("tsip_ServerKeyExVerify", ret);
+        WOLFSSL_LEAVE_FN(ret);
         return WOLFSSL_FAILURE;
     }
 
@@ -2074,7 +2074,7 @@ static int tsip_ServerKeyExVerify(
 
     XFREE(peerkey, 0, DYNAMIC_TYPE_TMP_BUFFER);
 
-    WOLFSSL_LEAVE("tsip_ServerKeyExVerify", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 /*
@@ -2100,7 +2100,7 @@ int wc_tsip_RsaVerify(
     if (ret == WOLFSSL_SUCCESS)
         ret = 0;
 
-    WOLFSSL_LEAVE("tsip_RsaVerify", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 /*  Verify signature for Server Key Exchange with TSIP
@@ -2134,14 +2134,14 @@ int wc_tsip_EccVerify(
     /* check if TSIP can handle given cipher suite */
     if (!tsip_usable(ssl, 0)) {
         WOLFSSL_MSG("Cannot handle cipher suite by TSIP");
-        WOLFSSL_LEAVE("wc_tsip_EccVerify", CRYPTOCB_UNAVAILABLE);
+        WOLFSSL_LEAVE_FN(CRYPTOCB_UNAVAILABLE);
         return CRYPTOCB_UNAVAILABLE;
     }
 
     /* in TLS1.3 */ 
     if (ssl->version.major == SSLv3_MAJOR && 
         ssl->version.minor == TLSv1_3_MINOR) {
-        WOLFSSL_LEAVE("wc_tsip_EccVerify", CRYPTOCB_UNAVAILABLE);
+        WOLFSSL_LEAVE_FN(CRYPTOCB_UNAVAILABLE);
         return CRYPTOCB_UNAVAILABLE;
     }
 
@@ -2181,7 +2181,7 @@ int wc_tsip_EccVerify(
     else
         *result = 0;
 
-    WOLFSSL_LEAVE("wc_tsip_EccVerify", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -2208,7 +2208,7 @@ int wc_tsip_EccSharedSecret(
     /* sanity check */
     if (ssl == NULL || pubKeyDer == NULL || pubKeySz == NULL ||
         out == NULL || outlen == NULL || ctx == NULL) {
-        WOLFSSL_LEAVE("wc_tsip_EccSharedSecret", WOLFSSL_FAILURE);
+        WOLFSSL_LEAVE_FN(WOLFSSL_FAILURE);
         return WOLFSSL_FAILURE;
     }
     if ((ret = tsip_hw_lock()) == 0) {
@@ -2244,7 +2244,7 @@ int wc_tsip_EccSharedSecret(
     else {
         WOLFSSL_MSG("Failed to lock tsip hw");
     }
-    WOLFSSL_LEAVE("wc_tsip_EccSharedSecret", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -2281,7 +2281,7 @@ WOLFSSL_API void tsip_set_callbacks(WOLFSSL_CTX* ctx)
         tsip_heap_hint = ctx->heap;
     }
 
-    WOLFSSL_LEAVE("tsip_set_callbacks", 0);
+    WOLFSSL_LEAVE_FN(0);
 }
 
 WOLFSSL_API int tsip_set_callback_ctx(WOLFSSL* ssl, void* user_ctx)
@@ -2290,7 +2290,7 @@ WOLFSSL_API int tsip_set_callback_ctx(WOLFSSL* ssl, void* user_ctx)
 
     TsipUserCtx* uCtx = (TsipUserCtx*)user_ctx;
     if (user_ctx == NULL) {
-        WOLFSSL_LEAVE("tsip_set_callback_ctx", 0);
+        WOLFSSL_LEAVE_FN(0);
         return 0;
     }
     ForceZero(uCtx, sizeof(TsipUserCtx));
@@ -2312,7 +2312,7 @@ WOLFSSL_API int tsip_set_callback_ctx(WOLFSSL* ssl, void* user_ctx)
 #endif /* !WOLFSSL_NO_TLS12 && !WOLFSSL_AEAD_ONLY */
     /* set up crypt callback */
     wc_CryptoCb_CryptInitRenesasCmn(ssl, user_ctx);
-    WOLFSSL_LEAVE("tsip_set_callback_ctx", 0);
+    WOLFSSL_LEAVE_FN(0);
     return 0;
 }
 
@@ -2425,7 +2425,7 @@ static int tsipImportPrivateKey(TsipUserCtx* tuc, int keyType)
     else {
         WOLFSSL_MSG("mutex locking error");
     }
-    WOLFSSL_LEAVE("tsipImportPrivateKey", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -2542,7 +2542,7 @@ WOLFSSL_LOCAL int tsipImportPublicKey(TsipUserCtx* tuc, int keyType)
     else {
         WOLFSSL_MSG("mutex locking error");
     }
-    WOLFSSL_LEAVE("tsipImportPublicKey", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 /*
@@ -2673,7 +2673,7 @@ int tsip_usable(const WOLFSSL *ssl, uint8_t session_key_generated)
         }
     }
 
-    WOLFSSL_LEAVE("tsip_usable", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_RENESAS_TSIP_TLS */
@@ -2773,7 +2773,7 @@ WOLFSSL_LOCAL int tsip_Open(void)
     else
         WOLFSSL_MSG("Failed to lock tsip hw ");
 
-    WOLFSSL_LEAVE("tsip_Open", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -2797,7 +2797,7 @@ WOLFSSL_LOCAL void tsip_Close(void)
     }
     else
         WOLFSSL_MSG("Failed to unlock tsip hw");
-    WOLFSSL_LEAVE("tsip_Close", 0);
+    WOLFSSL_LEAVE_FN(0);
 }
 
 int wc_tsip_GenerateRandBlock(byte* output, word32 sz)
@@ -2847,7 +2847,7 @@ void tsip_inform_user_keys_ex(
     }
 
     g_user_key_info.encrypted_user_tls_key_type = encrypted_user_tls_key_type;
-    WOLFSSL_LEAVE("tsip_inform_user_keys_ex", 0);
+    WOLFSSL_LEAVE_FN(0);
 }
 #elif (WOLFSSL_RENESAS_TSIP_VER>=106)
 /* inform user key                                                     */
@@ -2901,13 +2901,13 @@ int wc_tsip_Sha1HmacGenerate(
 
     if ((ssl == NULL) || (myInner == NULL) || (in == NULL) ||
         (digest == NULL)) {
-        WOLFSSL_LEAVE("wc_tsip_Sha1HmacGenerate", BAD_FUNC_ARG);
+        WOLFSSL_LEAVE_FN(BAD_FUNC_ARG);
         return BAD_FUNC_ARG;
     }
 
     if ((ret = tsip_hw_lock()) != 0) {
         WOLFSSL_MSG("hw lock failed");
-        WOLFSSL_LEAVE("wc_tsip_Sha1HmacGenerate", ret);
+        WOLFSSL_LEAVE_FN(ret);
         return ret;
     }
 
@@ -2936,7 +2936,7 @@ int wc_tsip_Sha1HmacGenerate(
 
     tsip_hw_unlock();
 
-    WOLFSSL_LEAVE("wc_tsip_Sha1HmacGenerate", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -3005,7 +3005,7 @@ int wc_tsip_Sha256HmacGenerate(
     }
     /* unlock hw */
     tsip_hw_unlock();
-    WOLFSSL_LEAVE("wc_tsip_Sha256HmacGenerate", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 /*
@@ -3031,7 +3031,7 @@ int wc_tsip_ShaXHmacVerify(
     int ret;
 
     if ((ssl == NULL) || (message == NULL)) {
-        WOLFSSL_LEAVE("tsip_ShaXHmacVerify", BAD_FUNC_ARG);
+        WOLFSSL_LEAVE_FN(BAD_FUNC_ARG);
         return BAD_FUNC_ARG;
     }
     wrapped_key = ssl->keys.tsip_server_write_MAC_secret;
@@ -3050,13 +3050,13 @@ int wc_tsip_ShaXHmacVerify(
     }
     else {
         WOLFSSL_MSG("unsupported key type");
-        WOLFSSL_LEAVE("tsip_ShaXHmacVerify", BAD_FUNC_ARG);
+        WOLFSSL_LEAVE_FN(BAD_FUNC_ARG);
         return BAD_FUNC_ARG;
     }
 
     if ((ret = tsip_hw_lock()) != 0) {
         WOLFSSL_MSG("hw lock failed\n");
-        WOLFSSL_LEAVE("tsip_ShaXHmacVerify", ret);
+        WOLFSSL_LEAVE_FN(ret);
         return ret;
     }
 
@@ -3080,7 +3080,7 @@ int wc_tsip_ShaXHmacVerify(
 
     /* unlock hw */
     tsip_hw_unlock();
-    WOLFSSL_LEAVE("tsip_ShaXHmacVerify", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -3098,7 +3098,7 @@ int wc_tsip_generateVerifyData(
 
     if ((ms == NULL) || (side == NULL) || (handshake_hash == NULL) ||
         (hashes == NULL)) {
-        WOLFSSL_LEAVE("tsip_generateVerifyData", BAD_FUNC_ARG);
+        WOLFSSL_LEAVE_FN(BAD_FUNC_ARG);
         return BAD_FUNC_ARG;
     }
     if (XSTRNCMP((const char*)side, (const char*)kTlsServerFinStr, 
@@ -3115,7 +3115,7 @@ int wc_tsip_generateVerifyData(
     }
     /* unlock hw */
     tsip_hw_unlock();
-    WOLFSSL_LEAVE("tsip_generateVerifyData", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -3269,7 +3269,7 @@ int wc_tsip_generateSessionKey(
     else
         WOLFSSL_MSG("hw lock failed");
 
-    WOLFSSL_LEAVE("wc_tsip_generateSessionKey", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -3312,7 +3312,7 @@ int wc_tsip_generateMasterSecretEx(
     else {
         WOLFSSL_MSG(" hw lock failed ");
     }
-    WOLFSSL_LEAVE("tsip_generateMasterSecretEx", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -3346,7 +3346,7 @@ int wc_tsip_generateMasterSecret(
     else {
         WOLFSSL_MSG(" hw lock failed ");
     }
-    WOLFSSL_LEAVE("tsip_generateMasterSecret", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_RENESAS_TSIP_VER */
@@ -3374,7 +3374,7 @@ int wc_tsip_storeKeyCtx(WOLFSSL* ssl, TsipUserCtx* userCtx)
                                                 ssl->options.cipherSuite);
     }
 
-    WOLFSSL_LEAVE("tsip_storeKeyCtx", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -3401,7 +3401,7 @@ int wc_tsip_generatePremasterSecret(byte *premaster, word32 preSz)
     else {
         WOLFSSL_MSG(" hw lock failed or preSz is smaller than 80");
     }
-    WOLFSSL_LEAVE("tsip_generatePremasterSecret", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -3458,7 +3458,7 @@ int wc_tsip_generateEncryptPreMasterSecret(
     else {
         WOLFSSL_MSG(" hw lock failed ");
     }
-    WOLFSSL_LEAVE("tsip_generateEncryptPreMasterSecret", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -3575,7 +3575,7 @@ int wc_tsip_tls_CertVerify(
     else {
         WOLFSSL_MSG(" hw lock failed ");
     }
-    WOLFSSL_LEAVE("wc_tsip_tls_CertVerify", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 /* Root Certificate verification */
@@ -3639,7 +3639,7 @@ int wc_tsip_tls_RootCertVerify(
     else {
         WOLFSSL_MSG(" hw lock failed ");
     }
-    WOLFSSL_LEAVE("wc_tsip_tls_RootCertVerify", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_RENESAS_TSIP_TLS */
@@ -3800,7 +3800,7 @@ WOLFSSL_LOCAL int tsip_SignRsaPkcs(wc_CryptoInfo* info, TsipUserCtx* tuc)
         }
     }
 
-    WOLFSSL_LEAVE("tsip_SignRsaPkcs", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* !NO_RSA */
@@ -3897,7 +3897,7 @@ WOLFSSL_LOCAL int tsip_VerifyRsaPkcsCb(
             WOLFSSL_MSG("mutex locking error");
         }
     }
-    WOLFSSL_LEAVE("tsip_VerifyRsaPkcsCb", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* !NO_RSA && TSIP_TLS */
@@ -4039,7 +4039,7 @@ WOLFSSL_LOCAL int tsip_SignEcdsa(wc_CryptoInfo* info, TsipUserCtx* tuc)
             WOLFSSL_MSG("mutex locking error");
         }
     }
-    WOLFSSL_LEAVE("tsip_SignEcdsa", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* HAVE_ECC && TSIP_TLS */

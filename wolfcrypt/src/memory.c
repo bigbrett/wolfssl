@@ -673,7 +673,7 @@ int wolfSSL_load_static_memory(byte* buffer, word32 sz, int flag,
         if (flag & WOLFMEM_IO_POOL || flag & WOLFMEM_IO_POOL_FIXED) {
             if ((ret = create_memory_buckets(pt, ava,
                                           WOLFMEM_IO_SZ, 1, &(heap->io))) < 0) {
-                WOLFSSL_LEAVE("wolfSSL_load_static_memory", ret);
+                WOLFSSL_LEAVE_FN(ret);
                 return ret;
             }
 
@@ -694,7 +694,7 @@ int wolfSSL_load_static_memory(byte* buffer, word32 sz, int flag,
                 if ((heap->sizeList[i] + padSz + memSz) <= ava) {
                     if ((ret = create_memory_buckets(pt, ava, heap->sizeList[i],
                                      heap->distList[i], &(heap->ava[i]))) < 0) {
-                        WOLFSSL_LEAVE("wolfSSL_load_static_memory", ret);
+                        WOLFSSL_LEAVE_FN(ret);
                         return ret;
                     }
 

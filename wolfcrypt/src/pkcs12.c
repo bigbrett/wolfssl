@@ -226,7 +226,7 @@ static int GetSafeContent(WC_PKCS12* pkcs12, const byte* input,
 
     ret = GetObjectId(input, &localIdx, &oid, oidIgnoreType, maxIdx);
     if (ret < 0) {
-        WOLFSSL_LEAVE("Get object id failed", ret);
+        WOLFSSL_LEAVE_FN(ret);
         freeSafe(safe, pkcs12->heap);
         return ASN_PARSE_E;
     }
@@ -347,7 +347,7 @@ static int GetSafeContent(WC_PKCS12* pkcs12, const byte* input,
             curIdx = localIdx;
             if ((ret = GetObjectId(input, &localIdx, &oid, oidIgnoreType,
                                                            (word32)size)) < 0) {
-                WOLFSSL_LEAVE("Get object id failed", ret);
+                WOLFSSL_LEAVE_FN(ret);
                 freeSafe(safe, pkcs12->heap);
                 return ret;
             }
@@ -853,7 +853,7 @@ int wc_d2i_PKCS12_fp(const char* file, WC_PKCS12** pkcs12)
         XFREE(buf, NULL, DYNAMIC_TYPE_TMP_BUFFER);
     }
 
-    WOLFSSL_LEAVE("wc_d2i_PKCS12_fp", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -1338,7 +1338,7 @@ int wc_PKCS12_parse(WC_PKCS12* pkcs12, const char* psw,
         if ((ret = wc_PKCS12_verify(pkcs12, pkcs12->safe->data,
                                pkcs12->safe->dataSz, (byte*)psw, (word32)pswSz)) != 0) {
             WOLFSSL_MSG("PKCS12 Bad MAC on verify");
-            WOLFSSL_LEAVE("wc_PKCS12_parse verify ", ret);
+            WOLFSSL_LEAVE_FN(ret);
             (void)ret;
             return MAC_CMP_FAILED_E;
         }
@@ -2463,7 +2463,7 @@ static byte* PKCS12_create_cert_content(WC_PKCS12* pkcs12, int nidCert,
             NULL, certBufSz, algo, pass, (int)passSz, iter, type);
     if (ret != LENGTH_ONLY_E) {
         XFREE(certBuf, heap, DYNAMIC_TYPE_TMP_BUFFER);
-        WOLFSSL_LEAVE("wc_PKCS12_create()", ret);
+        WOLFSSL_LEAVE_FN(ret);
         return NULL;
     }
     certCi = (byte*)XMALLOC(*certCiSz, heap, DYNAMIC_TYPE_TMP_BUFFER);
@@ -2476,7 +2476,7 @@ static byte* PKCS12_create_cert_content(WC_PKCS12* pkcs12, int nidCert,
             certBuf, certBufSz, algo, pass, (int)passSz, iter, type);
     XFREE(certBuf, heap, DYNAMIC_TYPE_TMP_BUFFER);
     if (ret < 0) {
-        WOLFSSL_LEAVE("wc_PKCS12_create()", ret);
+        WOLFSSL_LEAVE_FN(ret);
         XFREE(certCi, heap, DYNAMIC_TYPE_TMP_BUFFER);
         return NULL;
     }
@@ -2606,14 +2606,14 @@ WC_PKCS12* wc_PKCS12_create(char* pass, word32 passSz, char* name,
 
     if ((pkcs12 = wc_PKCS12_new()) == NULL) {
         wc_FreeRng(&rng);
-        WOLFSSL_LEAVE("wc_PKCS12_create", MEMORY_E);
+        WOLFSSL_LEAVE_FN(MEMORY_E);
         return NULL;
     }
 
     if ((ret = wc_PKCS12_SetHeap(pkcs12, heap)) != 0) {
         wc_PKCS12_free(pkcs12);
         wc_FreeRng(&rng);
-        WOLFSSL_LEAVE("wc_PKCS12_create", ret);
+        WOLFSSL_LEAVE_FN(ret);
         (void)ret;
         return NULL;
     }
@@ -2710,7 +2710,7 @@ WC_PKCS12* wc_PKCS12_create(char* pass, word32 passSz, char* name,
             wc_PKCS12_free(pkcs12);
             wc_FreeRng(&rng);
             WOLFSSL_MSG("Error creating mac");
-            WOLFSSL_LEAVE("wc_PKCS12_create", ret);
+            WOLFSSL_LEAVE_FN(ret);
             return NULL;
         }
 

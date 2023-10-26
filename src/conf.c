@@ -1114,7 +1114,7 @@ void wolfSSL_CONF_CTX_free(WOLFSSL_CONF_CTX* cctx)
 
     XFREE(cctx, NULL, DYNAMIC_TYPE_OPENSSL);
 
-    WOLFSSL_LEAVE("wolfSSL_CONF_CTX_free", 1);
+    WOLFSSL_LEAVE_FN(1);
 }
 /**
  * Set WOLFSSL_CTX instance to WOLFSSL_CONF_CTX
@@ -1133,7 +1133,7 @@ void wolfSSL_CONF_CTX_set_ssl_ctx(WOLFSSL_CONF_CTX* cctx, WOLFSSL_CTX *ctx)
     }
 
     cctx->ctx = ctx;
-    WOLFSSL_LEAVE("wolfSSL_CONF_CTX_set_ssl_ctx", 1);
+    WOLFSSL_LEAVE_FN(1);
 }
 /**
  * set flag value into WOLFSSL_CONF_CTX
@@ -1244,7 +1244,7 @@ static int cmdfunc_cipherstring(WOLFSSL_CONF_CTX* cctx, const char* value)
         ret = wolfSSL_set_cipher_list(cctx->ssl, value);
     }
 
-    WOLFSSL_LEAVE("cmdfunc_cipherstring", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -1283,7 +1283,7 @@ static int cmdfunc_curves(WOLFSSL_CONF_CTX* cctx, const char* value)
         ret = wolfSSL_set1_curves_list(cctx->ssl, value);
     }
 
-    WOLFSSL_LEAVE("cmdfunc_curves", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif
@@ -1329,7 +1329,7 @@ static int cmdfunc_cert(WOLFSSL_CONF_CTX* cctx, const char* value)
                                                     WOLFSSL_FILETYPE_PEM);
     }
 
-    WOLFSSL_LEAVE("cmdfunc_cert", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 /**
@@ -1373,7 +1373,7 @@ static int cmdfunc_key(WOLFSSL_CONF_CTX* cctx, const char* value)
                                                     WOLFSSL_FILETYPE_PEM);
     }
 
-    WOLFSSL_LEAVE("cmdfunc_key", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* NO_FILESYSTEM */
@@ -1435,7 +1435,7 @@ static int cmdfunc_dhparam(WOLFSSL_CONF_CTX* cctx, const char* value)
     if (bio)
         wolfSSL_BIO_free(bio);
 
-    WOLFSSL_LEAVE("cmdfunc_dhparam", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* !NO_DH && !NO_BIO */
@@ -1570,7 +1570,7 @@ int wolfSSL_CONF_cmd(WOLFSSL_CONF_CTX* cctx, const char* cmd, const char* value)
     if (ret < -3)
         ret = 0;
 
-    WOLFSSL_LEAVE("wolfSSL_CONF_cmd", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 

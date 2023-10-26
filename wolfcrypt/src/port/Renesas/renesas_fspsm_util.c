@@ -158,7 +158,7 @@ WOLFSSL_LOCAL int wc_fspsm_Open()
     /* unlock hw */
     wc_fspsm_hw_unlock();
 
-    WOLFSSL_LEAVE("wc_fspsm_Open", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -619,7 +619,7 @@ WOLFSSL_LOCAL int wc_fspsm_Sha256GenerateHmac(const WOLFSSL *ssl,
 
     /* unlock hw */
     wc_fspsm_hw_unlock();
-    WOLFSSL_LEAVE("fspsm_Sha256HmacGenerate", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -676,7 +676,7 @@ WOLFSSL_LOCAL int wc_fspsm_Sha256VerifyHmac(const WOLFSSL *ssl,
 
     /* unlock hw */
     wc_fspsm_hw_unlock();
-    WOLFSSL_LEAVE("fspsm_Sha256HmacVerify", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -709,7 +709,7 @@ WOLFSSL_LOCAL int wc_fspsm_generateVerifyData(
     }
     /* unlock hw */
     wc_fspsm_hw_unlock();
-    WOLFSSL_LEAVE("fspsm_generateVerifyData", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -864,10 +864,10 @@ WOLFSSL_LOCAL int wc_fspsm_generateSessionKey(WOLFSSL *ssl,
         
     }
     else {
-        WOLFSSL_LEAVE("hw lock failed", ret);
+        WOLFSSL_LEAVE_FN(ret);
     }
 
-    WOLFSSL_LEAVE("fspsm_generateSessionKey", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -905,7 +905,7 @@ WOLFSSL_LOCAL int wc_fspsm_generateMasterSecret(
     else {
         WOLFSSL_MSG(" hw lock failed ");
     }
-    WOLFSSL_LEAVE("fspsm_generateMasterSecret", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -933,7 +933,7 @@ WOLFSSL_LOCAL int wc_fspsm_generatePremasterSecret(uint8_t *premaster,
         WOLFSSL_MSG(" hw lock failed or preSz is smaller than 80");
     }
 
-    WOLFSSL_LEAVE("fspsm_generatePremasterSecret", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -978,7 +978,7 @@ WOLFSSL_LOCAL int wc_fspsm_generateEncryptPreMasterSecret(
     else {
         WOLFSSL_MSG(" hw lock failed ");
     }
-    WOLFSSL_LEAVE("fspsm_generateEncryptPreMasterSecret", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -1078,7 +1078,7 @@ WOLFSSL_LOCAL int wc_fspsm_tls_CertVerify(
     else {
         WOLFSSL_MSG(" hw lock failed ");
     }
-    WOLFSSL_LEAVE("fspsm_tls_CertVerify", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -1126,7 +1126,7 @@ WOLFSSL_LOCAL int wc_fspsm_tls_RootCertVerify(
     else {
         WOLFSSL_MSG(" hw lock failed ");
     }
-    WOLFSSL_LEAVE("wc_fspsm_tls_RootCertVerify", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -1151,7 +1151,7 @@ WOLFSSL_LOCAL int wc_fspsm_storeKeyCtx(WOLFSSL* ssl, FSPSM_ST* info)
         info->cipher = (uint8_t)GetSceCipherSuite(ssl->options.cipherSuite0,
                                ssl->options.cipherSuite);
     }
-    WOLFSSL_LEAVE("fspsm_storeKeyCtx", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 

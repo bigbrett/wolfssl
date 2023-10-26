@@ -279,7 +279,7 @@ static int wolfssl_i2d_asn1_items(const void* src, byte*buf,
         len += ret;
     }
 
-    WOLFSSL_LEAVE("wolfssl_i2d_asn1_items", len);
+    WOLFSSL_LEAVE_FN(len);
 
     return len;
 }
@@ -379,7 +379,7 @@ int wolfSSL_ASN1_item_i2d(const void* src, byte** dest,
         XFREE(buf, NULL, DYNAMIC_TYPE_ASN1);
         len = 0;
     }
-    WOLFSSL_LEAVE("wolfSSL_ASN1_item_i2d", len);
+    WOLFSSL_LEAVE_FN(len);
     return len;
 }
 
@@ -738,7 +738,7 @@ int wolfSSL_ASN1_INTEGER_cmp(const WOLFSSL_ASN1_INTEGER* a,
         }
     }
 
-    WOLFSSL_LEAVE("wolfSSL_ASN1_INTEGER_cmp", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -857,7 +857,7 @@ int wolfSSL_i2d_ASN1_INTEGER(const WOLFSSL_ASN1_INTEGER* a, unsigned char** out)
         *out = NULL;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_i2d_ASN1_INTEGER", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -1438,7 +1438,7 @@ long wolfSSL_ASN1_INTEGER_get(const WOLFSSL_ASN1_INTEGER* a)
         wolfSSL_BN_free(bn);
     }
 
-    WOLFSSL_LEAVE("wolfSSL_ASN1_INTEGER_get", (int)ret);
+    WOLFSSL_LEAVE_FN((int)ret);
 
     return ret;
 }
@@ -3317,7 +3317,7 @@ int wolfSSL_ASN1_TIME_compare(const WOLFSSL_ASN1_TIME *a,
         ret = 1;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_ASN1_TIME_compare", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }

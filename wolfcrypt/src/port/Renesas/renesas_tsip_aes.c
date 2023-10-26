@@ -226,7 +226,7 @@ WOLFSSL_LOCAL int tsip_Tls13AesEncrypt(
         tsip_hw_unlock();
     }
 
-    WOLFSSL_LEAVE("tsip_Tls13AesEncrypt", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -372,7 +372,7 @@ WOLFSSL_LOCAL int tsip_Tls13AesDecrypt(
         tsip_hw_unlock();
     }
 
-    WOLFSSL_LEAVE("tsip_Tls13AesDecrypt", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_RENESAS_TSIP_TLS */
@@ -460,7 +460,7 @@ WOLFSSL_LOCAL int wc_tsip_AesCipher(int devIdArg, wc_CryptoInfo* info,
     #endif /* !NO_AES || !NO_DES3 */
 
     }
-    WOLFSSL_LEAVE("wc_tsip_AesCipher", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLF_CRYPTO_CB */
@@ -637,13 +637,13 @@ int wc_tsip_AesGcmEncrypt(
        (sz != 0       && (in == NULL  || out == NULL)) ||
        (ivSz != 0     &&  iv == NULL) ||
        (authInSz != 0 && authIn == NULL)) {
-        WOLFSSL_LEAVE("wc_tsip_AesGcmEncrypt", BAD_FUNC_ARG);
+        WOLFSSL_LEAVE_FN(BAD_FUNC_ARG);
         return BAD_FUNC_ARG;
     }
     /* TSIP can handle 128 and 256 bit key only */
     if (aes->ctx.keySize != 16 && aes->ctx.keySize != 32) {
         WOLFSSL_MSG("illegal key size");
-        WOLFSSL_LEAVE("wc_tsip_AesGcmEncrypt", BAD_FUNC_ARG);
+        WOLFSSL_LEAVE_FN(BAD_FUNC_ARG);
         return  BAD_FUNC_ARG;
     }
 
@@ -837,12 +837,12 @@ int wc_tsip_AesGcmDecrypt(
         (authInSz == 0 && authIn != NULL) ||
         (authTagSz != 0 && authTag == NULL) ||
         (authTagSz == 0 && authTag != NULL)) {
-        WOLFSSL_LEAVE("wc_tsip_AesGcmDecrypt", BAD_FUNC_ARG);
+        WOLFSSL_LEAVE_FN(BAD_FUNC_ARG);
         return BAD_FUNC_ARG;
     }
     if (aes->ctx.keySize != 16 && aes->ctx.keySize != 32) {
         WOLFSSL_MSG("illegal key size");
-        WOLFSSL_LEAVE("wc_tsip_AesGcmDecrypt", BAD_FUNC_ARG);
+        WOLFSSL_LEAVE_FN(BAD_FUNC_ARG);
         return  BAD_FUNC_ARG;
     }
 
@@ -972,7 +972,7 @@ int wc_tsip_AesGcmDecrypt(
 
         tsip_hw_unlock();
     }
-    WOLFSSL_LEAVE("wc_tsip_AesGcmDecrypt", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_RENESAS_TSIP_TLS) || WOLFSSL_RENESAS_TSIP_CRYPTONLY

@@ -159,7 +159,7 @@ int CheckCertOCSP_ex(WOLFSSL_OCSP* ocsp, DecodedCert* cert, WOLFSSL* ssl)
     ocspRequest = (OcspRequest*)XMALLOC(sizeof(OcspRequest), NULL,
                                                        DYNAMIC_TYPE_TMP_BUFFER);
     if (ocspRequest == NULL) {
-        WOLFSSL_LEAVE("CheckCertOCSP", MEMORY_ERROR);
+        WOLFSSL_LEAVE_FN(MEMORY_ERROR);
         return MEMORY_E;
     }
 #endif
@@ -176,7 +176,7 @@ int CheckCertOCSP_ex(WOLFSSL_OCSP* ocsp, DecodedCert* cert, WOLFSSL* ssl)
     XFREE(ocspRequest, NULL, DYNAMIC_TYPE_TMP_BUFFER);
 #endif
 
-    WOLFSSL_LEAVE("CheckCertOCSP", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 int CheckCertOCSP(WOLFSSL_OCSP* ocsp, DecodedCert* cert)
@@ -192,7 +192,7 @@ static int GetOcspEntry(WOLFSSL_OCSP* ocsp, OcspRequest* request,
     *entry = NULL;
 
     if (wc_LockMutex(&ocsp->ocspLock) != 0) {
-        WOLFSSL_LEAVE("CheckCertOCSP", BAD_MUTEX_E);
+        WOLFSSL_LEAVE_FN(BAD_MUTEX_E);
         return BAD_MUTEX_E;
     }
 
@@ -235,7 +235,7 @@ static int GetOcspStatus(WOLFSSL_OCSP* ocsp, OcspRequest* request,
     *status = NULL;
 
     if (wc_LockMutex(&ocsp->ocspLock) != 0) {
-        WOLFSSL_LEAVE("CheckCertOCSP", BAD_MUTEX_E);
+        WOLFSSL_LEAVE_FN(BAD_MUTEX_E);
         return BAD_MUTEX_E;
     }
 
@@ -322,7 +322,7 @@ int CheckOcspResponse(WOLFSSL_OCSP *ocsp, byte *response, int responseSz,
         if (newSingle) XFREE(newSingle, NULL, DYNAMIC_TYPE_OCSP_ENTRY);
         if (ocspResponse) XFREE(ocspResponse, NULL, DYNAMIC_TYPE_OCSP_REQUEST);
 
-        WOLFSSL_LEAVE("CheckCertOCSP", MEMORY_ERROR);
+        WOLFSSL_LEAVE_FN(MEMORY_ERROR);
         return MEMORY_E;
     }
 #endif
@@ -332,7 +332,7 @@ int CheckOcspResponse(WOLFSSL_OCSP *ocsp, byte *response, int responseSz,
     ret = OcspResponseDecode(ocspResponse, ocsp->cm, ocsp->cm->heap, 0);
     if (ret != 0) {
         ocsp->error = ret;
-        WOLFSSL_LEAVE("OcspResponseDecode failed", ocsp->error);
+        WOLFSSL_LEAVE_FN(ocsp->error);
         goto end;
     }
 
@@ -492,11 +492,11 @@ int CheckOcspRequest(WOLFSSL_OCSP* ocsp, OcspRequest* ocspRequest,
                 break;
             case SSL_TLSEXT_ERR_ALERT_FATAL:
             default:
-                WOLFSSL_LEAVE("CheckOcspRequest", ocsp->error);
+                WOLFSSL_LEAVE_FN(ocsp->error);
                 ret = WOLFSSL_FATAL_ERROR;
                 break;
         }
-        WOLFSSL_LEAVE("CheckOcspRequest", ret);
+        WOLFSSL_LEAVE_FN(ret);
         return ret;
     }
 #endif
@@ -520,7 +520,7 @@ int CheckOcspRequest(WOLFSSL_OCSP* ocsp, OcspRequest* ocspRequest,
 
     request = (byte*)XMALLOC(requestSz, ocsp->cm->heap, DYNAMIC_TYPE_OCSP);
     if (request == NULL) {
-        WOLFSSL_LEAVE("CheckCertOCSP", MEMORY_ERROR);
+        WOLFSSL_LEAVE_FN(MEMORY_ERROR);
         return MEMORY_ERROR;
     }
 
@@ -545,7 +545,7 @@ int CheckOcspRequest(WOLFSSL_OCSP* ocsp, OcspRequest* ocspRequest,
 
     /* Keep responseBuffer in the case of getting to response check. Caller
      * should free responseBuffer after checking OCSP return value in "ret" */
-    WOLFSSL_LEAVE("CheckOcspRequest", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 

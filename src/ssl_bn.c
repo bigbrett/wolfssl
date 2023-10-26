@@ -1385,7 +1385,7 @@ int wolfSSL_BN_add_word(WOLFSSL_BIGNUM *bn, WOLFSSL_BN_ULONG w)
 
     ret = wolfssl_bn_add_word_int(bn, w, 0);
 
-    WOLFSSL_LEAVE("wolfSSL_BN_add_word", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -1407,7 +1407,7 @@ int wolfSSL_BN_sub_word(WOLFSSL_BIGNUM* bn, WOLFSSL_BN_ULONG w)
 
     ret = wolfssl_bn_add_word_int(bn, w, 1);
 
-    WOLFSSL_LEAVE("wolfSSL_BN_sub_word", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -1631,7 +1631,7 @@ int wolfSSL_BN_sub(WOLFSSL_BIGNUM* r, const WOLFSSL_BIGNUM* a,
         ret = 0;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_BN_sub mp_sub", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -1667,7 +1667,7 @@ int wolfSSL_BN_mul(WOLFSSL_BIGNUM *r, WOLFSSL_BIGNUM *a, WOLFSSL_BIGNUM *b,
         ret = 0;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_BN_mul", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -1714,7 +1714,7 @@ int wolfSSL_BN_div(WOLFSSL_BIGNUM* dv, WOLFSSL_BIGNUM* rem,
     if (res != dv)
         wolfSSL_BN_free(res);
 
-    WOLFSSL_LEAVE("wolfSSL_BN_div", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif
@@ -1750,7 +1750,7 @@ int wolfSSL_BN_mod(WOLFSSL_BIGNUM* r, const WOLFSSL_BIGNUM* a,
         ret = 0;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_BN_mod mp_mod", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -1831,7 +1831,7 @@ int wolfSSL_BN_mod_mul(WOLFSSL_BIGNUM *r, const WOLFSSL_BIGNUM *a,
         ret = 0;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_BN_mod_mul", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -1870,7 +1870,7 @@ int wolfSSL_BN_mod_exp(WOLFSSL_BIGNUM *r, const WOLFSSL_BIGNUM *a,
         ret = 0;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_BN_mod_exp", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -1966,7 +1966,7 @@ int wolfSSL_BN_gcd(WOLFSSL_BIGNUM* r, WOLFSSL_BIGNUM* a, WOLFSSL_BIGNUM* b,
         ret = 0;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_BN_gcd", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* !NO_RSA && WOLFSSL_KEY_GEN */
@@ -2076,7 +2076,7 @@ int wolfSSL_BN_rand(WOLFSSL_BIGNUM* bn, int bits, int top, int bottom)
         }
     }
 
-    WOLFSSL_LEAVE("wolfSSL_BN_rand", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -2230,7 +2230,7 @@ int wolfSSL_BN_generate_prime_ex(WOLFSSL_BIGNUM* prime, int bits,
     #endif
     }
 
-    WOLFSSL_LEAVE("wolfSSL_BN_generate_prime_ex", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }

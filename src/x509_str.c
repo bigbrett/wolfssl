@@ -961,7 +961,7 @@ int wolfSSL_X509_STORE_add_cert(WOLFSSL_X509_STORE* store, WOLFSSL_X509* x509)
         }
     }
 
-    WOLFSSL_LEAVE("wolfSSL_X509_STORE_add_cert", result);
+    WOLFSSL_LEAVE_FN(result);
 
     if (result != WOLFSSL_SUCCESS) {
         result = WOLFSSL_FATAL_ERROR;

@@ -10705,7 +10705,7 @@ int TLSX_QuicTP_Use(WOLFSSL* ssl, TLSX_Type ext_type, int is_response)
     }
 
 cleanup:
-    WOLFSSL_LEAVE("TLSX_QuicTP_Use", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -10718,7 +10718,7 @@ static word16 TLSX_QuicTP_Write(QuicTransportParam *tp, byte* output)
         XMEMCPY(output, tp->data, tp->len);
         len = tp->len;
     }
-    WOLFSSL_LEAVE("TLSX_QuicTP_Write", len);
+    WOLFSSL_LEAVE_FN(len);
     return len;
 }
 

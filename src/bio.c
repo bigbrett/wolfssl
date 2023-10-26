@@ -1247,7 +1247,7 @@ int wolfSSL_BIO_make_bio_pair(WOLFSSL_BIO *b1, WOLFSSL_BIO *b2)
     WOLFSSL_ENTER_FN();
 
     if (b1 == NULL || b2 == NULL) {
-        WOLFSSL_LEAVE("wolfSSL_BIO_make_bio_pair", BAD_FUNC_ARG);
+        WOLFSSL_LEAVE_FN(BAD_FUNC_ARG);
         return WOLFSSL_FAILURE;
     }
 
@@ -1535,7 +1535,7 @@ long wolfSSL_BIO_set_fp(WOLFSSL_BIO *bio, XFILE fp, int c)
     WOLFSSL_ENTER_FN();
 
     if (bio == NULL || fp == XBADFILE) {
-        WOLFSSL_LEAVE("wolfSSL_BIO_set_fp", BAD_FUNC_ARG);
+        WOLFSSL_LEAVE_FN(BAD_FUNC_ARG);
         return WOLFSSL_FAILURE;
     }
 

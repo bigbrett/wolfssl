@@ -396,7 +396,7 @@ int wolfSSL_set_quic_transport_params(WOLFSSL* ssl,
     ssl->quic.transport_local = tp;
 
 cleanup:
-    WOLFSSL_LEAVE("wolfSSL_set_quic_transport_params", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -621,7 +621,7 @@ cleanup:
     if (ret == WOLFSSL_SUCCESS) {
         ssl->error = WOLFSSL_ERROR_NONE;
     }
-    WOLFSSL_LEAVE("wolfSSL_quic_do_handshake", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -646,7 +646,7 @@ int wolfSSL_quic_read_write(WOLFSSL* ssl)
     ret = wolfSSL_process_quic_post_handshake(ssl);
 
 cleanup:
-    WOLFSSL_LEAVE("wolfSSL_quic_read_write", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -680,7 +680,7 @@ int wolfSSL_process_quic_post_handshake(WOLFSSL* ssl)
     }
 
 cleanup:
-    WOLFSSL_LEAVE("wolfSSL_process_quic_post_handshake", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -745,7 +745,7 @@ int wolfSSL_provide_quic_data(WOLFSSL* ssl, WOLFSSL_ENCRYPTION_LEVEL level,
     ssl->quic.enc_level_latest_recvd = level;
 
 cleanup:
-    WOLFSSL_LEAVE("wolfSSL_provide_quic_data", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -783,7 +783,7 @@ int wolfSSL_quic_receive(WOLFSSL* ssl, byte* buf, word32 sz)
         transferred += n;
     }
 cleanup:
-    WOLFSSL_LEAVE("wolfSSL_quic_receive", transferred);
+    WOLFSSL_LEAVE_FN(transferred);
     return transferred;
 }
 
@@ -851,7 +851,7 @@ static int wolfSSL_quic_send_internal(WOLFSSL* ssl)
     ssl->buffers.outputBuffer.length = 0;
 
 cleanup:
-    WOLFSSL_LEAVE("wolfSSL_quic_send", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -919,7 +919,7 @@ int wolfSSL_quic_forward_secrets(WOLFSSL* ssl, int ktype, int side)
      }
 
 cleanup:
-    WOLFSSL_LEAVE("wolfSSL_quic_forward_secrets", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -944,7 +944,7 @@ int wolfSSL_quic_keys_active(WOLFSSL* ssl, enum encrypt_side side)
         ssl->quic.enc_level_read = ssl->quic.enc_level_read_next;
     }
 cleanup:
-    WOLFSSL_LEAVE("wolfSSL_quic_keys_active", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -1171,7 +1171,7 @@ int wolfSSL_quic_hkdf_extract(uint8_t* dest, const WOLFSSL_EVP_MD* md,
 cleanup:
     if (pctx)
         wolfSSL_EVP_PKEY_CTX_free(pctx);
-    WOLFSSL_LEAVE("wolfSSL_quic_hkdf_extract", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -1210,7 +1210,7 @@ int wolfSSL_quic_hkdf_expand(uint8_t* dest, size_t destlen,
 cleanup:
     if (pctx)
         EVP_PKEY_CTX_free(pctx);
-    WOLFSSL_LEAVE("wolfSSL_quic_hkdf_expand", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -1250,7 +1250,7 @@ int wolfSSL_quic_hkdf(uint8_t* dest, size_t destlen,
 cleanup:
     if (pctx)
         EVP_PKEY_CTX_free(pctx);
-    WOLFSSL_LEAVE("wolfSSL_quic_hkdf", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 

@@ -130,7 +130,7 @@ WOLFSSL_LOCAL int tsip_Tls13GetHmacMessages(struct WOLFSSL* ssl, byte* mac)
             WOLFSSL_MSG("mutex locking error");
         }
     }
-    WOLFSSL_LEAVE("tsipTls13GetHmacMessages", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -206,7 +206,7 @@ WOLFSSL_LOCAL int tsip_StoreMessage(struct WOLFSSL* ssl, const byte* data,
         bag->buffIdx += sz;
     }
 
-    WOLFSSL_LEAVE("tsip_StoreMessage", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -273,7 +273,7 @@ WOLFSSL_LOCAL int tsip_GetMessageSha256(struct WOLFSSL* ssl, byte* hash,
             WOLFSSL_MSG("mutex locking error");
         }
     }
-    WOLFSSL_LEAVE("tsip_GetMessageSha256", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_RENESAS_TSIP_TLS */

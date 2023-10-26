@@ -753,7 +753,7 @@ unsigned long wc_GetErrorNodeErr(void)
         }
         else {
             WOLFSSL_MSG("Error with pulling error node!");
-            WOLFSSL_LEAVE("wolfSSL_ERR_get_error", ret);
+            WOLFSSL_LEAVE_FN(ret);
             ret = 0 - ret; /* return absolute value of error */
             /* panic and try to clear out nodes */
             wc_ClearErrorNodes();
@@ -1268,7 +1268,7 @@ unsigned long wc_GetErrorNodeErr(void)
         }
         else {
             WOLFSSL_MSG("Error with pulling error node!");
-            WOLFSSL_LEAVE("wolfSSL_ERR_get_error", ret);
+            WOLFSSL_LEAVE_FN(ret);
             ret = 0 - ret; /* return absolute value of error */
             /* panic and try to clear out nodes */
             clearErrorNodes();
@@ -1279,7 +1279,7 @@ unsigned long wc_GetErrorNodeErr(void)
         if (idx < 0) {
             WOLFSSL_MSG("Error with getting current index!");
             ret = BAD_STATE_E;
-            WOLFSSL_LEAVE("wolfSSL_ERR_get_error", ret);
+            WOLFSSL_LEAVE_FN(ret);
 
             /* panic and try to clear out nodes and reset queue state */
             clearErrorNodes();

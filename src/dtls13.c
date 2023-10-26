@@ -400,7 +400,7 @@ int Dtls13ProcessBufferedMessages(WOLFSSL* ssl)
             break;
     }
 
-    WOLFSSL_LEAVE("dtls13_process_buffered_messages()", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }

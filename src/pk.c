@@ -1532,7 +1532,7 @@ static int wolfSSL_RSA_To_Der_ex(WOLFSSL_RSA* rsa, byte** outBuf, int publicKey,
 
     /* Validate parameters. */
     if ((rsa == NULL) || ((publicKey != 0) && (publicKey != 1))) {
-        WOLFSSL_LEAVE("wolfSSL_RSA_To_Der", BAD_FUNC_ARG);
+        WOLFSSL_LEAVE_FN(BAD_FUNC_ARG);
         ret = BAD_FUNC_ARG;
     }
     /* Push external RSA data into internal RSA key if not set. */
@@ -1609,7 +1609,7 @@ static int wolfSSL_RSA_To_Der_ex(WOLFSSL_RSA* rsa, byte** outBuf, int publicKey,
         /* Not returning buffer, needs to be disposed of. */
         XFREE(derBuf, heap, DYNAMIC_TYPE_TMP_BUFFER);
     }
-    WOLFSSL_LEAVE("wolfSSL_RSA_To_Der", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* !HAVE_USER_RSA */
@@ -2284,7 +2284,7 @@ int wolfSSL_RSA_print_fp(XFILE fp, WOLFSSL_RSA* rsa, int indent)
         ret = pk_bn_field_print_fp(fp, indent, "coefficient", rsa->iqmp);
     }
 
-    WOLFSSL_LEAVE("wolfSSL_RSA_print_fp", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -3078,7 +3078,7 @@ int wolfSSL_RSA_check_key(const WOLFSSL_RSA* rsa)
         ret = 0;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_RSA_check_key", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -3932,7 +3932,7 @@ int wolfSSL_RSA_sign_generic_padding(int hashAlg, const unsigned char* hash,
     XFREE(encodedSig, NULL, DYNAMIC_TYPE_SIGNATURE);
 #endif
 
-    WOLFSSL_LEAVE("wolfSSL_RSA_sign_generic_padding", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -4198,7 +4198,7 @@ int wolfSSL_RSA_public_encrypt(int len, const unsigned char* from,
     if (ret <= 0) {
         ret = -1;
     }
-    WOLFSSL_LEAVE("wolfSSL_RSA_public_encrypt", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -4293,7 +4293,7 @@ int wolfSSL_RSA_private_decrypt(int len, const unsigned char* from,
     if (ret <= 0) {
         ret = -1;
     }
-    WOLFSSL_LEAVE("wolfSSL_RSA_private_decrypt", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -4379,7 +4379,7 @@ int wolfSSL_RSA_public_decrypt(int len, const unsigned char* from,
     if (ret <= 0) {
         ret = -1;
     }
-    WOLFSSL_LEAVE("wolfSSL_RSA_public_decrypt", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -4475,7 +4475,7 @@ int wolfSSL_RSA_private_encrypt(int len, const unsigned char* from,
     if (ret <= 0) {
         ret = -1;
     }
-    WOLFSSL_LEAVE("wolfSSL_RSA_private_encrypt", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* !HAVE_USER_RSA && !HAVE_FAST_RSA */
@@ -4659,7 +4659,7 @@ int wolfSSL_DSA_print_fp(XFILE fp, WOLFSSL_DSA* dsa, int indent)
         ret = pk_bn_field_print_fp(fp, indent, "G", dsa->g);
     }
 
-    WOLFSSL_LEAVE("wolfSSL_DSA_print_fp", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -5536,7 +5536,7 @@ WOLFSSL_API int wolfSSL_i2d_DSAparams(const WOLFSSL_DSA* dsa,
         XFREE(*out, key ? key->heap : NULL, DYNAMIC_TYPE_OPENSSL);
     }
 
-    WOLFSSL_LEAVE("wolfSSL_i2d_DSAparams", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -6053,7 +6053,7 @@ WOLFSSL_DSA *wolfSSL_PEM_read_bio_DSAparams(WOLFSSL_BIO *bp, WOLFSSL_DSA **x,
 
     ret = wolfSSL_BIO_get_mem_data(bp, &buf);
     if (ret <= 0) {
-        WOLFSSL_LEAVE("wolfSSL_PEM_read_bio_DSAparams", ret);
+        WOLFSSL_LEAVE_FN(ret);
         return NULL;
     }
 
@@ -6074,7 +6074,7 @@ WOLFSSL_DSA *wolfSSL_PEM_read_bio_DSAparams(WOLFSSL_BIO *bp, WOLFSSL_DSA **x,
     }
 
     if (GetSequence(pDer->buffer, &idx, &length, pDer->length) < 0) {
-        WOLFSSL_LEAVE("wolfSSL_PEM_read_bio_DSAparams", ret);
+        WOLFSSL_LEAVE_FN(ret);
         FreeDer(&pDer);
         return NULL;
     }
@@ -6448,7 +6448,7 @@ WOLFSSL_DH* wolfSSL_DH_new_by_nid(int nid)
         dh = NULL;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_DH_new_by_nid", err);
+    WOLFSSL_LEAVE_FN(err);
 
     return dh;
 }
@@ -7646,7 +7646,7 @@ static int wolfssl_dhparams_to_der(WOLFSSL_DH* dh, unsigned char** out,
         /* Allocate memory for DER encoding. */
         der = (byte*)XMALLOC(derSz, heap, DYNAMIC_TYPE_TMP_BUFFER);
         if (der == NULL) {
-            WOLFSSL_LEAVE("wolfssl_dhparams_to_der", MEMORY_E);
+            WOLFSSL_LEAVE_FN(MEMORY_E);
             err = 1;
         }
     }
@@ -7714,7 +7714,7 @@ int wolfSSL_PEM_write_DHparams(XFILE fp, WOLFSSL_DH* dh)
     /* Dispose of DER buffer. */
     XFREE(derBuf, heap, DYNAMIC_TYPE_TMP_BUFFER);
 
-    WOLFSSL_LEAVE("wolfSSL_PEM_write_DHparams", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -8630,7 +8630,7 @@ int wolfSSL_DH_compute_key(unsigned char* key, const WOLFSSL_BIGNUM* otherPub,
     XFREE(priv, NULL, DYNAMIC_TYPE_PRIVATE_KEY);
 #endif
 
-    WOLFSSL_LEAVE("wolfSSL_DH_compute_key", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -12197,7 +12197,7 @@ int wolfSSL_PEM_write_EC_PUBKEY(XFILE fp, WOLFSSL_EC_KEY* key)
     /* Dispose of any dynamically allocated data. */
     XFREE(derBuf, key->heap, DYNAMIC_TYPE_TMP_BUFFER);
 
-    WOLFSSL_LEAVE("wolfSSL_PEM_write_EC_PUBKEY", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -12659,7 +12659,7 @@ int wolfSSL_EC_KEY_print_fp(XFILE fp, WOLFSSL_EC_KEY* key, int indent)
     }
 
 
-    WOLFSSL_LEAVE("wolfSSL_EC_KEY_print_fp", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }

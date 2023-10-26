@@ -627,7 +627,7 @@ static int wc_GetContentType(const byte* input, word32* inOutIdx, word32* oid,
 {
     WOLFSSL_ENTER_FN();
     if (GetObjectId(input, inOutIdx, oid, oidIgnoreType, maxIdx) < 0) {
-        WOLFSSL_LEAVE("wc_GetContentType", ASN_PARSE_E);
+        WOLFSSL_LEAVE_FN(ASN_PARSE_E);
         return ASN_PARSE_E;
     }
 

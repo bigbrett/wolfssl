@@ -78,7 +78,7 @@ WOLFSSL_LOCAL int Renesas_cmn_Cleanup(WOLFSSL* ssl)
     ret = tsip_TlsCleanup(ssl);
 #endif
 
-    WOLFSSL_LEAVE("Renesas_cmn_Cleanup", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -94,7 +94,7 @@ WOLFSSL_LOCAL int Renesas_cmn_RsaSignCb(WOLFSSL* ssl,
 
     /* This is just a stub function that provides no logic */
 
-    WOLFSSL_LEAVE("Renesas_cmn_RsaSignCb", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 /* This function is a callback passed to wolfSSL_CTX_SetRsaSignCheckCb.
@@ -117,7 +117,7 @@ WOLFSSL_LOCAL int Renesas_cmn_RsaSignCheckCb(WOLFSSL* ssl,
 
     #endif /* WOLFSSL_RENESAS_TSIP */
 
-    WOLFSSL_LEAVE("Renesas_cmn_RsaSignCheckCb", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -132,7 +132,7 @@ WOLFSSL_LOCAL int Renesas_cmn_EccSignCb(WOLFSSL* ssl,
 
     /* This is just a stub function that provides no logic */
 
-    WOLFSSL_LEAVE("Renesas_cmn_EccSignCb", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 #endif /* WOLFSSL_RENESAS_TSIP_TLS */
@@ -407,7 +407,7 @@ static int Renesas_cmn_CryptoDevCb(int devIdArg, wc_CryptoInfo* info, void* ctx)
 
     (void)devIdArg;
     (void)ctx;
-    WOLFSSL_LEAVE("Renesas_cmn_CryptoDevCb", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 
@@ -695,7 +695,7 @@ int wc_Renesas_cmn_RootCertVerify(const byte* cert, word32 cert_len,
         /* already verified. skipped */
         ret = 0;
     }
-    WOLFSSL_LEAVE("wc_Renesas_cmn_RootCertVerify", ret);
+    WOLFSSL_LEAVE_FN(ret);
     return ret;
 }
 

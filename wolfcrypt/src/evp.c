@@ -2592,7 +2592,7 @@ int wolfSSL_EVP_PKEY_CTX_set_hkdf_md(WOLFSSL_EVP_PKEY_CTX* ctx,
         ctx->pkey->hkdfMd = md;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_EVP_PKEY_CTX_set_hkdf_md", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -2629,7 +2629,7 @@ int wolfSSL_EVP_PKEY_CTX_set1_hkdf_salt(WOLFSSL_EVP_PKEY_CTX* ctx,
         }
     }
 
-    WOLFSSL_LEAVE("wolfSSL_EVP_PKEY_CTX_set1_hkdf_salt", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -2666,7 +2666,7 @@ int wolfSSL_EVP_PKEY_CTX_set1_hkdf_key(WOLFSSL_EVP_PKEY_CTX* ctx,
         }
     }
 
-    WOLFSSL_LEAVE("wolfSSL_EVP_PKEY_CTX_set1_hkdf_key", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -2705,7 +2705,7 @@ int wolfSSL_EVP_PKEY_CTX_add1_hkdf_info(WOLFSSL_EVP_PKEY_CTX* ctx,
         }
     }
 
-    WOLFSSL_LEAVE("wolfSSL_EVP_PKEY_CTX_add1_hkdf_info", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -2733,7 +2733,7 @@ int wolfSSL_EVP_PKEY_CTX_hkdf_mode(WOLFSSL_EVP_PKEY_CTX* ctx, int mode)
         ctx->pkey->hkdfMode = mode;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_EVP_PKEY_CTX_hkdf_mode", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -3299,7 +3299,7 @@ int wolfSSL_EVP_PKEY_paramgen(WOLFSSL_EVP_PKEY_CTX* ctx,
         *pkey = NULL;
     }
 
-    WOLFSSL_LEAVE("wolfSSL_EVP_PKEY_paramgen", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
@@ -3752,7 +3752,7 @@ static int DH_param_check(WOLFSSL_DH* dh_key)
     wolfSSL_BN_free(num1);
     wolfSSL_BN_free(num2);
 
-    WOLFSSL_LEAVE("DH_param_check", WOLFSSL_SUCCESS);
+    WOLFSSL_LEAVE_FN(WOLFSSL_SUCCESS);
     return ret;
 }
 /**
@@ -4057,20 +4057,20 @@ WOLFSSL_EVP_PKEY* wolfSSL_EVP_PKEY_new_CMAC_key(WOLFSSL_ENGINE* e,
     WOLFSSL_ENTER_FN();
 
     if (priv == NULL || len == 0 || cipher == NULL) {
-        WOLFSSL_LEAVE("wolfSSL_EVP_PKEY_new_CMAC_key", BAD_FUNC_ARG);
+        WOLFSSL_LEAVE_FN(BAD_FUNC_ARG);
         return NULL;
     }
 
     ctx = wolfSSL_CMAC_CTX_new();
     if (ctx == NULL) {
-        WOLFSSL_LEAVE("wolfSSL_EVP_PKEY_new_CMAC_key", 0);
+        WOLFSSL_LEAVE_FN(0);
         return NULL;
     }
 
     ret = wolfSSL_CMAC_Init(ctx, priv, len, cipher, e);
     if (ret == WOLFSSL_FAILURE) {
         wolfSSL_CMAC_CTX_free(ctx);
-        WOLFSSL_LEAVE("wolfSSL_EVP_PKEY_new_CMAC_key", 0);
+        WOLFSSL_LEAVE_FN(0);
         return NULL;
     }
 
@@ -4096,7 +4096,7 @@ WOLFSSL_EVP_PKEY* wolfSSL_EVP_PKEY_new_CMAC_key(WOLFSSL_ENGINE* e,
         wolfSSL_CMAC_CTX_free(ctx);
     }
 
-    WOLFSSL_LEAVE("wolfSSL_EVP_PKEY_new_CMAC_key", 0);
+    WOLFSSL_LEAVE_FN(0);
     return pkey;
 }
 #endif /* defined(WOLFSSL_CMAC) && !defined(NO_AES) && defined(WOLFSSL_AES_DIRECT) */
@@ -4758,7 +4758,7 @@ int wolfSSL_EVP_PBE_scrypt(const char *pass, size_t passlen,
     ret = wc_scrypt(key, (const byte*)pass, (int)passlen, salt, (int)saltlen,
                                             exp, (int)r, (int)p, (int)keylen);
 
-    WOLFSSL_LEAVE("wolfSSL_EVP_PBE_scrypt", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     if (ret == 0)
         return WOLFSSL_SUCCESS;
@@ -9035,7 +9035,7 @@ int wolfSSL_EVP_MD_pkey_type(const WOLFSSL_EVP_MD* type)
         }
     }
 
-    WOLFSSL_LEAVE("wolfSSL_EVP_MD_pkey_type", ret);
+    WOLFSSL_LEAVE_FN(ret);
 
     return ret;
 }
