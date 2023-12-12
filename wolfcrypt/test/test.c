@@ -39968,14 +39968,26 @@ WOLFSSL_TEST_SUBROUTINE wc_test_ret_t cmac_test(void)
 
         XMEMSET(tag, 0, sizeof(tag));
         tagSz = sizeof(tag);
+#if !defined(HAVE_FIPS) || \
+    defined(HAVE_FIPS_VERSION) && (HAVE_FIPS_VERSION >= 3)
+        ret = wc_AesCmacGenerate_ex(tag, &tagSz, tc->m, tc->mSz,
+                               tc->k, tc->kSz, devId);
+#else
         ret = wc_AesCmacGenerate(tag, &tagSz, tc->m, tc->mSz,
                                tc->k, tc->kSz);
+#endif
         if (ret != 0)
             ERROR_OUT(WC_TEST_RET_ENC_EC(ret), out);
         if (XMEMCMP(tag, tc->t, AES_BLOCK_SIZE) != 0)
             ERROR_OUT(WC_TEST_RET_ENC_NC, out);
+#if !defined(HAVE_FIPS) || \
+    defined(HAVE_FIPS_VERSION) && (HAVE_FIPS_VERSION >= 3)
+        ret = wc_AesCmacVerify_ex(tc->t, tc->tSz, tc->m, tc->mSz,
+                             tc->k, tc->kSz, devId);
+#else
         ret = wc_AesCmacVerify(tc->t, tc->tSz, tc->m, tc->mSz,
                              tc->k, tc->kSz);
+#endif
         if (ret != 0)
             ERROR_OUT(WC_TEST_RET_ENC_EC(ret), out);
     }
@@ -49368,6 +49380,49 @@ static int myCryptoDevCb(int devIdArg, wc_CryptoInfo* info, void* ctx)
         info->hmac.hmac->devId = devIdArg;
     }
 #endif
+#if defined(WOLFSSL_CMAC) && !defined(NO_AES) && defined(WOLFSSL_AES_DIRECT)
+    else if (info->algo_type == WC_ALGO_TYPE_CMAC) {
+        if (info->cmac.cmac == NULL) {
+            return NOT_COMPILED_IN;
+        }
+
+        /* set devId to invalid so software is used */
+        info->cmac.cmac->devId = INVALID_DEVID;
+
+        if (info->cmac.in != NULL && info->cmac.out != NULL) {
+            ret = wc_AesCmacGenerate(info->cmac.out,
+                                     info->cmac.outSz,
+                                     info->cmac.in,
+                                     info->cmac.inSz,
+                                     info->cmac.key,
+                                     info->cmac.keySz);
+        }
+        else if (info->cmac.key != NULL) {
+            ret = wc_InitCmac(info->cmac.cmac,
+                              info->cmac.key,
+                              info->cmac.keySz,
+                              info->cmac.type,
+                              NULL);
+        }
+        else if (info->cmac.in != NULL) {
+            ret = wc_CmacUpdate(info->cmac.cmac,
+                                info->cmac.in,
+                                info->cmac.inSz);
+        }
+        else if (info->cmac.out != NULL) {
+            ret = wc_CmacFinal(info->cmac.cmac,
+                               info->cmac.out,
+                               info->cmac.outSz);
+        }
+        else {
+            /* we should never get here */
+            ret = NOT_COMPILED_IN;
+        }
+
+        /* reset devId */
+        info->cmac.cmac->devId = devIdArg;
+    }
+#endif /* WOLFSSL_CMAC && !(NO_AES) && WOLFSSL_AES_DIRECT */
 
     (void)devIdArg;
     (void)myCtx;

@@ -305,9 +305,11 @@ int wc_CmacFinal(Cmac* cmac, byte* out, word32* outSz) {
     return ret;
 }
 
-int wc_AesCmacGenerate(byte* out, word32* outSz,
+
+int wc_AesCmacGenerate_ex(byte* out, word32* outSz,
                        const byte* in, word32 inSz,
-                       const byte* key, word32 keySz)
+                       const byte* key, word32 keySz,
+                       int devId)
 {
     int ret;
 #ifdef WOLFSSL_SMALL_STACK
@@ -326,12 +328,38 @@ int wc_AesCmacGenerate(byte* out, word32* outSz,
         return MEMORY_E;
     }
 #endif
+
 #ifdef WOLFSSL_CHECK_MEM_ZERO
     XMEMSET(((unsigned char *)cmac) + sizeof(Aes), 0xff,
         sizeof(Cmac) - sizeof(Aes));
     /* Aes part is checked by wc_AesFree. */
-    wc_MemZero_Add("wc_AesCmacGenerate cmac",
+    wc_MemZero_Add("wc_AesCmacGenerate_ex cmac",
         ((unsigned char *)cmac) + sizeof(Aes), sizeof(Cmac) - sizeof(Aes));
+#endif
+
+#ifdef WOLF_CRYPTO_CB
+    /* Set devId regardless of value (invalid or not) */
+    cmac->devId = devId;
+    #ifndef WOLF_CRYPTO_CB_FIND
+    if (devId != INVALID_DEVID)
+    #endif
+    {
+        cmac->devCtx = NULL;
+
+        ret = wc_CryptoCb_Cmac(cmac, key, keySz, in, inSz, out, outSz,
+                WC_CMAC_AES, NULL);
+        if (ret != CRYPTOCB_UNAVAILABLE) {
+            #ifdef WOLFSSL_SMALL_STACK
+            if (cmac) {
+                XFREE(cmac, NULL, DYNAMIC_TYPE_CMAC);
+            }
+            #endif
+            return ret;
+        }
+        /* fall-through when unavailable */
+    }
+#else
+    (void)devId;
 #endif
 
     ret = wc_InitCmac(cmac, key, keySz, WC_CMAC_AES, NULL);
@@ -354,9 +382,17 @@ int wc_AesCmacGenerate(byte* out, word32* outSz,
 }
 
 
-int wc_AesCmacVerify(const byte* check, word32 checkSz,
+int wc_AesCmacGenerate(byte* out, word32* outSz,
+                       const byte* in, word32 inSz,
+                       const byte* key, word32 keySz)
+{
+    return wc_AesCmacGenerate_ex(out, outSz, in, inSz, key, keySz, INVALID_DEVID);
+}
+
+
+int wc_AesCmacVerify_ex(const byte* check, word32 checkSz,
                      const byte* in, word32 inSz,
-                     const byte* key, word32 keySz)
+                     const byte* key, word32 keySz, int devId)
 {
     int ret;
     byte a[AES_BLOCK_SIZE];
@@ -369,13 +405,21 @@ int wc_AesCmacVerify(const byte* check, word32 checkSz,
     }
 
     XMEMSET(a, 0, aSz);
-    ret = wc_AesCmacGenerate(a, &aSz, in, inSz, key, keySz);
+    ret = wc_AesCmacGenerate_ex(a, &aSz, in, inSz, key, keySz, devId);
     compareRet = ConstantCompare(check, a, (int)min(checkSz, aSz));
 
     if (ret == 0)
         ret = compareRet ? 1 : 0;
 
     return ret;
+}
+
+
+int wc_AesCmacVerify(const byte* check, word32 checkSz,
+                     const byte* in, word32 inSz,
+                     const byte* key, word32 keySz)
+{
+    return wc_AesCmacVerify_ex(check, checkSz, in, inSz, key, keySz, INVALID_DEVID);
 }
 
 #endif /* WOLFSSL_CMAC && NO_AES && WOLFSSL_AES_DIRECT */

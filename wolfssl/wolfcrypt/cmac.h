@@ -111,11 +111,19 @@ WOLFSSL_API
 int wc_AesCmacGenerate(byte* out, word32* outSz,
                        const byte* in, word32 inSz,
                        const byte* key, word32 keySz);
+WOLFSSL_API
+int wc_AesCmacGenerate_ex(byte* out, word32* outSz,
+                       const byte* in, word32 inSz,
+                       const byte* key, word32 keySz, int devId);
 
 WOLFSSL_API
 int wc_AesCmacVerify(const byte* check, word32 checkSz,
                      const byte* in, word32 inSz,
                      const byte* key, word32 keySz);
+WOLFSSL_API
+int wc_AesCmacVerify_ex(const byte* check, word32 checkSz,
+                     const byte* in, word32 inSz,
+                     const byte* key, word32 keySz, int devId);
 
 WOLFSSL_LOCAL
 void ShiftAndXorRb(byte* out, byte* in);
