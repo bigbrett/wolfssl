@@ -624,6 +624,8 @@ WOLFSSL_API int wc_AesGcmDecryptUpdate(Aes* aes, byte* out, const byte* in,
         word32 sz, const byte* authIn, word32 authInSz);
 WOLFSSL_API WARN_UNUSED_RESULT int wc_AesGcmDecryptFinal(Aes* aes,
         const byte* authTag, word32 authTagSz);
+WOLFSSL_API int wc_AesGcmDecryptFinal_ex(Aes* aes, const byte* authTag,
+        word32 authTagSz, byte* outTag);
 #endif
 
 #ifndef WC_NO_RNG

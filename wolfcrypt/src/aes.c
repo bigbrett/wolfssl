@@ -10598,6 +10598,24 @@ int wc_AesGcmDecryptUpdate(Aes* aes, byte* out, const byte* in, word32 sz,
  */
 int wc_AesGcmDecryptFinal(Aes* aes, const byte* authTag, word32 authTagSz)
 {
+    return wc_AesGcmDecryptFinal_ex(aes, authTag, authTagSz, NULL);
+}
+
+/* Finalize the AES GCM for decryption and check the authentication tag, also
+ * returning the computed tag
+ *
+ * Must set key and IV before calling this function.
+ * Must call wc_AesGcmInit() before calling this function.
+ *
+ * @param [in, out] aes        AES object.
+ * @param [in]      authTag    Buffer holding authentication tag.
+ * @param [in]      authTagSz  Length of authentication tag in bytes.
+ * @param [out]     outTag     Buffer to hold computed tag.
+ * @return  0 on success.
+ */
+int wc_AesGcmDecryptFinal_ex(Aes* aes, const byte* authTag, word32 authTagSz,
+                         byte* outTag)
+{
     int ret = 0;
 
     /* Check validity of parameters. */
@@ -10633,6 +10651,9 @@ int wc_AesGcmDecryptFinal(Aes* aes, const byte* authTag, word32 authTagSz)
             if (ConstantCompare(authTag, calcTag, (int)authTagSz) != 0) {
                 ret = AES_GCM_AUTH_E;
             }
+            if (outTag != NULL) {
+                XMEMCPY(outTag, calcTag, authTagSz);
+            }
         }
         else
     #endif
@@ -10645,6 +10666,9 @@ int wc_AesGcmDecryptFinal(Aes* aes, const byte* authTag, word32 authTagSz)
                 if (ConstantCompare(authTag, calcTag, (int)authTagSz) != 0) {
                     ret = AES_GCM_AUTH_E;
                 }
+            }
+            if (outTag != NULL) {
+                XMEMCPY(outTag, calcTag, authTagSz);
             }
         }
     }
