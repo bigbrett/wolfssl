@@ -1,0 +1,45 @@
+name: macOS Apple Native Cert Validation Dylib Interpose Test
+
+# START OF COMMON SECTION
+on:
+  push:
+    branches: [ 'master', 'main', 'release/**' ]
+  pull_request:
+    branches: [ '*' ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+# END OF COMMON SECTION
+
+jobs:
+  make_check:
+    strategy:
+      matrix:
+        config: [
+          # Add new configs here
+          'CFLAGS="-DWOLFSSL_APPLE_NATIVE_CERT_VALIDATION"'
+        ]
+    name: make check
+    #if: github.repository_owner == 'wolfssl'
+    runs-on: macos-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout wolfSSL
+
+      - name: add wolfSSL test root CA to system trust store
+        run: |
+          sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ./certs/client-ca.pem
+
+      - name: compile dylib interpose shim library
+        run: |
+          clang -dynamiclib -o libinterpose.dylib tests/api-macos-dylib-interpose.c
+
+      - name: configure build and test, inserting dylib interpose shim library
+        run: |
+          ./autogen.sh
+          ./configure ${{ matrix.config }}
+          make -j
+          export DYLD_INSERT_LIBRARIES=./libinterpose.dylib
+          make check
