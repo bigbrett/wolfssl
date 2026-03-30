@@ -874,6 +874,7 @@ WOLFSSL_TEST_SUBROUTINE int ariagcm_test(MC_ALGID);
 
 #if defined(WOLF_CRYPTO_CB) && !defined(WC_TEST_NO_CRYPTOCB_SW_TEST)
 WOLFSSL_TEST_SUBROUTINE wc_test_ret_t cryptocb_test(void);
+int cryptocb_test_sw_cb(int devIdArg, wc_CryptoInfo* info, void* ctx);
 #endif
 #ifdef WOLFSSL_CERT_PIV
 WOLFSSL_TEST_SUBROUTINE wc_test_ret_t certpiv_test(void);
@@ -64255,7 +64256,7 @@ WOLFSSL_TEST_SUBROUTINE wc_test_ret_t blob_test(void)
 
 #ifdef WOLF_CRYPTO_CB
 
-/* Example custom context for crypto callback */
+/* Context for the software crypto callback redirect */
 typedef struct {
     int exampleVar; /* flag for testing if only crypt is enabled. */
 } myCryptoDevCtx;
@@ -64350,7 +64351,7 @@ static wc_test_ret_t rsa_onlycb_test(myCryptoDevCtx *ctx)
 #ifdef WOLFSSL_KEY_GEN
    /* wc_CryptoCb_MakeRsaKey cb test, no actual making key
     * wc_MakeRsaKey() -> rsa cb ->
-    *        myCryptoDevCb -> wc_MakeRsaKey(CBONLY_TEST_DEVID)
+    *        cryptocb_test_sw_cb -> wc_MakeRsaKey(CBONLY_TEST_DEVID)
     * wc_MakeRsaKey(CBONLY_TEST_DEVID) expects to return 0(success)
     */
     ctx->exampleVar = 99;
@@ -64358,7 +64359,7 @@ static wc_test_ret_t rsa_onlycb_test(myCryptoDevCtx *ctx)
     if (ret != 0)
         ERROR_OUT(WC_TEST_RET_ENC_EC(ret), exit_onlycb);
    /* wc_MakeRsaKey() -> rsa cb ->
-    *        myCryptoDevCb -> wc_MakeRsaKey(INVALID_DEVID)
+    *        cryptocb_test_sw_cb -> wc_MakeRsaKey(INVALID_DEVID)
     * wc_MakeRsaKey(CBONLY_TEST_DEVID) expects to return NO_VALID_DEVID(failure)
     */
     ctx->exampleVar = 1;
@@ -64381,7 +64382,7 @@ static wc_test_ret_t rsa_onlycb_test(myCryptoDevCtx *ctx)
     /* wc_CryptoCb_Rsa cb test, no actual rsa operation */
     if (ret == 0) {
        /* wc_SignatureGenerate() -> rsa cb ->
-        *                    myCryptoDevCb -> wc_RsaFunction(CBONLY_TEST_DEVID)
+        *               cryptocb_test_sw_cb -> wc_RsaFunction(CBONLY_TEST_DEVID)
         * wc_RsaFunction(CBONLY_TEST_DEVID) expects to return 0(success)
         */
         ctx->exampleVar = 99;
@@ -64392,7 +64393,7 @@ static wc_test_ret_t rsa_onlycb_test(myCryptoDevCtx *ctx)
     }
     if (ret == 0) {
        /* wc_SignatureGenerate() -> rsa cb ->
-        *                    myCryptoDevCb -> wc_RsaFunction(INVALID_DEVID)
+        *                   cryptocb_test_sw_cb -> wc_RsaFunction(INVALID_DEVID)
         * wc_SignatureGenerate(INVALID_DEVID) expects to
         *                               return NO_VALID_DEVID(failure)
         */
@@ -64736,8 +64737,10 @@ exit_onlycb:
 }
 #endif
 
-/* Example crypto dev callback function that calls software version */
-static int myCryptoDevCb(int devIdArg, wc_CryptoInfo* info, void* ctx)
+/* Software crypto dev callback that redirects all operations to software
+ * implementations. ctx can be NULL for default behavior, or a pointer to
+ * myCryptoDevCtx for CB_ONLY testing. */
+int cryptocb_test_sw_cb(int devIdArg, wc_CryptoInfo* info, void* ctx)
 {
     int ret = WC_NO_ERR_TRACE(NOT_COMPILED_IN); /* return this to bypass HW and
                                                    use SW */
@@ -64798,9 +64801,10 @@ static int myCryptoDevCb(int devIdArg, wc_CryptoInfo* info, void* ctx)
             info->pk.rsa.key->devId = INVALID_DEVID;
             #if defined(WOLF_CRYPTO_CB_ONLY_RSA)
             #ifdef DEBUG_WOLFSSL
-            printf("CryptoDevCb: exampleVar %d\n", myCtx->exampleVar);
+            printf("CryptoDevCb: exampleVar %d\n",
+                myCtx != NULL ? myCtx->exampleVar : -1);
             #endif
-            if (myCtx->exampleVar == 99) {
+            if (myCtx != NULL && myCtx->exampleVar == 99) {
                 info->pk.rsa.key->devId = devIdArg;
                 return 0;
             }
@@ -64832,9 +64836,10 @@ static int myCryptoDevCb(int devIdArg, wc_CryptoInfo* info, void* ctx)
             info->pk.rsakg.key->devId = INVALID_DEVID;
             #if defined(WOLF_CRYPTO_CB_ONLY_RSA)
             #ifdef DEBUG_WOLFSSL
-            printf("CryptoDevCb: exampleVar %d\n", myCtx->exampleVar);
+            printf("CryptoDevCb: exampleVar %d\n",
+                myCtx != NULL ? myCtx->exampleVar : -1);
             #endif
-            if (myCtx->exampleVar == 99) {
+            if (myCtx != NULL && myCtx->exampleVar == 99) {
                 info->pk.rsakg.key->devId = devIdArg;
                 return 0;
             }
@@ -64863,9 +64868,10 @@ static int myCryptoDevCb(int devIdArg, wc_CryptoInfo* info, void* ctx)
             info->pk.eckg.key->devId = INVALID_DEVID;
             #if defined(WOLF_CRYPTO_CB_ONLY_ECC)
             #ifdef DEBUG_WOLFSSL
-            printf("CryptoDevCb: exampleVar %d\n", myCtx->exampleVar);
+            printf("CryptoDevCb: exampleVar %d\n",
+                myCtx != NULL ? myCtx->exampleVar : -1);
             #endif
-            if (myCtx->exampleVar == 99) {
+            if (myCtx != NULL && myCtx->exampleVar == 99) {
                 info->pk.eckg.key->devId = devIdArg;
                 return 0;
             }
@@ -64883,9 +64889,10 @@ static int myCryptoDevCb(int devIdArg, wc_CryptoInfo* info, void* ctx)
             info->pk.eccsign.key->devId = INVALID_DEVID;
             #if defined(WOLF_CRYPTO_CB_ONLY_ECC)
             #ifdef DEBUG_WOLFSSL
-            printf("CryptoDevCb: exampleVar %d\n", myCtx->exampleVar);
+            printf("CryptoDevCb: exampleVar %d\n",
+                myCtx != NULL ? myCtx->exampleVar : -1);
             #endif
-            if (myCtx->exampleVar == 99) {
+            if (myCtx != NULL && myCtx->exampleVar == 99) {
                 info->pk.eccsign.key->devId = devIdArg;
                 return 0;
             }
@@ -64905,9 +64912,10 @@ static int myCryptoDevCb(int devIdArg, wc_CryptoInfo* info, void* ctx)
             info->pk.eccverify.key->devId = INVALID_DEVID;
             #if defined(WOLF_CRYPTO_CB_ONLY_ECC)
             #ifdef DEBUG_WOLFSSL
-            printf("CryptoDevCb: exampleVar %d\n", myCtx->exampleVar);
+            printf("CryptoDevCb: exampleVar %d\n",
+                myCtx != NULL ? myCtx->exampleVar : -1);
             #endif
-            if (myCtx->exampleVar == 99) {
+            if (myCtx != NULL && myCtx->exampleVar == 99) {
                 info->pk.eccverify.key->devId = devIdArg;
                 return 0;
             }
@@ -64927,9 +64935,10 @@ static int myCryptoDevCb(int devIdArg, wc_CryptoInfo* info, void* ctx)
             info->pk.ecdh.private_key->devId = INVALID_DEVID;
             #if defined(WOLF_CRYPTO_CB_ONLY_ECC)
             #ifdef DEBUG_WOLFSSL
-            printf("CryptoDevCb: exampleVar %d\n", myCtx->exampleVar);
+            printf("CryptoDevCb: exampleVar %d\n",
+                myCtx != NULL ? myCtx->exampleVar : -1);
             #endif
-            if (myCtx->exampleVar == 99) {
+            if (myCtx != NULL && myCtx->exampleVar == 99) {
                 info->pk.ecdh.private_key->devId = devIdArg;
                 return 0;
             }
@@ -65835,6 +65844,7 @@ static int myCryptoDevCb(int devIdArg, wc_CryptoInfo* info, void* ctx)
 }
 
 
+
 #ifdef WOLF_CRYPTO_CB_FIND
 static int myCryptoCbFind(int currentId, int algoType)
 {
@@ -65874,7 +65884,7 @@ WOLFSSL_TEST_SUBROUTINE wc_test_ret_t cryptocb_test(void)
 
     /* set devId to something other than INVALID_DEVID */
     devId = 1;
-    ret = wc_CryptoCb_RegisterDevice(devId, myCryptoDevCb, &myCtx);
+    ret = wc_CryptoCb_RegisterDevice(devId, cryptocb_test_sw_cb, &myCtx);
     if (ret != 0)
         ret = WC_TEST_RET_ENC_EC(ret);
 #ifdef WOLF_CRYPTO_CB_FIND

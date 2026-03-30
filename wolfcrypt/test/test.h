@@ -405,6 +405,10 @@ extern WOLFSSL_TEST_SUBROUTINE int ariagcm_test(MC_ALGID);
 
 #if defined(WOLF_CRYPTO_CB) && !defined(WC_TEST_NO_CRYPTOCB_SW_TEST)
 extern WOLFSSL_TEST_SUBROUTINE wc_test_ret_t cryptocb_test(void);
+/* Software crypto callback that redirects all operations to software
+ * implementations. Can be registered with wc_CryptoCb_RegisterDevice()
+ * for testing the crypto callback framework without hardware. */
+extern int cryptocb_test_sw_cb(int devIdArg, wc_CryptoInfo* info, void* ctx);
 #endif
 #ifdef WOLFSSL_CERT_PIV
 extern WOLFSSL_TEST_SUBROUTINE wc_test_ret_t certpiv_test(void);
